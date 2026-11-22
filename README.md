@@ -10,8 +10,8 @@ colours and the greeting. Change anything you like, then export files that a pri
 as they are: real 300 DPI, bleed and safe zones, vector text in the PDF, sRGB or CMYK.
 
 * **One Docker container.** No cloud account, no telemetry, no subscription.
-* **Private accounts for the whole household.** Cards, uploads, exports and Immich libraries
-  are never visible to each other.
+* **Multiple users, private by default.** Everyone in the household gets their own sign-in.
+  Cards, uploads, exports and Immich libraries are never visible to anyone else.
 * **Read-only Immich.** HomeCard refuses Immich keys that could change your library, and its
   Immich client can only send read requests.
 * **Clean files.** Exports carry no EXIF, GPS or camera data, so your home location never
@@ -70,6 +70,16 @@ More detail: [docs/SECURITY.md](docs/SECURITY.md) (security model and how to che
   decorations and layers, an inspector for the selected element, snap guides, keyboard nudging,
   undo/redo, autosave, version history and a 1:1 zoom.
 
+**For the whole household**
+
+* **One server, everyone's cards.** The admin adds people under **Users**, and each person sets
+  their own password at first sign-in. Give a second person the admin role if you like.
+* **Each person's work stays theirs.** Cards, version history, uploads, exports, photo folders
+  and Immich libraries belong to one person. Fonts, style packs, stock backgrounds and
+  `photos/shared/` are there for everyone.
+* **Hand a card over.** **⋯ → Share copy with another user** gives someone their own copy to
+  change, without access to your photos or your Immich library.
+
 **Photos**
 
 * **Immich**: each person links **their own** read-only key, then browses Albums, People,
@@ -126,7 +136,7 @@ You need Docker with Compose v2, about 2 GB of disk for the image, and 1–2 GB 
 exporting.
 
 ```sh
-git clone <repository-url> homecard     # the address from the green "Code" button on GitHub
+git clone https://github.com/AftermathLK/HomeCard.git homecard
 cd homecard
 cp .env.example .env
 openssl rand -base64 48                 # copy the output into APP_ENCRYPTION_KEY= in .env
@@ -180,7 +190,7 @@ hardening as `docker-compose.yml`. Open a terminal on Unraid (the `>_` icon in t
 
 ```sh
 # 1. Get the source onto the server
-git clone <repository-url> /mnt/user/appdata/homecard-src
+git clone https://github.com/AftermathLK/HomeCard.git /mnt/user/appdata/homecard-src
 
 # 2. Build and start
 cd /mnt/user/appdata/homecard-src && bash docker/unraid.sh update
