@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 140" preserveAspectRatio="none">
+<g fill="none" stroke="#c9a54a" vector-effect="non-scaling-stroke">
+<rect x="3" y="3" width="94" height="134" stroke-width="1.6"/>
+<path d="M8 20 L8 8 L20 8 M80 8 L92 8 L92 20 M92 120 L92 132 L80 132 M20 132 L8 132 L8 120" stroke-width="1"/>
+<path d="M40 3 L50 10 L60 3 M40 137 L50 130 L60 137" stroke-width="1"/>
+</g>
+</svg>

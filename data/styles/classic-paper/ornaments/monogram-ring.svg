@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+<circle cx="50" cy="50" r="44" fill="none" stroke="#1f1b16" stroke-width="1.8"/>
+<circle cx="50" cy="50" r="40" fill="none" stroke="#1f1b16" stroke-width="0.6"/>
+<circle cx="50" cy="4.5" r="0.9" class="tone2" fill="#b4533c"/>
+<circle cx="61.78" cy="6.05" r="0.9" class="tone2" fill="#b4533c"/>
+<circle cx="72.75" cy="10.6" r="0.9" class="tone2" fill="#b4533c"/>
+<circle cx="82.17" cy="17.83" r="0.9" class="tone2" fill="#b4533c"/>
+<circle cx="89.4" cy="27.25" r="0.9" class="tone2" fill="#b4533c"/>
+<circle cx="93.95" cy="38.22" r="0.9" class="tone2" fill="#b4533c"/>
+<circle cx="95.5" cy="50" r="0.9" class="tone2" fill="#b4533c"/>
+<circle cx="93.95" cy="61.78" r="0.9" class="tone2" fill="#b4533c"/>
+<circle cx="89.4" cy="72.75" r="0.9" class="tone2" fill="#b4533c"/>
+<circle cx="82.17" cy="82.17" r="0.9" class="tone2" fill="#b4533c"/>
+<circle cx="72.75" cy="89.4" r="0.9" class="tone2" fill="#b4533c"/>
+<circle cx="61.78" cy="93.95" r="0.9" class="tone2" fill="#b4533c"/>
+<circle cx="50" cy="95.5" r="0.9" class="tone2" fill="#b4533c"/>
+<circle cx="38.22" cy="93.95" r="0.9" class="tone2" fill="#b4533c"/>
+<circle cx="27.25" cy="89.4" r="0.9" class="tone2" fill="#b4533c"/>
+<circle cx="17.83" cy="82.17" r="0.9" class="tone2" fill="#b4533c"/>
+<circle cx="10.6" cy="72.75" r="0.9" class="tone2" fill="#b4533c"/>
+<circle cx="6.05" cy="61.78" r="0.9" class="tone2" fill="#b4533c"/>
+<circle cx="4.5" cy="50" r="0.9" class="tone2" fill="#b4533c"/>
+<circle cx="6.05" cy="38.22" r="0.9" class="tone2" fill="#b4533c"/>
+<circle cx="10.6" cy="27.25" r="0.9" class="tone2" fill="#b4533c"/>
+<circle cx="17.83" cy="17.83" r="0.9" class="tone2" fill="#b4533c"/>
+<circle cx="27.25" cy="10.6" r="0.9" class="tone2" fill="#b4533c"/>
+<circle cx="38.22" cy="6.05" r="0.9" class="tone2" fill="#b4533c"/>
+</svg>

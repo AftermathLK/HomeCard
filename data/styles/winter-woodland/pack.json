@@ -1,0 +1,205 @@
+{
+  "$schema": "../style-pack.schema.json",
+  "id": "winter-woodland",
+  "name": "Winter Woodland",
+  "version": "1.0.0",
+  "author": "HomeCard",
+  "license": "CC0-1.0",
+  "description": "Evergreens, crystal snowflakes and cabin-cosy colours for winter holidays.",
+  "occasions": [
+    "christmas",
+    "holiday",
+    "winter-solstice",
+    "hanukkah",
+    "new-year"
+  ],
+  "palettes": [
+    {
+      "id": "forest-night",
+      "name": "Forest Night",
+      "colors": {
+        "background": "#132a1f",
+        "text": "#f2ede1",
+        "accent": "#d9b765",
+        "accent2": "#9fc2a8",
+        "surface": "#1b382a"
+      }
+    },
+    {
+      "id": "frosted-birch",
+      "name": "Frosted Birch",
+      "colors": {
+        "background": "#f2f4f3",
+        "text": "#22313a",
+        "accent": "#3e6b57",
+        "accent2": "#a33b32"
+      }
+    },
+    {
+      "id": "cranberry-cabin",
+      "name": "Cranberry Cabin",
+      "colors": {
+        "background": "#7c1d24",
+        "text": "#fbf3e6",
+        "accent": "#f0d9a6",
+        "accent2": "#2f5d48",
+        "surface": "#8d2a30"
+      }
+    }
+  ],
+  "backgrounds": [
+    {
+      "id": "pine-velvet",
+      "name": "Pine velvet",
+      "file": "textures/pine-velvet.jpg",
+      "mode": "cover",
+      "kind": "image",
+      "tone": "dark"
+    },
+    {
+      "id": "snowfall",
+      "name": "Falling snow",
+      "file": "textures/snowfall.png",
+      "mode": "tile",
+      "tileSizeIn": 2.5,
+      "kind": "overlay",
+      "tone": "dark"
+    }
+  ],
+  "foils": [
+    {
+      "id": "frost-silver",
+      "name": "Frost silver",
+      "stops": [
+        "#7f8c96",
+        "#f2f7fa",
+        "#a7b4bd",
+        "#ffffff",
+        "#8a96a0"
+      ],
+      "angle": 115,
+      "mid": "#c3ccd3"
+    }
+  ],
+  "ornaments": [
+    {
+      "id": "crystal-snowflake",
+      "name": "Crystal snowflake",
+      "file": "ornaments/crystal-snowflake.svg",
+      "kind": "ornament",
+      "tags": [
+        "snowflake",
+        "snow",
+        "winter",
+        "christmas"
+      ]
+    },
+    {
+      "id": "fir-trio",
+      "name": "Fir tree trio",
+      "file": "ornaments/fir-trio.svg",
+      "kind": "divider",
+      "tags": [
+        "tree",
+        "forest",
+        "winter",
+        "christmas"
+      ]
+    },
+    {
+      "id": "pinecone",
+      "name": "Pinecone",
+      "file": "ornaments/pinecone.svg",
+      "kind": "ornament",
+      "recolorable": false,
+      "tags": [
+        "pinecone",
+        "winter",
+        "autumn"
+      ]
+    },
+    {
+      "id": "holly-sprig",
+      "name": "Holly sprig",
+      "file": "ornaments/holly-sprig.svg",
+      "kind": "ornament",
+      "tags": [
+        "holly",
+        "christmas",
+        "berries"
+      ]
+    },
+    {
+      "id": "snowdrift-corner",
+      "name": "Snow drift corner",
+      "file": "ornaments/snowdrift-corner.svg",
+      "kind": "corner",
+      "tags": [
+        "snow",
+        "corner",
+        "winter"
+      ]
+    },
+    {
+      "id": "scallop-frame",
+      "name": "Scalloped frame",
+      "file": "ornaments/scallop-frame.svg",
+      "kind": "frame",
+      "tags": [
+        "frame",
+        "border",
+        "scallop"
+      ]
+    }
+  ],
+  "stickers": [
+    {
+      "id": "cozy-mitten",
+      "name": "Cozy mitten",
+      "file": "stickers/cozy-mitten.svg",
+      "tags": [
+        "mitten",
+        "winter",
+        "cozy"
+      ]
+    },
+    {
+      "id": "cocoa-mug",
+      "name": "Hot cocoa",
+      "file": "stickers/cocoa-mug.svg",
+      "tags": [
+        "cocoa",
+        "mug",
+        "winter",
+        "cozy"
+      ]
+    }
+  ],
+  "templates": [
+    "templates/woodland-window.json"
+  ],
+  "fontPairings": [
+    {
+      "id": "cabin-script",
+      "name": "Cabin Script",
+      "mood": "Cosy & handmade",
+      "display": {
+        "family": "Dancing Script",
+        "weight": 700,
+        "style": "normal"
+      },
+      "body": {
+        "family": "Lora",
+        "weight": 400,
+        "style": "normal"
+      },
+      "accent": {
+        "family": "Josefin Sans",
+        "weight": 600,
+        "style": "normal",
+        "letterSpacing": 0.22,
+        "transform": "uppercase"
+      }
+    }
+  ]
+}

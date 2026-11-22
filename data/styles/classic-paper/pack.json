@@ -1,0 +1,213 @@
+{
+  "$schema": "../style-pack.schema.json",
+  "id": "classic-paper",
+  "name": "Classic Paper",
+  "version": "1.0.0",
+  "author": "HomeCard",
+  "license": "CC0-1.0",
+  "description": "Stationery-shop basics: fine papers, letterpress rules and timeless palettes for any occasion.",
+  "occasions": [],
+  "palettes": [
+    {
+      "id": "ivory-ink",
+      "name": "Ivory & Ink",
+      "colors": {
+        "background": "#f8f4ea",
+        "text": "#1f1b16",
+        "accent": "#8c2f2b",
+        "accent2": "#b89448"
+      }
+    },
+    {
+      "id": "kraft-cream",
+      "name": "Kraft & Cream",
+      "colors": {
+        "background": "#c9a77c",
+        "text": "#2b2117",
+        "accent": "#fbf6ea",
+        "accent2": "#7d3b2a",
+        "surface": "#f4ecdc"
+      }
+    },
+    {
+      "id": "sage-stationery",
+      "name": "Sage Stationery",
+      "colors": {
+        "background": "#eef0e8",
+        "text": "#263328",
+        "accent": "#5f7a61",
+        "accent2": "#c08a5b"
+      }
+    },
+    {
+      "id": "navy-letterpress",
+      "name": "Navy Letterpress",
+      "colors": {
+        "background": "#1c2a40",
+        "text": "#f3eee2",
+        "accent": "#d8b56b",
+        "accent2": "#9fb3c8",
+        "surface": "#24354f"
+      }
+    }
+  ],
+  "backgrounds": [
+    {
+      "id": "linen",
+      "name": "Linen",
+      "file": "textures/linen.png",
+      "mode": "tile",
+      "tileSizeIn": 2,
+      "kind": "overlay",
+      "tone": "light"
+    },
+    {
+      "id": "cardstock",
+      "name": "Cardstock grain",
+      "file": "textures/cardstock-grain.png",
+      "mode": "tile",
+      "tileSizeIn": 2,
+      "kind": "overlay",
+      "tone": "light"
+    },
+    {
+      "id": "watercolor",
+      "name": "Watercolour wash",
+      "file": "textures/watercolor-wash.jpg",
+      "mode": "cover",
+      "kind": "image",
+      "tone": "light"
+    },
+    {
+      "id": "kraft",
+      "name": "Kraft paper",
+      "file": "textures/kraft.jpg",
+      "mode": "tile",
+      "tileSizeIn": 3,
+      "kind": "image",
+      "tone": "light"
+    }
+  ],
+  "foils": [
+    {
+      "id": "champagne",
+      "name": "Champagne foil",
+      "stops": [
+        "#9c8658",
+        "#efe2bd",
+        "#b59e6c",
+        "#fbf3da",
+        "#a48d5e"
+      ],
+      "angle": 120,
+      "mid": "#cdb98a"
+    },
+    {
+      "id": "antique-brass",
+      "name": "Antique brass",
+      "stops": [
+        "#5e4a22",
+        "#b8964f",
+        "#7a6230",
+        "#d6b974",
+        "#6b5428"
+      ],
+      "angle": 135,
+      "mid": "#9a7d40"
+    }
+  ],
+  "ornaments": [
+    {
+      "id": "double-rule-frame",
+      "name": "Double rule frame",
+      "file": "ornaments/double-rule-frame.svg",
+      "kind": "frame",
+      "tags": [
+        "frame",
+        "border",
+        "classic"
+      ]
+    },
+    {
+      "id": "deco-corner",
+      "name": "Deco corner",
+      "file": "ornaments/deco-corner.svg",
+      "kind": "corner",
+      "tags": [
+        "corner",
+        "classic"
+      ]
+    },
+    {
+      "id": "flourish-divider",
+      "name": "Flourish divider",
+      "file": "ornaments/flourish-divider.svg",
+      "kind": "divider",
+      "tags": [
+        "divider",
+        "flourish"
+      ]
+    },
+    {
+      "id": "laurel-wreath",
+      "name": "Laurel wreath",
+      "file": "ornaments/laurel-wreath.svg",
+      "kind": "ornament",
+      "tags": [
+        "wreath",
+        "laurel",
+        "wedding",
+        "graduation"
+      ]
+    },
+    {
+      "id": "botanical-sprig",
+      "name": "Botanical sprig",
+      "file": "ornaments/botanical-sprig.svg",
+      "kind": "ornament",
+      "tags": [
+        "leaf",
+        "botanical",
+        "spring"
+      ]
+    },
+    {
+      "id": "monogram-ring",
+      "name": "Monogram ring",
+      "file": "ornaments/monogram-ring.svg",
+      "kind": "ornament",
+      "tags": [
+        "monogram",
+        "circle",
+        "badge"
+      ]
+    }
+  ],
+  "templates": [
+    "templates/letterpress-frame.json"
+  ],
+  "fontPairings": [
+    {
+      "id": "letterpress",
+      "name": "Letterpress",
+      "mood": "Quiet & refined",
+      "display": {
+        "family": "Cormorant Garamond",
+        "weight": 600,
+        "style": "italic"
+      },
+      "body": {
+        "family": "EB Garamond",
+        "weight": 400,
+        "style": "normal"
+      },
+      "accent": {
+        "family": "Work Sans",
+        "weight": 500,
+        "style": "normal",
+        "letterSpacing": 0.24,
+        "transform": "uppercase"
+      }
+    }
+  ]
+}

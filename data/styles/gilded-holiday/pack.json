@@ -1,0 +1,198 @@
+{
+  "$schema": "../style-pack.schema.json",
+  "id": "gilded-holiday",
+  "name": "Gilded Holiday",
+  "version": "1.0.0",
+  "author": "HomeCard",
+  "license": "CC0-1.0",
+  "description": "Black-tie glamour: art-deco frames, starbursts, confetti and rich metallic foils.",
+  "occasions": [
+    "christmas",
+    "new-year",
+    "hanukkah",
+    "wedding",
+    "save-the-date",
+    "diwali",
+    "graduation"
+  ],
+  "palettes": [
+    {
+      "id": "black-tie",
+      "name": "Black Tie",
+      "colors": {
+        "background": "#111111",
+        "text": "#f5efe0",
+        "accent": "#d4af37",
+        "accent2": "#8f8f8f",
+        "surface": "#1c1c1c"
+      }
+    },
+    {
+      "id": "midnight-gold",
+      "name": "Midnight Gold",
+      "colors": {
+        "background": "#0f1c33",
+        "text": "#f6f0e1",
+        "accent": "#d9b45a",
+        "accent2": "#7b9cc4",
+        "surface": "#16264a"
+      }
+    },
+    {
+      "id": "champagne-toast",
+      "name": "Champagne Toast",
+      "colors": {
+        "background": "#f6efe1",
+        "text": "#2a241b",
+        "accent": "#a8842f",
+        "accent2": "#c9a9a0"
+      }
+    }
+  ],
+  "backgrounds": [
+    {
+      "id": "gold-bokeh",
+      "name": "Gold bokeh",
+      "file": "textures/gold-bokeh.jpg",
+      "mode": "cover",
+      "kind": "image",
+      "tone": "dark"
+    }
+  ],
+  "foils": [
+    {
+      "id": "24k",
+      "name": "24k gold",
+      "gradient": "linear-gradient(135deg, #7a5a12 0%, #f7df8a 20%, #c4972f 36%, #fff1b8 50%, #b7892a 64%, #f0cf6e 82%, #6e500f 100%)",
+      "mid": "#d3ab47"
+    },
+    {
+      "id": "white-gold",
+      "name": "White gold",
+      "stops": [
+        "#8d8a80",
+        "#f8f5ec",
+        "#bdb7a6",
+        "#ffffff",
+        "#a19c8d"
+      ],
+      "angle": 125,
+      "mid": "#d6d1c2"
+    },
+    {
+      "id": "copper-glow",
+      "name": "Copper glow",
+      "stops": [
+        "#6d3418",
+        "#e9a77c",
+        "#a65a33",
+        "#f8cdb0",
+        "#8b4825"
+      ],
+      "angle": 135,
+      "mid": "#c27b52"
+    }
+  ],
+  "ornaments": [
+    {
+      "id": "deco-frame",
+      "name": "Art-deco frame",
+      "file": "ornaments/deco-frame.svg",
+      "kind": "frame",
+      "tags": [
+        "frame",
+        "deco",
+        "gold",
+        "new-year"
+      ]
+    },
+    {
+      "id": "starburst",
+      "name": "Starburst",
+      "file": "ornaments/starburst.svg",
+      "kind": "ornament",
+      "tags": [
+        "star",
+        "burst",
+        "new-year",
+        "sparkle"
+      ]
+    },
+    {
+      "id": "fan-corner",
+      "name": "Deco fan corner",
+      "file": "ornaments/fan-corner.svg",
+      "kind": "corner",
+      "tags": [
+        "corner",
+        "deco",
+        "fan"
+      ]
+    },
+    {
+      "id": "gold-confetti",
+      "name": "Gold confetti",
+      "file": "ornaments/gold-confetti.svg",
+      "kind": "scatter",
+      "tags": [
+        "confetti",
+        "party",
+        "new-year",
+        "celebration"
+      ]
+    },
+    {
+      "id": "deco-divider",
+      "name": "Deco divider",
+      "file": "ornaments/deco-divider.svg",
+      "kind": "divider",
+      "tags": [
+        "divider",
+        "deco"
+      ]
+    }
+  ],
+  "stickers": [
+    {
+      "id": "champagne-toast",
+      "name": "Champagne toast",
+      "file": "stickers/champagne-toast.svg",
+      "tags": [
+        "champagne",
+        "toast",
+        "new-year",
+        "wedding",
+        "celebration"
+      ]
+    }
+  ],
+  "templates": [
+    "templates/deco-arch.json"
+  ],
+  "fontPairings": [
+    {
+      "id": "gatsby",
+      "name": "Gatsby",
+      "mood": "Glamorous",
+      "display": {
+        "family": "Cinzel",
+        "weight": 600,
+        "style": "normal",
+        "letterSpacing": 0.12,
+        "transform": "uppercase"
+      },
+      "body": {
+        "family": "Cormorant Garamond",
+        "weight": 500,
+        "style": "normal"
+      },
+      "accent": {
+        "family": "Josefin Sans",
+        "weight": 400,
+        "style": "normal",
+        "letterSpacing": 0.32,
+        "transform": "uppercase"
+      }
+    }
+  ]
+}

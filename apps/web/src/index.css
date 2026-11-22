@@ -1,0 +1,202 @@
+@import "tailwindcss";
+
+@theme {
+  --color-paper: #faf7f2;
+  --color-paper-2: #f3eee6;
+  --color-paper-3: #ebe4d8;
+  --color-ink: #1f1b16;
+  --color-ink-2: #4a433b;
+  --color-ink-3: #857c72;
+  --color-line: #e3dbcf;
+  --color-line-2: #d3c8b8;
+  --color-brand: #2f5d50;
+  --color-brand-2: #234a3f;
+  --color-brand-soft: #e3eee9;
+  --color-accent: #b4533c;
+  --color-accent-soft: #f6e4dd;
+  --color-gold: #c9a54a;
+  --color-ok: #2f7d4f;
+  --color-ok-soft: #e1f1e7;
+  --color-warn: #b7791f;
+  --color-warn-soft: #fbf0d9;
+  --color-bad: #c0392b;
+  --color-bad-soft: #f9e1de;
+  --font-ui: "Work Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: "Playfair Display", Georgia, "Times New Roman", serif;
+  --shadow-card: 0 1px 2px rgb(31 27 22 / 0.06), 0 8px 24px -8px rgb(31 27 22 / 0.18);
+  --shadow-pop: 0 12px 40px -12px rgb(31 27 22 / 0.35), 0 2px 6px rgb(31 27 22 / 0.08);
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-ui);
+  font-size: 14px;
+  -webkit-font-smoothing: antialiased;
+}
+
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-line-2) transparent;
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center gap-1.5 rounded-lg border border-line bg-white px-3 py-1.5 text-[13px] font-medium text-ink shadow-sm transition select-none;
+    @apply hover:border-line-2 hover:bg-paper-2 active:translate-y-px disabled:pointer-events-none disabled:opacity-45;
+  }
+  .btn-primary {
+    @apply border-brand bg-brand text-white hover:border-brand-2 hover:bg-brand-2;
+  }
+  .btn-accent {
+    @apply border-accent bg-accent text-white hover:brightness-95 hover:bg-accent;
+  }
+  .btn-ghost {
+    @apply border-transparent bg-transparent shadow-none hover:border-transparent hover:bg-paper-2;
+  }
+  .btn-sm {
+    @apply px-2 py-1 text-xs;
+  }
+  .btn-lg {
+    @apply px-5 py-2.5 text-[15px];
+  }
+  .icon-btn {
+    @apply inline-flex h-8 w-8 items-center justify-center rounded-lg text-ink-2 transition hover:bg-paper-2 hover:text-ink disabled:opacity-40;
+  }
+  .input {
+    @apply w-full rounded-lg border border-line bg-white px-2.5 py-1.5 text-[13px] text-ink outline-none transition placeholder:text-ink-3 focus:border-brand focus:ring-2 focus:ring-brand/15;
+  }
+  .label {
+    @apply mb-1 block text-[11px] font-semibold uppercase tracking-wider text-ink-3;
+  }
+  .panel-title {
+    @apply text-[11px] font-semibold uppercase tracking-[0.12em] text-ink-3;
+  }
+  .chip {
+    @apply inline-flex items-center gap-1 rounded-full border border-line bg-white px-2.5 py-1 text-xs font-medium text-ink-2 transition hover:border-line-2;
+  }
+  .chip-on {
+    @apply border-brand bg-brand-soft text-brand-2;
+  }
+  .card-tile {
+    @apply rounded-xl border border-line bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-card;
+  }
+  .seg {
+    @apply inline-flex rounded-lg border border-line bg-paper-2 p-0.5;
+  }
+  .seg > button {
+    @apply rounded-md px-2.5 py-1 text-xs font-medium text-ink-2 transition;
+  }
+  .seg > button[data-on="true"] {
+    @apply bg-white text-ink shadow-sm;
+  }
+}
+
+/* Range sliders */
+input[type="range"].range {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 18px;
+  background: transparent;
+}
+input[type="range"].range::-webkit-slider-runnable-track {
+  height: 4px;
+  border-radius: 4px;
+  background: linear-gradient(to right, var(--color-brand) var(--fill, 50%), var(--color-line) var(--fill, 50%));
+}
+input[type="range"].range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  margin-top: -6px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid var(--color-brand);
+  box-shadow: 0 1px 3px rgb(0 0 0 / 0.2);
+}
+input[type="range"].range::-moz-range-track {
+  height: 4px;
+  border-radius: 4px;
+  background: var(--color-line);
+}
+input[type="range"].range::-moz-range-progress {
+  height: 4px;
+  border-radius: 4px;
+  background: var(--color-brand);
+}
+input[type="range"].range::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #fff;
+  border: 2px solid var(--color-brand);
+}
+
+/* Card surface rendering helpers (shared by editor and print renderer) */
+.hc-surface,
+.hc-surface * {
+  box-sizing: border-box;
+}
+.hc-recolor svg [fill]:not([fill="none"]),
+.hc-recolor svg path:not([fill]),
+.hc-recolor svg circle:not([fill]),
+.hc-recolor svg ellipse:not([fill]),
+.hc-recolor svg polygon:not([fill]),
+.hc-recolor svg rect:not([fill]) {
+  fill: currentColor;
+}
+.hc-recolor svg [stroke]:not([stroke="none"]) {
+  stroke: currentColor;
+}
+/* Style-pack SVGs: elements with class="tone2" take the ornament's second colour. */
+.hc-recolor svg .tone2[fill]:not([fill="none"]),
+.hc-recolor svg path.tone2:not([fill]),
+.hc-recolor svg circle.tone2:not([fill]),
+.hc-recolor svg ellipse.tone2:not([fill]),
+.hc-recolor svg polygon.tone2:not([fill]),
+.hc-recolor svg rect.tone2:not([fill]) {
+  fill: var(--hc-orn2, currentColor);
+}
+.hc-recolor svg .tone2[stroke]:not([stroke="none"]) {
+  stroke: var(--hc-orn2, currentColor);
+}
+.hc-svg > svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+/* Checkerboard for transparent previews */
+.checker {
+  background-color: #fff;
+  background-image:
+    linear-gradient(45deg, #eee 25%, transparent 25%),
+    linear-gradient(-45deg, #eee 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #eee 75%),
+    linear-gradient(-45deg, transparent 75%, #eee 75%);
+  background-size: 16px 16px;
+  background-position: 0 0, 0 8px, 8px -8px, -8px 0;
+}
+
+@keyframes hc-fade-in {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: none; }
+}
+.fade-in {
+  animation: hc-fade-in 0.18s ease-out;
+}
+@keyframes hc-spin {
+  to { transform: rotate(360deg); }
+}
+.spin {
+  animation: hc-spin 0.9s linear infinite;
+}

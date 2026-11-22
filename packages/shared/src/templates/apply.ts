@@ -1,0 +1,378 @@
+import { clampCrop, smartCrop } from '../crop';
+import { orientationOf } from '../formats';
+import { photoContentBox, photoSafeInsets } from '../geometry';
+import { getOccasion, SIGNOFFS, type Occasion } from '../holidays';
+import { defaultPolish } from '../adjustments';
+import type {
+  CardElement,
+  CardFormat,
+  CardProject,
+  GreetingStyle,
+  PhotoElement,
+  PhotoFill,
+  PhotoRecord,
+  Surface,
+  SurfaceId,
+  TemplateParams,
+  TextElement,
+  TextRole,
+} from '../types';
+import { uid } from '../units';
+import { BUILTIN_TEMPLATES, ROLE_DEFAULTS } from './builtin';
+import type { CustomTemplateJson, TemplateContext, TemplateDef, TemplateElement, TemplateSurfaceKind } from './types';
+
+/* ---------------- Registry (built-in + custom from Style Packs) ---------------- */
+
+const customTemplates = new Map<string, TemplateDef>();
+
+export function registerCustomTemplates(list: CustomTemplateJson[], packId: string) {
+  for (const json of list) {
+    const def = customTemplateToDef(json, packId);
+    if (def) customTemplates.set(def.id, def);
+  }
+}
+export function clearCustomTemplates() {
+  customTemplates.clear();
+}
+export function allTemplates(): TemplateDef[] {
+  return [...BUILTIN_TEMPLATES, ...customTemplates.values()];
+}
+export function getTemplate(id: string): TemplateDef {
+  return BUILTIN_TEMPLATES.find((t) => t.id === id) ?? customTemplates.get(id) ?? BUILTIN_TEMPLATES[0];
+}
+export function surfaceKind(id: SurfaceId): TemplateSurfaceKind {
+  return id === 'front' ? 'front' : id === 'back' ? 'back' : 'inside';
+}
+export function templatesFor(kind: TemplateSurfaceKind): TemplateDef[] {
+  return allTemplates().filter((t) => t.kinds.includes(kind));
+}
+
+function customTemplateToDef(json: CustomTemplateJson, packId: string): TemplateDef | null {
+  if (!json || typeof json.id !== 'string' || !json.layouts) return null;
+  const id = json.id.includes(':') ? json.id : `${packId}:${json.id}`;
+  const anyLayout = json.layouts.any ?? json.layouts.portrait ?? json.layouts.landscape ?? json.layouts.square;
+  if (!anyLayout) return null;
+  const photos = new Set(anyLayout.filter((e) => e.type === 'photo').map((e: any) => e.slot)).size;
+  return {
+    id,
+    name: json.name ?? json.id,
+    description: json.description ?? `Custom template from ${packId}`,
+    kinds: json.kinds ?? ['front'],
+    photos,
+    category: json.category ?? 'framed',
+    params: [],
+    defaults: { gutter: 0.08, radius: 0, margin: 0.3, ...(json.defaults ?? {}) },
+    source: 'custom',
+    build: (c) => {
+      const layout = json.layouts[c.orientation] ?? json.layouts.any ?? anyLayout;
+      return layout.map((raw) => {
+        const [nx, ny, nw, nh] = raw.rect;
+        let x = nx * c.w, y = ny * c.h, w = nw * c.w, h = nh * c.h;
+        if (raw.bleed) {
+          if (nx <= 0.001) { x -= c.bleed; w += c.bleed; }
+          if (ny <= 0.001) { y -= c.bleed; h += c.bleed; }
+          if (nx + nw >= 0.999) w += c.bleed;
+          if (ny + nh >= 0.999) h += c.bleed;
+        }
+        const { rect: _r, bleed: _b, ...rest } = raw as any;
+        const base = { ...rest, x, y, w, h };
+        if (raw.type === 'text') {
+          const d = ROLE_DEFAULTS[raw.role] ?? ROLE_DEFAULTS.custom;
+          const { sizeRel, ...t } = base;
+          return {
+            fontRole: d.fontRole, lineHeight: d.lineHeight, align: d.align, vAlign: d.vAlign, color: d.color,
+            fill: 'color', transform: d.transform, shadow: false, autoFit: true,
+            ...t,
+            fontSize: Math.round((sizeRel ?? d.size) * c.unit * 72 * 10) / 10,
+          } as TemplateElement;
+        }
+        if (raw.type === 'photo') {
+          const { radiusIn, ...p } = base;
+          return { mask: 'rect', ...p, radius: radiusIn ?? 0 } as TemplateElement;
+        }
+        return base as TemplateElement;
+      });
+    },
+  };
+}
+
+/* ---------------- Context & default content ---------------- */
+
+export function templateContext(format: CardFormat, params: TemplateParams): TemplateContext {
+  return {
+    w: format.widthIn,
+    h: format.heightIn,
+    bleed: format.bleedIn,
+    safe: format.safeIn,
+    orientation: orientationOf(format.widthIn, format.heightIn),
+    params,
+    unit: Math.min(format.widthIn, format.heightIn),
+  };
+}
+
+const RETURN_ADDRESS = '{{family}}\n[123 Street Name]\n[City, State ZIP]';
+
+/** Default copy for a role, based on the occasion, greeting style and which side of the card. */
+export function defaultText(
+  role: TextRole,
+  kind: TemplateSurfaceKind,
+  occasion: Occasion,
+  style: GreetingStyle,
+  variant = 0,
+  /** Second message on the same card (inside-left of a folded card): never repeat the main one. */
+  alternate = false,
+): string {
+  const list = occasion.greetings[style]?.length ? occasion.greetings[style] : occasion.greetings.warm;
+  const gr = list[variant % list.length];
+  if (alternate && role === 'message') {
+    const main = gr.message ?? '';
+    const styles: GreetingStyle[] = [style, 'warm', 'short', 'formal', 'humorous', 'family-update'];
+    for (const st of styles) {
+      const l = occasion.greetings[st] ?? [];
+      for (let k = 1; k <= l.length; k++) {
+        const m = l[(variant + k) % l.length]?.message;
+        if (m && m !== main) return m;
+      }
+    }
+    return main;
+  }
+  const signoff = SIGNOFFS[style];
+  if (kind === 'front') {
+    switch (role) {
+      case 'headline': return gr.headline;
+      case 'subhead': return gr.subhead ?? '';
+      case 'names': return style === 'formal' ? '{{family}}' : signoff.replace(/^With love, /, '');
+      case 'year': return '{{year}}';
+      case 'message': return gr.message ?? '';
+      case 'body': return occasion.letterIntro;
+      case 'small': return RETURN_ADDRESS;
+      case 'monogram': return '{{initial}}';
+      default: return '';
+    }
+  }
+  // back / inside
+  switch (role) {
+    case 'headline':
+      return style === 'family-update' ? (kind === 'back' ? 'Our Year in Review' : gr.headline) : kind === 'inside' ? gr.headline : (gr.subhead ?? occasion.name);
+    case 'subhead': return gr.subhead ?? '';
+    case 'names': return signoff;
+    case 'year': return '{{year}}';
+    case 'message': return gr.message ?? `Wishing you a wonderful ${occasion.name.replace(/’s$/, '')} season.`;
+    case 'body': return occasion.letterIntro;
+    case 'small': return RETURN_ADDRESS;
+    case 'monogram': return '{{initial}}';
+    default: return '';
+  }
+}
+
+/* ---------------- Photo placement ---------------- */
+
+export function fillFromRecord(rec: PhotoRecord): PhotoFill {
+  return {
+    ref: rec.ref,
+    width: rec.width,
+    height: rec.height,
+    faces: rec.faces,
+    focus: rec.focus,
+    crop: { cx: 0.5, cy: 0.5, zoom: 1, mode: 'auto' },
+    polish: defaultPolish(),
+  };
+}
+
+/** (Re)compute crop for a fill placed in an element — smart crop for auto, clamp for manual. */
+export function fitFill(el: Pick<PhotoElement, 'x' | 'y' | 'w' | 'h' | 'frameStyle' | 'rotation' | 'focusArea'> & Partial<PhotoElement>, fill: PhotoFill, format: CardFormat): PhotoFill {
+  const box = photoContentBox(el as PhotoElement);
+  if (fill.crop.mode === 'manual') {
+    return { ...fill, crop: clampCrop(box.w, box.h, fill.width, fill.height, fill.crop) };
+  }
+  const r = smartCrop({
+    frameW: box.w,
+    frameH: box.h,
+    imgW: fill.width,
+    imgH: fill.height,
+    faces: fill.faces,
+    focus: fill.focus,
+    focusArea: el.focusArea ?? null,
+    insets: photoSafeInsets({ ...(el as PhotoElement), type: 'photo' } as PhotoElement, format),
+    minDpi: 280,
+  });
+  return { ...fill, crop: { cx: r.cx, cy: r.cy, zoom: r.zoom, mode: 'auto' } };
+}
+
+/* ---------------- Apply / switch ---------------- */
+
+function textKey(el: TextElement, index: number) {
+  return index === 0 ? el.role : `${el.role}#${index}`;
+}
+
+export interface ApplyOptions {
+  params?: Partial<TemplateParams>;
+  /** Reset text to occasion defaults instead of migrating existing copy. */
+  resetText?: boolean;
+  greetingVariant?: number;
+}
+
+/**
+ * Apply a template to a surface, migrating photos (by slot order, overflow kept in a stash),
+ * text (by role) and user-added free elements so switching templates never loses work.
+ */
+export function applyTemplate(project: CardProject, surfaceId: SurfaceId, templateId: string, opts: ApplyOptions = {}): Surface {
+  const surface = project.surfaces.find((s) => s.id === surfaceId)!;
+  const tpl = getTemplate(templateId);
+  const occasion = getOccasion(project.occasionId);
+  const kind = surfaceKind(surfaceId);
+  const sameTemplate = surface.templateId === tpl.id;
+  const params: TemplateParams = { ...tpl.defaults, ...(sameTemplate ? surface.templateParams : {}), ...(opts.params ?? {}) };
+  const ctx = templateContext(project.format, params);
+  const built = tpl.build(ctx);
+
+  // Gather existing content.
+  const oldPhotos = surface.elements
+    .filter((e): e is PhotoElement => e.type === 'photo' && !!e.managed)
+    .sort((a, b) => a.slot - b.slot);
+  const fills: PhotoFill[] = [...oldPhotos.map((p) => p.fill).filter((f): f is PhotoFill => !!f), ...surface.photoStash];
+  const roleCount: Record<string, number> = {};
+  const oldTexts = new Map<string, string>();
+  for (const el of surface.elements) {
+    if (el.type !== 'text' || !el.managed) continue;
+    const i = roleCount[el.role] ?? 0;
+    roleCount[el.role] = i + 1;
+    oldTexts.set(textKey(el, i), el.text);
+  }
+  const stash: Record<string, string> = { ...(surface.textStash as Record<string, string>) };
+
+  const elements: CardElement[] = [];
+  const usedKeys = new Set<string>();
+  const newRoleCount: Record<string, number> = {};
+  let fillIndex = 0;
+  const maxSlot = Math.max(-1, ...built.filter((b) => b.type === 'photo').map((b: any) => b.slot as number));
+
+  for (const t of built) {
+    const base = { id: uid('el'), rotation: t.rotation ?? 0, opacity: t.opacity ?? 1, managed: true };
+    if (t.type === 'photo') {
+      const el: PhotoElement = {
+        ...base,
+        type: 'photo',
+        x: t.x, y: t.y, w: t.w, h: t.h,
+        slot: t.slot,
+        fill: null,
+        mask: t.mask ?? 'rect',
+        radius: t.radius ?? 0,
+        border: t.border ?? null,
+        frameStyle: t.frameStyle ?? 'none',
+        shadow: t.shadow ?? false,
+        focusArea: t.focusArea,
+      };
+      const f = fills[t.slot] ?? null;
+      if (f) {
+        el.fill = fitFill(el, f, project.format);
+        fillIndex = Math.max(fillIndex, t.slot + 1);
+      }
+      elements.push(el);
+    } else if (t.type === 'text') {
+      const i = newRoleCount[t.role] ?? 0;
+      newRoleCount[t.role] = i + 1;
+      const key = i === 0 ? t.role : `${t.role}#${i}`;
+      usedKeys.add(key);
+      const migrated = opts.resetText ? undefined : oldTexts.get(key) ?? stash[key];
+      const content = migrated ?? t.text ?? defaultText(t.role, kind, occasion, project.greetingStyle, opts.greetingVariant ?? 0, surface.id === 'inside-left');
+      const { type: _t, role, text: _x, ...rest } = t;
+      elements.push({
+        ...base,
+        type: 'text',
+        role,
+        text: content,
+        fontRole: 'body',
+        fontSize: 14,
+        lineHeight: 1.3,
+        align: 'center',
+        vAlign: 'middle',
+        color: '@text',
+        fill: 'color',
+        shadow: false,
+        autoFit: true,
+        ...rest,
+        x: t.x, y: t.y, w: t.w, h: t.h,
+      } as TextElement);
+    } else if (t.type === 'ornament') {
+      const asset = t.asset === '@icon' ? `builtin:${occasion.icon}` : t.asset.includes(':') ? t.asset : `builtin:${t.asset}`;
+      elements.push({ ...base, type: 'ornament', x: t.x, y: t.y, w: t.w, h: t.h, asset, color: t.color ?? '@accent', color2: t.color2, flipX: t.flipX });
+    } else if (t.type === 'shape') {
+      elements.push({ ...base, type: 'shape', x: t.x, y: t.y, w: t.w, h: t.h, shape: t.shape ?? 'rect', fill: t.fill === undefined ? '@accent' : t.fill, stroke: t.stroke ?? null, radius: t.radius ?? 0 });
+    } else if (t.type === 'scrim') {
+      elements.push({ ...base, type: 'scrim', x: t.x, y: t.y, w: t.w, h: t.h, direction: t.direction ?? 'to-top', color: t.color ?? '@scrim', strength: t.strength ?? 0.5, extent: t.extent ?? 0.3 });
+    }
+  }
+
+  // Text that the new template has no slot for is stashed (restored if you switch back).
+  const newStash: Record<string, string> = {};
+  for (const [k, v] of Object.entries(stash)) if (!usedKeys.has(k)) newStash[k] = v;
+  for (const [k, v] of oldTexts) if (!usedKeys.has(k) && v.trim()) newStash[k] = v;
+
+  // Free (user-added) elements stay on top.
+  const free = surface.elements.filter((e) => !e.managed);
+
+  return {
+    ...surface,
+    templateId: tpl.id,
+    templateParams: params,
+    elements: [...elements, ...free],
+    photoStash: fills.slice(Math.max(fillIndex, maxSlot + 1)),
+    textStash: newStash as Surface['textStash'],
+  };
+}
+
+/** Put a picked photo into a specific photo element (smart-cropped). */
+export function placePhoto(project: CardProject, surfaceId: SurfaceId, elementId: string, rec: PhotoRecord): CardProject {
+  return {
+    ...project,
+    surfaces: project.surfaces.map((s) =>
+      s.id !== surfaceId
+        ? s
+        : {
+            ...s,
+            elements: s.elements.map((e) => {
+              if (e.id !== elementId || e.type !== 'photo') return e;
+              const prev = e.fill;
+              const fill = fitFill(e, { ...fillFromRecord(rec), polish: prev?.polish ?? defaultPolish() }, project.format);
+              return { ...e, fill };
+            }),
+          },
+    ),
+  };
+}
+
+/** Fill empty photo slots across the card with tray photos not already used. */
+export function autoFillPhotos(project: CardProject, records: PhotoRecord[] = project.photos): CardProject {
+  const used = new Set<string>();
+  for (const s of project.surfaces) for (const e of s.elements) if (e.type === 'photo' && e.fill) used.add(e.fill.ref);
+  const queue = records.filter((r) => !used.has(r.ref));
+  if (!queue.length) return project;
+  const order: SurfaceId[] = ['front', 'back', 'inside-right', 'inside-left'];
+  const surfaces = project.surfaces.map((s) => ({ ...s, elements: [...s.elements] }));
+  for (const sid of order) {
+    const s = surfaces.find((x) => x.id === sid);
+    if (!s) continue;
+    const slots = s.elements
+      .map((e, i) => ({ e, i }))
+      .filter((x): x is { e: PhotoElement; i: number } => x.e.type === 'photo' && !x.e.fill)
+      .sort((a, b) => a.e.slot - b.e.slot);
+    for (const { e, i } of slots) {
+      const rec = queue.shift();
+      if (!rec) break;
+      s.elements[i] = { ...e, fill: fitFill(e, fillFromRecord(rec), project.format) };
+    }
+  }
+  return { ...project, surfaces };
+}
+
+/** Recompute auto crops for all photos (after a format change). */
+export function refitAllPhotos(project: CardProject): CardProject {
+  return {
+    ...project,
+    surfaces: project.surfaces.map((s) => ({
+      ...s,
+      elements: s.elements.map((e) => (e.type === 'photo' && e.fill ? { ...e, fill: fitFill(e, e.fill, project.format) } : e)),
+    })),
+  };
+}

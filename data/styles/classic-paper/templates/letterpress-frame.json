@@ -1,0 +1,121 @@
+{
+  "id": "letterpress-frame",
+  "name": "Letterpress Frame",
+  "description": "A photo set inside a fine double rule, with classic type beneath.",
+  "kinds": [
+    "front"
+  ],
+  "category": "framed",
+  "layouts": {
+    "portrait": [
+      {
+        "type": "photo",
+        "slot": 0,
+        "rect": [
+          0.1,
+          0.08,
+          0.8,
+          0.6
+        ]
+      },
+      {
+        "type": "ornament",
+        "asset": "pack:classic-paper/ornaments/double-rule-frame.svg",
+        "rect": [
+          0.06,
+          0.05,
+          0.88,
+          0.9
+        ],
+        "color": "@text"
+      },
+      {
+        "type": "text",
+        "role": "headline",
+        "rect": [
+          0.1,
+          0.7,
+          0.8,
+          0.12
+        ]
+      },
+      {
+        "type": "ornament",
+        "asset": "pack:classic-paper/ornaments/flourish-divider.svg",
+        "rect": [
+          0.3,
+          0.825,
+          0.4,
+          0.04
+        ],
+        "color": "@text",
+        "color2": "@accent"
+      },
+      {
+        "type": "text",
+        "role": "names",
+        "rect": [
+          0.1,
+          0.87,
+          0.8,
+          0.05
+        ]
+      }
+    ],
+    "landscape": [
+      {
+        "type": "photo",
+        "slot": 0,
+        "rect": [
+          0.07,
+          0.1,
+          0.52,
+          0.8
+        ]
+      },
+      {
+        "type": "ornament",
+        "asset": "pack:classic-paper/ornaments/double-rule-frame.svg",
+        "rect": [
+          0.04,
+          0.06,
+          0.92,
+          0.88
+        ],
+        "color": "@text"
+      },
+      {
+        "type": "text",
+        "role": "headline",
+        "rect": [
+          0.62,
+          0.25,
+          0.32,
+          0.3
+        ]
+      },
+      {
+        "type": "ornament",
+        "asset": "pack:classic-paper/ornaments/flourish-divider.svg",
+        "rect": [
+          0.66,
+          0.58,
+          0.24,
+          0.05
+        ],
+        "color": "@text",
+        "color2": "@accent"
+      },
+      {
+        "type": "text",
+        "role": "names",
+        "rect": [
+          0.62,
+          0.65,
+          0.32,
+          0.08
+        ]
+      }
+    ]
+  }
+}

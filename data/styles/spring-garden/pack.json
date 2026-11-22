@@ -1,0 +1,179 @@
+{
+  "$schema": "../style-pack.schema.json",
+  "id": "spring-garden",
+  "name": "Spring Garden",
+  "version": "1.0.0",
+  "author": "HomeCard",
+  "license": "CC0-1.0",
+  "description": "Blooms, vines and butterflies in soft watercolour tones for spring and milestones.",
+  "occasions": [
+    "easter",
+    "mothers-day",
+    "wedding",
+    "save-the-date",
+    "birth",
+    "thank-you",
+    "passover",
+    "first-birthday",
+    "valentines"
+  ],
+  "palettes": [
+    {
+      "id": "blush-peony",
+      "name": "Blush Peony",
+      "colors": {
+        "background": "#fbf1ee",
+        "text": "#4a2f35",
+        "accent": "#c86b85",
+        "accent2": "#7f9c74"
+      }
+    },
+    {
+      "id": "garden-party",
+      "name": "Garden Party",
+      "colors": {
+        "background": "#f4f6ec",
+        "text": "#2f3d2a",
+        "accent": "#5d7f55",
+        "accent2": "#e6a04e"
+      }
+    },
+    {
+      "id": "lavender-field",
+      "name": "Lavender Field",
+      "colors": {
+        "background": "#f3f0f8",
+        "text": "#3a3150",
+        "accent": "#8a72b8",
+        "accent2": "#a9c08f"
+      }
+    }
+  ],
+  "backgrounds": [
+    {
+      "id": "blush-wash",
+      "name": "Blush watercolour",
+      "file": "textures/blush-wash.jpg",
+      "mode": "cover",
+      "kind": "image",
+      "tone": "light"
+    }
+  ],
+  "foils": [
+    {
+      "id": "rose-quartz",
+      "name": "Rose quartz",
+      "stops": [
+        "#a86a72",
+        "#f6d3d6",
+        "#c98d95",
+        "#fff0f1",
+        "#b0767e"
+      ],
+      "angle": 130,
+      "mid": "#d9a8ad"
+    }
+  ],
+  "ornaments": [
+    {
+      "id": "floral-corner",
+      "name": "Floral corner",
+      "file": "ornaments/floral-corner.svg",
+      "kind": "corner",
+      "tags": [
+        "flower",
+        "corner",
+        "spring",
+        "wedding"
+      ]
+    },
+    {
+      "id": "leafy-wreath",
+      "name": "Leafy wreath",
+      "file": "ornaments/leafy-wreath.svg",
+      "kind": "ornament",
+      "tags": [
+        "wreath",
+        "leaf",
+        "flower",
+        "spring"
+      ]
+    },
+    {
+      "id": "tulip",
+      "name": "Tulip",
+      "file": "ornaments/tulip.svg",
+      "kind": "ornament",
+      "tags": [
+        "tulip",
+        "flower",
+        "spring",
+        "easter",
+        "mothers-day"
+      ]
+    },
+    {
+      "id": "butterfly",
+      "name": "Butterfly",
+      "file": "ornaments/butterfly.svg",
+      "kind": "ornament",
+      "tags": [
+        "butterfly",
+        "spring",
+        "baby"
+      ]
+    },
+    {
+      "id": "vine-divider",
+      "name": "Vine divider",
+      "file": "ornaments/vine-divider.svg",
+      "kind": "divider",
+      "tags": [
+        "vine",
+        "divider",
+        "leaf"
+      ]
+    }
+  ],
+  "stickers": [
+    {
+      "id": "watercolor-peony",
+      "name": "Watercolour peony",
+      "file": "stickers/watercolor-peony.svg",
+      "tags": [
+        "peony",
+        "flower",
+        "watercolour",
+        "wedding",
+        "mothers-day"
+      ]
+    }
+  ],
+  "templates": [
+    "templates/garden-oval.json"
+  ],
+  "fontPairings": [
+    {
+      "id": "garden-script",
+      "name": "Garden Script",
+      "mood": "Soft & romantic",
+      "display": {
+        "family": "Parisienne",
+        "weight": 400,
+        "style": "normal"
+      },
+      "body": {
+        "family": "Lora",
+        "weight": 400,
+        "style": "italic"
+      },
+      "accent": {
+        "family": "Raleway",
+        "weight": 600,
+        "style": "normal",
+        "letterSpacing": 0.26,
+        "transform": "uppercase"
+      }
+    }
+  ]
+}

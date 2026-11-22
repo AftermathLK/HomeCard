@@ -1,0 +1,87 @@
+# HomeCard — self-hosted, print-ready card studio.
+#
+#   cp .env.example .env     # then set APP_ENCRYPTION_KEY (required) — see the comments in it
+#   docker compose up -d --build
+#   open http://<server>:8787  → create the first admin account
+#
+# Everything HomeCard knows lives in the volumes below — back up ./homecard-data (or your
+# Unraid appdata share) AND your APP_ENCRYPTION_KEY, and you have backed up every account,
+# card, export, font and style pack.
+
+services:
+  homecard:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: homecard:latest
+    container_name: homecard
+    restart: unless-stopped
+    ports:
+      - "${HOMECARD_PORT:-8787}:8787"
+    # Values come from .env next to this file (docker compose reads it automatically).
+    environment:
+      # Run as this user/group (Unraid: 99/100 = nobody/users). The server never runs as root.
+      PUID: ${PUID:-99}
+      PGID: ${PGID:-100}
+      UMASK: ${UMASK:-027}
+      TZ: ${TZ:-Etc/UTC}
+      # ---- Security (see .env.example) ----
+      # Required: encrypts each user's Immich API key at rest. Keep it safe and keep it stable.
+      APP_ENCRYPTION_KEY: "${APP_ENCRYPTION_KEY:?Set APP_ENCRYPTION_KEY in .env - generate one with openssl rand -base64 48}"
+      SESSION_SECRET: ${SESSION_SECRET:-}
+      ALLOW_REGISTRATION: ${ALLOW_REGISTRATION:-false}
+      TRUST_PROXY: ${TRUST_PROXY:-}
+      HTTPS: ${HTTPS:-false}
+      SESSION_IDLE_DAYS: ${SESSION_IDLE_DAYS:-14}
+      SESSION_MAX_DAYS: ${SESSION_MAX_DAYS:-60}
+      # ---- Immich: server address only. Each person links their own read-only key in the app. ----
+      IMMICH_URL: ${IMMICH_URL:-}
+      # ---- Stock backgrounds (optional) ----
+      PIXABAY_API_KEY: ${PIXABAY_API_KEY:-}
+      UNSPLASH_API_KEY: ${UNSPLASH_API_KEY:-}
+      OPENVERSE_ENABLED: ${OPENVERSE_ENABLED:-}
+      # ---- Tuning ----
+      # Parallel print renders (each uses ~300–600 MB RAM at 300 DPI).
+      RENDER_CONCURRENCY: ${RENDER_CONCURRENCY:-2}
+      # Use polling for folder watching on NFS/SMB shares where inotify events don't arrive.
+      WATCH: ${WATCH:-true}
+      WATCH_POLLING: ${WATCH_POLLING:-false}
+      CACHE_MAX_MB: ${CACHE_MAX_MB:-4096}
+      MAX_UPLOAD_MB: ${MAX_UPLOAD_MB:-200}
+      LOG_LEVEL: ${LOG_LEVEL:-info}
+    volumes:
+      - ${HOMECARD_DATA:-./homecard-data}/config:/data/config       # homecard.db (accounts, sessions, encrypted keys, audit log), ICC profiles
+      - ${HOMECARD_DATA:-./homecard-data}/projects:/data/projects   # card drafts per user: projects/<userId>/…
+      - ${HOMECARD_DATA:-./homecard-data}/uploads:/data/uploads     # photos uploaded in the browser, per user
+      - ${HOMECARD_DATA:-./homecard-data}/exports:/data/exports     # finished print files, per user
+      - ${HOMECARD_DATA:-./homecard-data}/fonts:/data/fonts         # shared: your .ttf/.otf/.woff2 fonts
+      - ${HOMECARD_DATA:-./homecard-data}/styles:/data/styles       # shared: style packs + downloaded stock backgrounds
+      - ${HOMECARD_DATA:-./homecard-data}/cache:/data/cache         # thumbnails & converted originals (safe to delete)
+      # Your photo library, read-only. Layout: photos/shared/… (everyone) and photos/users/<username>/… (only that person).
+      - ${PHOTOS_PATH:-./homecard-data/photos}:/data/photos:ro
+    # Chromium renders big 300 DPI pages; give it room.
+    shm_size: "1gb"
+
+    # ---- Container hardening ----
+    # The image's own files can't be changed at runtime; HomeCard writes only to the volumes above
+    # and to /tmp, which lives in RAM. Full-resolution Immich originals fetched for an export are
+    # kept in /tmp/homecard-ephemeral and wiped as soon as the render finishes.
+    read_only: true
+    tmpfs:
+      - /tmp:size=2g,mode=1777
+    cap_drop: [ALL]
+    # Only for the entrypoint (as root) to fix volume ownership and switch to PUID:PGID.
+    # If your folders are already owned by PUID:PGID you can instead set `user: "99:100"`
+    # and remove cap_add entirely.
+    cap_add: [CHOWN, DAC_OVERRIDE, SETUID, SETGID]
+    security_opt:
+      - no-new-privileges:true
+    pids_limit: 1024
+    # If Immich runs in another compose project on the same host, either use its LAN URL
+    # (http://192.168.x.x:2283) or join its network:
+    # networks: [default, immich]
+
+# networks:
+#   immich:
+#     external: true
+#     name: immich_default

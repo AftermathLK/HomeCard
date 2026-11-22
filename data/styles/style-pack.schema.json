@@ -1,0 +1,213 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://homecard.local/style-pack.schema.json",
+  "title": "HomeCard Style Pack",
+  "description": "Manifest for a HomeCard style pack. Put it in /data/styles/<pack-folder>/pack.json (or as a standalone /data/styles/<id>.json). All file paths are relative to the manifest's folder. See docs/STYLE_PACKS.md.",
+  "type": "object",
+  "required": ["id", "name"],
+  "additionalProperties": true,
+  "$defs": {
+    "hex": { "type": "string", "pattern": "^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$" },
+    "file": {
+      "type": "string",
+      "description": "Relative path to a .svg, .png, .jpg/.jpeg or .webp file inside the pack folder. No '..' and no leading '/'.",
+      "pattern": "^(?!/)(?!.*\\.\\.)[\\w\\-./ ]+\\.(svg|png|jpe?g|webp)$"
+    },
+    "id": { "type": "string", "pattern": "^[a-zA-Z0-9][a-zA-Z0-9\\-_]{0,63}$" },
+    "fontSpec": {
+      "type": "object",
+      "required": ["family", "weight", "style"],
+      "properties": {
+        "family": { "type": "string", "description": "A bundled family or any family installed in /data/fonts." },
+        "weight": { "type": "integer", "minimum": 100, "maximum": 900 },
+        "style": { "enum": ["normal", "italic"] },
+        "letterSpacing": { "type": "number", "description": "Extra tracking in em (0.2 = 20%)." },
+        "transform": { "enum": ["none", "uppercase"] }
+      }
+    },
+    "colorRef": { "type": "string", "description": "A theme token such as \"@accent\" (follows the palette) or a literal hex colour." },
+    "layoutElement": {
+      "type": "object",
+      "required": ["type", "rect"],
+      "properties": {
+        "type": { "enum": ["photo", "text", "ornament", "shape", "scrim"] },
+        "rect": {
+          "type": "array",
+          "description": "[x, y, width, height] as fractions (0..1) of the finished (trim) card.",
+          "items": { "type": "number" },
+          "minItems": 4,
+          "maxItems": 4
+        },
+        "bleed": { "type": "boolean", "description": "Extend edges that touch the trim out into the bleed (use for full-bleed photos and backgrounds)." },
+        "rotation": { "type": "number" },
+        "opacity": { "type": "number", "minimum": 0, "maximum": 1 },
+        "slot": { "type": "integer", "minimum": 0, "description": "photo: which photo (0 = the hero photo)." },
+        "mask": { "enum": ["rect", "rounded", "circle", "ellipse", "arch", "scallop", "heart", "stamp"] },
+        "radiusIn": { "type": "number", "description": "photo: corner radius in inches for mask \"rounded\"." },
+        "frameStyle": { "enum": ["none", "polaroid", "mat"] },
+        "shadow": { "type": "boolean" },
+        "role": { "enum": ["headline", "subhead", "names", "year", "message", "body", "small", "monogram", "custom"], "description": "text: what the box holds. Copy comes from the occasion's greeting library." },
+        "sizeRel": { "type": "number", "description": "text: font size as a fraction of the card's short edge (0.1 on a 5\" card = 36pt)." },
+        "fontRole": { "enum": ["display", "body", "accent"] },
+        "align": { "enum": ["left", "center", "right"] },
+        "vAlign": { "enum": ["top", "middle", "bottom"] },
+        "fill": { "type": "string", "description": "text: \"color\" or \"foil\"; shape: a colour reference." },
+        "color": { "$ref": "#/$defs/colorRef" },
+        "color2": { "$ref": "#/$defs/colorRef" },
+        "asset": { "type": "string", "description": "ornament: \"builtin:<id>\" or \"pack:<packId>/<file.svg>\"." },
+        "shape": { "enum": ["rect", "ellipse", "line"] },
+        "direction": { "enum": ["to-top", "to-bottom", "to-left", "to-right", "radial", "solid"] },
+        "strength": { "type": "number" },
+        "extent": { "type": "number" }
+      }
+    },
+    "template": {
+      "type": "object",
+      "required": ["id", "name", "layouts"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "kinds": { "type": "array", "items": { "enum": ["front", "back", "inside"] } },
+        "category": { "enum": ["full-bleed", "framed", "collage", "cutout", "split", "typography", "letter", "postcard"] },
+        "defaults": {
+          "type": "object",
+          "properties": { "gutter": { "type": "number" }, "radius": { "type": "number" }, "margin": { "type": "number" } }
+        },
+        "layouts": {
+          "type": "object",
+          "description": "Element lists per orientation. \"any\" is used when no orientation-specific layout exists.",
+          "properties": {
+            "any": { "type": "array", "items": { "$ref": "#/$defs/layoutElement" } },
+            "portrait": { "type": "array", "items": { "$ref": "#/$defs/layoutElement" } },
+            "landscape": { "type": "array", "items": { "$ref": "#/$defs/layoutElement" } },
+            "square": { "type": "array", "items": { "$ref": "#/$defs/layoutElement" } }
+          }
+        }
+      }
+    }
+  },
+  "properties": {
+    "$schema": { "type": "string" },
+    "id": { "$ref": "#/$defs/id", "description": "Unique pack id. Used in asset references: pack:<id>/<file>." },
+    "name": { "type": "string" },
+    "version": { "type": "string" },
+    "author": { "type": "string" },
+    "description": { "type": "string" },
+    "license": { "type": "string", "description": "SPDX id or a short licence note for the artwork." },
+    "occasions": {
+      "type": "array",
+      "description": "Occasion ids this pack suits (shown first for those occasions). Empty = all occasions.",
+      "items": { "type": "string" }
+    },
+    "palettes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "colors"],
+        "properties": {
+          "id": { "$ref": "#/$defs/id" },
+          "name": { "type": "string" },
+          "colors": {
+            "type": "object",
+            "required": ["background", "text", "accent"],
+            "description": "Missing tokens (surface, textMuted, accent2, onPhoto, scrim) are derived automatically.",
+            "properties": {
+              "background": { "$ref": "#/$defs/hex" },
+              "surface": { "$ref": "#/$defs/hex" },
+              "text": { "$ref": "#/$defs/hex" },
+              "textMuted": { "$ref": "#/$defs/hex" },
+              "accent": { "$ref": "#/$defs/hex" },
+              "accent2": { "$ref": "#/$defs/hex" },
+              "onPhoto": { "$ref": "#/$defs/hex" },
+              "scrim": { "$ref": "#/$defs/hex" }
+            }
+          }
+        }
+      }
+    },
+    "backgrounds": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "file"],
+        "properties": {
+          "id": { "$ref": "#/$defs/id" },
+          "name": { "type": "string" },
+          "file": { "$ref": "#/$defs/file" },
+          "mode": { "enum": ["tile", "cover"], "description": "tile = repeat at tileSizeIn; cover = stretch over the whole card including bleed." },
+          "tileSizeIn": { "type": "number", "exclusiveMinimum": 0, "description": "Physical tile size in inches. A 600px tile at 2in prints at 300 DPI." },
+          "kind": { "enum": ["overlay", "image"], "description": "overlay = semi-transparent texture over the background colour; image = opaque picture." },
+          "tone": { "enum": ["light", "dark"] }
+        }
+      }
+    },
+    "foils": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id"],
+        "description": "A metallic gradient used as a text fill. Give either a full CSS gradient or a list of hex stops.",
+        "properties": {
+          "id": { "$ref": "#/$defs/id" },
+          "name": { "type": "string" },
+          "gradient": { "type": "string", "pattern": "^(linear|radial|conic)-gradient\\(" },
+          "stops": { "type": "array", "items": { "$ref": "#/$defs/hex" }, "minItems": 2 },
+          "angle": { "type": "number" },
+          "mid": { "$ref": "#/$defs/hex", "description": "Representative colour used for contrast checks." },
+          "texture": { "$ref": "#/$defs/file" }
+        }
+      }
+    },
+    "ornaments": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "file"],
+        "properties": {
+          "id": { "$ref": "#/$defs/id" },
+          "name": { "type": "string" },
+          "file": { "$ref": "#/$defs/file" },
+          "kind": { "enum": ["ornament", "divider", "corner", "frame", "scatter"] },
+          "recolorable": { "type": "boolean", "description": "SVG only (default true): fills/strokes take the element colour; elements with class=\"tone2\" take the second colour." },
+          "stretch": { "type": "boolean", "description": "Stretch to the element box instead of keeping proportions (frames)." },
+          "tags": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "stickers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "file"],
+        "description": "Full-colour artwork placed as-is (PNG with transparency, or SVG). Provide at least 300 px per printed inch.",
+        "properties": {
+          "id": { "$ref": "#/$defs/id" },
+          "name": { "type": "string" },
+          "file": { "$ref": "#/$defs/file" },
+          "tags": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "templates": {
+      "type": "array",
+      "description": "Inline template objects or relative paths to template .json files.",
+      "items": { "oneOf": [{ "type": "string" }, { "$ref": "#/$defs/template" }] }
+    },
+    "fontPairings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "display", "body", "accent"],
+        "properties": {
+          "id": { "$ref": "#/$defs/id" },
+          "name": { "type": "string" },
+          "mood": { "type": "string" },
+          "display": { "$ref": "#/$defs/fontSpec" },
+          "body": { "$ref": "#/$defs/fontSpec" },
+          "accent": { "$ref": "#/$defs/fontSpec" }
+        }
+      }
+    }
+  }
+}

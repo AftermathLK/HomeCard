@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="color-scheme" content="light" />
+    <title>HomeCard print renderer</title>
+    <!-- No favicon request: the renderer's grant only covers what a card needs. -->
+    <link rel="icon" href="data:," />
+    <style>
+      @page { margin: 0; }
+      html, body { margin: 0; padding: 0; background: #ffffff; }
+      body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    </style>
+  </head>
+  <body>
+    <div id="render-root"></div>
+    <script type="module" src="/src/render-main.tsx"></script>
+  </body>
+</html>
