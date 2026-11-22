@@ -5,8 +5,10 @@ import {
   isLargeText,
   photoContentBox,
   SURFACE_INFO,
+  uid,
   type GuardianIssue,
   type GuardianReport,
+  type ScrimElement,
   type Severity,
   type TextElement,
 } from '@homecard/shared';
@@ -118,19 +120,21 @@ async function makeReadable(id: string) {
   const overPhoto = surface.elements.some(
     (o) => o.type === 'photo' && o.fill && o.x < el.x + el.w && o.x + o.w > el.x && o.y < el.y + el.h && o.y + o.h > el.y,
   );
+  // A stock image or a pattern behind the text can be as busy as a photo.
+  const busy = overPhoto || !!(surface.background.texture || surface.background.backdrop);
   const base: TextElement = { ...el, shadow: overPhoto ? true : el.shadow };
-  const apply = (color: string) =>
+  const apply = (color: string, shadow = overPhoto) =>
     ed.updateElement(id, (e) => {
       if (e.type !== 'text') return;
       e.color = color;
-      if (overPhoto) e.shadow = true;
+      if (shadow) e.shadow = true;
     }, null);
 
-  if (overPhoto) {
-    const r = await measureContrast(p, surface, { ...base, color: '@onPhoto' }, ink, packs).catch(() => undefined);
+  if (busy) {
+    const r = await measureContrast(p, surface, { ...base, color: '@onPhoto', shadow: true }, ink, packs).catch(() => undefined);
     if (r !== undefined && r >= target) {
-      apply('@onPhoto');
-      toast(`Switched to the theme’s text-on-photo colour with a soft shadow (${r.toFixed(1)}:1).`, 'info');
+      apply('@onPhoto', true);
+      toast(`Switched to the theme’s light text colour with a soft shadow (${r.toFixed(1)}:1).`, 'info');
       return;
     }
   }
@@ -139,6 +143,7 @@ async function makeReadable(id: string) {
     toast('Couldn’t measure what’s behind this text. Pick a lighter or darker colour in the panel on the right.', 'error');
     return;
   }
+  if (pick.ratio < target && busy && (await addShade(id, ink, target))) return;
   apply(pick.color);
   toast(
     pick.ratio >= target
@@ -146,6 +151,49 @@ async function makeReadable(id: string) {
       : `Made it as readable as this colour allows (${pick.ratio.toFixed(1)}:1). A shade behind the text would help more.`,
     'info',
   );
+}
+
+/**
+ * When no single colour reads over every part of a busy background (bright and dark patches
+ * under the same word), put a soft shade behind the text and use the light text-on-photo
+ * colour. Tries the lightest shade first. Returns false if even the strongest doesn't help.
+ */
+async function addShade(id: string, ink: { x: number; y: number; w: number; h: number }, target: number): Promise<boolean> {
+  const ed = useEditor.getState();
+  const p = ed.project;
+  const found = p ? findElement(p, id) : null;
+  if (!p || !found || found.el.type !== 'text') return false;
+  const { el, surface, index } = found;
+  const packs = useAssets.getState().packs;
+  const pad = Math.min(0.4, Math.max(0.12, ink.h * 0.4));
+  const text: TextElement = { ...el, color: '@onPhoto', shadow: true };
+  let best: { scrim: ScrimElement; ratio: number } | null = null;
+  for (const strength of [0.45, 0.6, 0.75]) {
+    const scrim: ScrimElement = {
+      id: uid('el'), type: 'scrim', direction: 'radial', color: '@scrim', strength, extent: 0.55,
+      x: ink.x - 2 * pad, y: ink.y - pad, w: ink.w + 4 * pad, h: ink.h + 2 * pad, rotation: 0, opacity: 1,
+    };
+    const shaded = { ...surface, elements: [...surface.elements.slice(0, index), scrim, ...surface.elements.slice(index)] };
+    const ratio = await measureContrast(p, shaded, text, ink, packs).catch(() => undefined);
+    if (ratio === undefined) return false;
+    if (!best || ratio > best.ratio) best = { scrim, ratio };
+    if (ratio >= target) break;
+  }
+  if (!best || best.ratio < target) return false;
+  const { scrim, ratio } = best;
+  ed.edit((d) => {
+    const s = d.surfaces.find((x) => x.id === surface.id);
+    const i = s ? s.elements.findIndex((e) => e.id === id) : -1;
+    if (!s || i < 0) return;
+    s.elements.splice(i, 0, scrim);
+    const t = s.elements[i + 1];
+    if (t.type === 'text') {
+      t.color = '@onPhoto';
+      t.shadow = true;
+    }
+  }, null);
+  useUi.getState().toast(`Added a soft shade behind the text and made it light, so it reads over the whole background (${ratio.toFixed(1)}:1). Select the shade to make it lighter or remove it.`, 'info');
+  return true;
 }
 
 /** Print Guardian: traffic-light pre-flight with one-click fixes. */
