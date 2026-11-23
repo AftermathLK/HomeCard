@@ -8,7 +8,9 @@ import {
   oklchToHex,
   parseHex,
   photoContentBox,
+  orientedFill,
   placeImage,
+  unorientPoint,
   pixelAdjustments,
   resolveColor,
   rotatedBounds,
@@ -231,8 +233,10 @@ export async function measureContrast(project: CardProject, surface: Surface, te
           }
           const d = photoData.get(e.id);
           if (!d) continue;
-          const pl = placeImage(box.w, box.h, e.fill.width, e.fill.height, e.fill.crop);
-          const u = (fx - pl.left) / pl.width, v = (fy - pl.top) / pl.height;
+          const ov = orientedFill(e.fill);
+          const pl = placeImage(box.w, box.h, ov.width, ov.height, e.fill.crop);
+          // Sample the original pixels: undo the user's turn/mirror.
+          const [u, v] = unorientPoint((fx - pl.left) / pl.width, (fy - pl.top) / pl.height, e.fill);
           const px = Math.min(d.px.w - 1, Math.max(0, Math.floor(u * d.px.w)));
           const py = Math.min(d.px.h - 1, Math.max(0, Math.floor(v * d.px.h)));
           const o = (py * d.px.w + px) * 4;

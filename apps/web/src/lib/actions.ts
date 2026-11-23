@@ -4,12 +4,17 @@
 import {
   applyTemplate,
   autoFillPhotos,
+  clampCrop,
   defaultPolish,
   fillFromRecord,
   fitFill,
   getBuiltinOrnament,
+  orientedFill,
+  photoContentBox,
+  placeImage,
   placePhoto,
   refitAllPhotos,
+  turnFill,
   uid,
   type CardElement,
   type CardProject,
@@ -20,6 +25,7 @@ import {
   type PhotoRecord,
   type SurfaceId,
   type TextElement,
+  type TurnOp,
 } from '@homecard/shared';
 import { useEditor } from '@/store/editor';
 import { useUi } from '@/store/ui';
@@ -144,6 +150,67 @@ export function smartCrop(elementId: string) {
   if (!p) return;
   ed.updateElement(elementId, (el) => {
     if (el.type === 'photo' && el.fill) el.fill = fitFill(el, { ...el.fill, crop: { ...el.fill.crop, mode: 'auto' } }, p.format);
+  }, null);
+}
+
+/** Turn the photo a quarter turn or mirror it inside its frame ('reset' undoes both). */
+export function turnPhoto(elementId: string, op: TurnOp | 'reset') {
+  const ed = useEditor.getState();
+  const p = ed.project;
+  if (!p) return;
+  ed.updateElement(elementId, (el) => {
+    if (el.type === 'photo' && el.fill) el.fill = fitFill(el, turnFill(el.fill, op), p.format);
+  }, null);
+}
+
+/** Back to the plain framing: centred, zoomed all the way out (keeps any turn/mirror). */
+export function resetFraming(elementId: string) {
+  useEditor.getState().updateElement(elementId, (el) => {
+    if (el.type !== 'photo' || !el.fill) return;
+    const box = photoContentBox(el);
+    const o = orientedFill(el.fill);
+    el.fill.crop = clampCrop(box.w, box.h, o.width, o.height, { cx: 0.5, cy: 0.5, zoom: 1, mode: 'manual' });
+  }, null);
+}
+
+/** Move the photo inside its frame by a fraction of the frame (arrow keys while cropping). */
+export function panCrop(elementId: string, fx: number, fy: number) {
+  useEditor.getState().updateElement(elementId, (el) => {
+    if (el.type !== 'photo' || !el.fill) return;
+    const box = photoContentBox(el);
+    const o = orientedFill(el.fill);
+    const pl = placeImage(box.w, box.h, o.width, o.height, el.fill.crop);
+    const c = el.fill.crop;
+    el.fill.crop = clampCrop(box.w, box.h, o.width, o.height, { ...c, cx: c.cx - (fx * box.w) / pl.width, cy: c.cy - (fy * box.h) / pl.height, mode: 'manual' });
+  }, `crop:${elementId}`);
+}
+
+/**
+ * Reshape the frame to the photo's proportions so the whole picture shows uncropped.
+ * Keeps the frame's centre and roughly its area; frame styles (instant photo, mat) are allowed for.
+ */
+export function fitFrameToPhoto(elementId: string) {
+  useEditor.getState().updateElement(elementId, (el) => {
+    if (el.type !== 'photo' || !el.fill) return;
+    const o = orientedFill(el.fill);
+    const box0 = photoContentBox(el);
+    const aspect = o.width / Math.max(1, o.height);
+    const area = box0.w * box0.h;
+    const cw = Math.sqrt(area * aspect), ch = Math.sqrt(area / aspect);
+    let w = el.w, h = el.h;
+    for (let i = 0; i < 24; i++) {
+      const b = photoContentBox({ w, h, frameStyle: el.frameStyle });
+      w += cw - b.w;
+      h += ch - b.h;
+    }
+    const r3 = (v: number) => Math.round(v * 1000) / 1000;
+    const cx = el.x + el.w / 2, cy = el.y + el.h / 2;
+    el.w = r3(w);
+    el.h = r3(h);
+    el.x = r3(cx - w / 2);
+    el.y = r3(cy - h / 2);
+    const box = photoContentBox(el);
+    el.fill.crop = clampCrop(box.w, box.h, o.width, o.height, { cx: 0.5, cy: 0.5, zoom: 1, mode: 'manual' });
   }, null);
 }
 

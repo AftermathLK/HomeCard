@@ -16,7 +16,9 @@ import {
   effectiveAdjustments,
   fontStack,
   getBuiltinOrnament,
+  imageBox,
   maskPath,
+  orientedFill,
   parsePackAssetRef,
   photoContentBox,
   pixelAdjustments,
@@ -226,7 +228,10 @@ function PhotoView({ el, project }: { el: PhotoElement; project: CardProject }) 
   const theme = project.theme;
   const box = photoContentBox(el);
   const fill = el.fill;
-  const place = fill ? placeImage(box.w, box.h, fill.width, fill.height, fill.crop) : null;
+  const oriented = fill ? orientedFill(fill) : null;
+  const place = fill && oriented ? placeImage(box.w, box.h, oriented.width, oriented.height, fill.crop) : null;
+  // The <img> keeps the photo's own axes; a CSS turn/mirror lays it over `place`.
+  const ib = fill && place ? imageBox(place, fill) : null;
   const compare = !!env.compareIds?.has(el.id);
   const editorSrc = useEditorPhotoSrc(env.mode === 'editor' ? fill : null, compare);
   const eff = fill ? effectiveAdjustments(fill.polish) : null;
@@ -237,7 +242,7 @@ function PhotoView({ el, project }: { el: PhotoElement; project: CardProject }) 
     if (env.mode === 'editor') src = editorSrc;
     else {
       const adj = pixelAdjustments(eff!);
-      requestPx = Math.ceil(place.width * env.dpi);
+      requestPx = Math.ceil(ib!.width * env.dpi);
       if (env.mode === 'print') src = printUrl(fill.ref, requestPx, adj);
       else src = Object.keys(adj).length ? printUrl(fill.ref, Math.min(1400, Math.max(400, requestPx)), adj) : previewUrl(fill.ref);
     }
@@ -268,7 +273,7 @@ function PhotoView({ el, project }: { el: PhotoElement; project: CardProject }) 
         <div style={{ position: 'absolute', inset: 0, border: `${IN(0.006)} solid rgba(0,0,0,0.12)` }} />
       )}
       <div style={{ ...contentPos, overflow: 'hidden', ...mask.style, background: fill ? undefined : 'transparent' }}>
-        {fill && place && src ? (
+        {fill && ib && src ? (
           <img
             src={src}
             alt=""
@@ -276,14 +281,15 @@ function PhotoView({ el, project }: { el: PhotoElement; project: CardProject }) 
             data-hc-photo={el.id}
             data-ref={fill.ref}
             data-req={requestPx || undefined}
-            data-win={place.width}
+            data-win={ib.width}
             decoding={env.mode === 'editor' ? 'async' : 'sync'}
             style={{
               position: 'absolute',
-              left: IN(place.left),
-              top: IN(place.top),
-              width: IN(place.width),
-              height: IN(place.height),
+              left: IN(ib.left),
+              top: IN(ib.top),
+              width: IN(ib.width),
+              height: IN(ib.height),
+              transform: ib.transform,
               maxWidth: 'none',
               maxHeight: 'none',
               display: 'block',

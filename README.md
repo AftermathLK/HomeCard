@@ -17,7 +17,7 @@ as they are: real 300 DPI, bleed and safe zones, vector text in the PDF, sRGB or
 * **Clean files.** Exports carry no EXIF, GPS or camera data, so your home location never
   reaches a print shop.
 
-Version 0.13.0 · [MIT licence](LICENSE) · works on any Docker host, with a ready-made script for
+Version 0.13.1 · [MIT licence](LICENSE) · works on any Docker host, with a ready-made script for
 Unraid.
 
 ---
@@ -95,6 +95,8 @@ More detail: [docs/SECURITY.md](docs/SECURITY.md) (security model and how to che
 * **Upload** from your computer or phone. Uploads are private to you.
 * **Face-aware smart crop**, using Immich's face boxes or in-browser face detection (the model is
   bundled; nothing is uploaded). Heads stay clear of the fold, the trim and the text.
+* **Turn, mirror and flip** a placed photo inside its frame, nudge the crop with the arrow keys,
+  reset the framing, or reshape the frame to the photo so nothing is cropped.
 * **Auto-Enhance**, 6 film-style filters and 11 sliders. The same maths runs on the
   full-resolution original at export, so the print matches the screen.
 

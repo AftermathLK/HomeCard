@@ -112,6 +112,13 @@ export interface PhotoFill {
   faces?: FaceBox[];
   /** Saliency focal point (normalized), used when no faces. */
   focus?: { x: number; y: number };
+  /**
+   * The user's turn of the photo inside its frame, clockwise in quarter turns. Applied after
+   * `flipX`. `crop` (and faces/focus, via `orientedFill`) live in this turned space.
+   */
+  rotate?: 0 | 90 | 180 | 270;
+  /** Mirror the photo left-to-right (applied before `rotate`). */
+  flipX?: boolean;
   crop: CropState;
   polish: PhotoPolish;
 }

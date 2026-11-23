@@ -3,6 +3,7 @@ import { AlertOctagon, AlertTriangle, CheckCircle2, Info, ShieldCheck } from 'lu
 import {
   clampCrop,
   isLargeText,
+  orientedFill,
   photoContentBox,
   SURFACE_INFO,
   uid,
@@ -64,7 +65,8 @@ export function applyFix(issue: GuardianIssue) {
       ed.updateElement(found.el.id, (el) => {
         if (el.type !== 'photo' || !el.fill) return;
         const box = photoContentBox(el);
-        el.fill.crop = clampCrop(box.w, box.h, el.fill.width, el.fill.height, { ...el.fill.crop, zoom: 1, mode: 'manual' });
+        const o = orientedFill(el.fill);
+        el.fill.crop = clampCrop(box.w, box.h, o.width, o.height, { ...el.fill.crop, zoom: 1, mode: 'manual' });
       }, null);
       useUi.getState().toast('Zoomed all the way out — if it’s still soft, make the frame smaller or use a larger original.', 'info');
       return;

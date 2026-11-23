@@ -2,7 +2,7 @@
  * Print Guardian — pre-flight rules that catch bad prints before they happen.
  * Pure function: the editor supplies DOM measurements (text ink bounds, overflow, contrast samples).
  */
-import { effectiveDpi, facesOnCard, significantFaces } from './crop';
+import { effectiveDpi, facesOnCard, orientedFill, significantFaces } from './crop';
 import { SURFACE_INFO, safeRect, trimRect, type RectIn } from './formats';
 import { photoContentBox } from './geometry';
 import { PLACEHOLDER_FAMILY, PLACEHOLDER_PATTERNS } from './holidays';
@@ -91,7 +91,8 @@ export function isLargeText(el: TextElement) {
 export function photoDpi(el: PhotoElement): number | null {
   if (!el.fill) return null;
   const box = photoContentBox(el);
-  return effectiveDpi(box.w, box.h, el.fill.width, el.fill.height, el.fill.crop.zoom);
+  const o = orientedFill(el.fill);
+  return effectiveDpi(box.w, box.h, o.width, o.height, el.fill.crop.zoom);
 }
 
 /** Below this a raster background (stock photo or texture) gets a Print Guardian note. */
@@ -177,10 +178,11 @@ export function runGuardian(project: CardProject, input: GuardianInput): Guardia
           });
 
         // Faces
-        const faces = significantFaces(el.fill.faces, el.fill.width, el.fill.height);
+        const ov = orientedFill(el.fill);
+        const faces = significantFaces(ov.faces, ov.width, ov.height);
         if (faces.length && !el.rotation) {
           const frame = { x: el.x + box.x, y: el.y + box.y, w: box.w, h: box.h };
-          const onCard = facesOnCard(frame, el.fill.width, el.fill.height, el.fill.crop, faces);
+          const onCard = facesOnCard(frame, ov.width, ov.height, el.fill.crop, faces);
           let worst: Severity = 'ok';
           let reason = '';
           for (const fc of onCard) {

@@ -10,10 +10,16 @@ import {
   ArrowUpToLine,
   Crop,
   FlipHorizontal2,
+  FlipVertical2,
   FoldVertical,
   ImagePlus,
+  LocateFixed,
+  Proportions,
+  RotateCcw,
+  RotateCw,
   ShieldCheck,
   Trash2,
+  Undo2,
   Wand2,
 } from 'lucide-react';
 import {
@@ -36,7 +42,7 @@ import {
   type ThemeColors,
 } from '@homecard/shared';
 import { ColorField, Section, Segmented, Slider, Toggle } from '@/components/ui';
-import { alignToCard, clearFrame, deleteElements, moveInsideSafe, smartCrop } from '@/lib/actions';
+import { alignToCard, clearFrame, deleteElements, fitFrameToPhoto, moveInsideSafe, resetFraming, smartCrop, turnPhoto } from '@/lib/actions';
 import { useAssets } from '@/lib/assets';
 import { useEditor, useProject, useSelected } from '@/store/editor';
 import { useUi } from '@/store/ui';
@@ -302,6 +308,36 @@ function PhotoProps({ el, upd }: { el: PhotoElement; upd: Upd }) {
                 Empty frame
               </button>
             </div>
+            <div className="label mt-3">Turn &amp; flip</div>
+            <div className="flex flex-wrap items-center gap-1">
+              <button className="btn btn-sm" title="Turn the photo left 90°" onClick={() => turnPhoto(el.id, 'ccw')}>
+                <RotateCcw size={13} /> Left
+              </button>
+              <button className="btn btn-sm" title="Turn the photo right 90°" onClick={() => turnPhoto(el.id, 'cw')}>
+                <RotateCw size={13} /> Right
+              </button>
+              <button className="btn btn-sm" title="Flip horizontally (mirror)" onClick={() => turnPhoto(el.id, 'flipH')}>
+                <FlipHorizontal2 size={13} /> Mirror
+              </button>
+              <button className="btn btn-sm" title="Flip vertically (upside down)" onClick={() => turnPhoto(el.id, 'flipV')}>
+                <FlipVertical2 size={13} /> Flip
+              </button>
+              {(!!el.fill.rotate || !!el.fill.flipX) && (
+                <button className="btn btn-sm btn-ghost" title="Undo turn and flip" onClick={() => turnPhoto(el.id, 'reset')}>
+                  <Undo2 size={13} /> Original
+                </button>
+              )}
+            </div>
+            <div className="label mt-3">Fit</div>
+            <div className="flex flex-wrap gap-1">
+              <button className="btn btn-sm" title="Centre the photo and zoom all the way out" onClick={() => resetFraming(el.id)}>
+                <LocateFixed size={13} /> Reset framing
+              </button>
+              <button className="btn btn-sm" title="Reshape the frame to the photo’s proportions so nothing is cropped" onClick={() => fitFrameToPhoto(el.id)}>
+                <Proportions size={13} /> Fit frame to photo
+              </button>
+            </div>
+            <p className="mt-1.5 text-[11px] leading-snug text-ink-3">To tilt the whole frame, drag its round handle or set Rotate below.</p>
             <button className="mt-2 text-xs font-medium text-brand hover:underline" onClick={() => useUi.getState().set(useUi.getState().mode === 'studio' ? { tab: 'polish' } : { step: 3 })}>
               Polish this photo →
             </button>

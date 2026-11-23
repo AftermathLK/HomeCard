@@ -3,7 +3,9 @@ import clsx from 'clsx';
 import {
   clampCrop,
   effectiveDpi,
+  imageBox,
   MAX_ZOOM,
+  orientedFill,
   photoContentBox,
   placeImage,
   resolveTokens,
@@ -13,8 +15,8 @@ import {
   type PhotoRecord,
   type TextElement,
 } from '@homecard/shared';
-import { Check, Copy, Crop, Eye, ImagePlus, Lock, MoveDown, MoveUp, Pencil, ScanFace, Trash2, Unlock } from 'lucide-react';
-import { addPhotoFrame, deleteElements, duplicateElements, nudge, placeIntoFrame, reorder, resolvePhotos, smartCrop, swapPhotos } from '@/lib/actions';
+import { Check, Copy, Crop, Eye, FlipHorizontal2, FlipVertical2, ImagePlus, Lock, MoveDown, MoveUp, Pencil, RotateCcw, RotateCw, ScanFace, Trash2, Undo2, Unlock } from 'lucide-react';
+import { addPhotoFrame, deleteElements, duplicateElements, nudge, panCrop, placeIntoFrame, reorder, resetFraming, resolvePhotos, smartCrop, swapPhotos, turnPhoto } from '@/lib/actions';
 import { upload } from '@/lib/api';
 import { useAssets } from '@/lib/assets';
 import { previewUrl } from '@/lib/image';
@@ -278,7 +280,8 @@ export function Canvas() {
         d.h = round3(r.h);
         if (d.type === 'photo' && d.fill) {
           const box = photoContentBox(d);
-          d.fill.crop = { ...clampCrop(box.w, box.h, d.fill.width, d.fill.height, d.fill.crop) };
+          const o = orientedFill(d.fill);
+          d.fill.crop = { ...clampCrop(box.w, box.h, o.width, o.height, d.fill.crop) };
         }
       }, `resize:${g.id}`);
       return;
@@ -302,8 +305,9 @@ export function Canvas() {
       const lx = dX * Math.cos(th) + dY * Math.sin(th);
       const ly = -dX * Math.sin(th) + dY * Math.cos(th);
       const box = photoContentBox(el);
-      const pl = placeImage(box.w, box.h, fill.width, fill.height, fill.crop);
-      const next = clampCrop(box.w, box.h, fill.width, fill.height, { ...fill.crop, cx: g.start.cx - lx / pl.width, cy: g.start.cy - ly / pl.height, mode: 'manual' });
+      const o = orientedFill(fill);
+      const pl = placeImage(box.w, box.h, o.width, o.height, fill.crop);
+      const next = clampCrop(box.w, box.h, o.width, o.height, { ...fill.crop, cx: g.start.cx - lx / pl.width, cy: g.start.cy - ly / pl.height, mode: 'manual' });
       ed.updateElement(g.id, (d) => {
         if (d.type === 'photo' && d.fill) d.fill.crop = next;
       }, `crop:${g.id}`);
@@ -345,9 +349,10 @@ export function Canvas() {
       const el = found.el;
       const fill = el.fill!;
       const box = photoContentBox(el);
+      const o = orientedFill(fill);
       const zoom = Math.min(MAX_ZOOM, Math.max(1, fill.crop.zoom * Math.exp(-e.deltaY * 0.0015)));
       useEditor.getState().updateElement(el.id, (d) => {
-        if (d.type === 'photo' && d.fill) d.fill.crop = clampCrop(box.w, box.h, fill.width, fill.height, { ...fill.crop, zoom, mode: 'manual' });
+        if (d.type === 'photo' && d.fill) d.fill.crop = clampCrop(box.w, box.h, o.width, o.height, { ...fill.crop, zoom, mode: 'manual' });
       }, `crop:${el.id}`);
       return;
     }
@@ -467,6 +472,14 @@ export function Canvas() {
         if (ui.cropId) ui.set({ cropId: null });
         else if (ui.editingTextId) ui.set({ editingTextId: null });
         else ed.select(null);
+        return;
+      }
+      const cropArrow = ({ ArrowLeft: [-1, 0], ArrowRight: [1, 0], ArrowUp: [0, -1], ArrowDown: [0, 1] } as Record<string, [number, number]>)[e.key];
+      if (ui.cropId && cropArrow) {
+        // While cropping, arrows move the photo inside its frame (Shift = bigger steps).
+        e.preventDefault();
+        const s = e.shiftKey ? 0.1 : 0.02;
+        panCrop(ui.cropId, cropArrow[0] * s, cropArrow[1] * s);
         return;
       }
       if (!sel.length) return;
@@ -668,8 +681,11 @@ export function Canvas() {
 function CropOverlay({ el, style, k }: { el: PhotoElement; style: CSSProperties; k: number }) {
   const fill = el.fill!;
   const box = photoContentBox(el);
-  const pl = placeImage(box.w, box.h, fill.width, fill.height, fill.crop);
-  const dpi = effectiveDpi(box.w, box.h, fill.width, fill.height, fill.crop.zoom);
+  const o = orientedFill(fill);
+  const pl = placeImage(box.w, box.h, o.width, o.height, fill.crop);
+  const ib = imageBox(pl, fill);
+  const dpi = effectiveDpi(box.w, box.h, o.width, o.height, fill.crop.zoom);
+  const turned = !!fill.rotate || !!fill.flipX;
   return (
     <div style={{ ...style, pointerEvents: 'none' }}>
       <div data-crop-surface style={{ position: 'absolute', left: box.x * k, top: box.y * k, width: box.w * k, height: box.h * k, pointerEvents: 'auto', cursor: 'move' }}>
@@ -677,7 +693,7 @@ function CropOverlay({ el, style, k }: { el: PhotoElement; style: CSSProperties;
           src={previewUrl(fill.ref)}
           alt=""
           draggable={false}
-          style={{ position: 'absolute', left: pl.left * k, top: pl.top * k, width: pl.width * k, height: pl.height * k, maxWidth: 'none', opacity: 0.38, pointerEvents: 'none' }}
+          style={{ position: 'absolute', left: ib.left * k, top: ib.top * k, width: ib.width * k, height: ib.height * k, transform: ib.transform, maxWidth: 'none', opacity: 0.38, pointerEvents: 'none' }}
         />
         <div style={{ position: 'absolute', inset: 0, outline: '2px solid #fff', boxShadow: '0 0 0 1px rgba(0,0,0,.4)' }} />
         {/* rule of thirds */}
@@ -688,7 +704,7 @@ function CropOverlay({ el, style, k }: { el: PhotoElement; style: CSSProperties;
               <line y1={`${(i * 100) / 3}%`} y2={`${(i * 100) / 3}%`} x1="0" x2="100%" />
             </g>
           ))}
-          {(fill.faces ?? []).map((fc, i) => (
+          {(o.faces ?? []).map((fc, i) => (
             <rect
               key={i}
               x={(pl.left + fc.x * pl.width) * k}
@@ -721,13 +737,35 @@ function CropOverlay({ el, style, k }: { el: PhotoElement; style: CSSProperties;
           onChange={(e) => {
             const zoom = Math.pow(MAX_ZOOM, Number(e.target.value));
             useEditor.getState().updateElement(el.id, (d) => {
-              if (d.type === 'photo' && d.fill) d.fill.crop = clampCrop(box.w, box.h, fill.width, fill.height, { ...d.fill.crop, zoom, mode: 'manual' });
+              if (d.type === 'photo' && d.fill) d.fill.crop = clampCrop(box.w, box.h, o.width, o.height, { ...d.fill.crop, zoom, mode: 'manual' });
             }, `crop:${el.id}`);
           }}
         />
         <span className={clsx('rounded px-1.5 py-0.5 text-[11px] font-semibold', dpi >= 250 ? 'bg-ok-soft text-ok' : dpi >= 180 ? 'bg-warn-soft text-warn' : 'bg-bad-soft text-bad')}>
           {Math.round(dpi)} DPI
         </span>
+        <div className="h-5 w-px bg-line" />
+        <button className="icon-btn" title="Turn left 90°" onClick={() => turnPhoto(el.id, 'ccw')}>
+          <RotateCcw size={15} />
+        </button>
+        <button className="icon-btn" title="Turn right 90°" onClick={() => turnPhoto(el.id, 'cw')}>
+          <RotateCw size={15} />
+        </button>
+        <button className="icon-btn" title="Flip horizontally (mirror)" onClick={() => turnPhoto(el.id, 'flipH')}>
+          <FlipHorizontal2 size={15} />
+        </button>
+        <button className="icon-btn" title="Flip vertically" onClick={() => turnPhoto(el.id, 'flipV')}>
+          <FlipVertical2 size={15} />
+        </button>
+        {turned && (
+          <button className="icon-btn" title="Undo turn and flip" onClick={() => turnPhoto(el.id, 'reset')}>
+            <Undo2 size={15} />
+          </button>
+        )}
+        <div className="h-5 w-px bg-line" />
+        <button className="btn btn-sm" onClick={() => resetFraming(el.id)} title="Centre the photo and zoom all the way out">
+          Reset
+        </button>
         <button className="btn btn-sm" onClick={() => smartCrop(el.id)} title="Face-aware automatic framing">
           <ScanFace size={14} /> Smart crop
         </button>
@@ -815,9 +853,17 @@ function FloatingToolbar({ el, anchor, cropping }: { el: CardElement; anchor: { 
             <ImagePlus size={16} />
           </button>
           {el.fill && (
-            <button className="icon-btn" title="Crop & position (double-click)" onClick={() => ui.set({ cropId: el.id })}>
-              <Crop size={16} />
-            </button>
+            <>
+              <button className="icon-btn" title="Crop & position (double-click)" onClick={() => ui.set({ cropId: el.id })}>
+                <Crop size={16} />
+              </button>
+              <button className="icon-btn" title="Turn photo right 90°" onClick={() => turnPhoto(el.id, 'cw')}>
+                <RotateCw size={16} />
+              </button>
+              <button className="icon-btn" title="Flip photo horizontally (mirror)" onClick={() => turnPhoto(el.id, 'flipH')}>
+                <FlipHorizontal2 size={16} />
+              </button>
+            </>
           )}
           {hasPolish && (
             <button

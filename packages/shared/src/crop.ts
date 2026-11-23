@@ -5,7 +5,7 @@
  * centre, and zoom relative to "cover". Because it never stores pixels, swapping a 1600px
  * preview for a 50MP original produces exactly the same framing.
  */
-import type { CropState, FaceBox } from './types';
+import type { CropState, FaceBox, PhotoFill } from './types';
 
 export interface Placement {
   /** Inches relative to the frame's top-left. */
@@ -16,6 +16,120 @@ export interface Placement {
 }
 
 export const MAX_ZOOM = 8;
+
+/* ---------------- Turn & mirror ---------------- */
+
+export type QuarterTurn = 0 | 90 | 180 | 270;
+/** How the user turned a photo inside its frame: mirror left-right first, then turn clockwise. */
+export interface FillOrientation {
+  rotate?: QuarterTurn;
+  flipX?: boolean;
+}
+export type TurnOp = 'cw' | 'ccw' | 'flipH' | 'flipV';
+
+const quarter = (deg: number) => ((((Math.round(deg / 90) * 90) % 360) + 360) % 360) as QuarterTurn;
+const turnOf = (o: FillOrientation) => quarter(o.rotate ?? 0);
+
+export function isTurned(o: FillOrientation) {
+  return turnOf(o) !== 0 || !!o.flipX;
+}
+
+/** A normalized point of the original photo → where it shows after the mirror + turn. */
+export function orientPoint(x: number, y: number, o: FillOrientation): [number, number] {
+  const u = o.flipX ? 1 - x : x;
+  switch (turnOf(o)) {
+    case 90: return [1 - y, u];
+    case 180: return [1 - u, 1 - y];
+    case 270: return [y, 1 - u];
+    default: return [u, y];
+  }
+}
+
+/** Inverse of `orientPoint`: a point of the turned photo → the original photo. */
+export function unorientPoint(x: number, y: number, o: FillOrientation): [number, number] {
+  let u: number, v: number;
+  switch (turnOf(o)) {
+    case 90: u = y; v = 1 - x; break;
+    case 180: u = 1 - x; v = 1 - y; break;
+    case 270: u = 1 - y; v = x; break;
+    default: u = x; v = y;
+  }
+  return [o.flipX ? 1 - u : u, v];
+}
+
+function orientFace(f: FaceBox, o: FillOrientation): FaceBox {
+  const [ax, ay] = orientPoint(f.x, f.y, o);
+  const [bx, by] = orientPoint(f.x + f.w, f.y + f.h, o);
+  return { ...f, x: Math.min(ax, bx), y: Math.min(ay, by), w: Math.abs(bx - ax), h: Math.abs(by - ay) };
+}
+
+/**
+ * The photo as it appears in the frame after the user's turn/mirror: pixel size and
+ * faces/focus in turned space. All crop math (placeImage, smartCrop, DPI) uses this.
+ */
+export function orientedFill(fill: Pick<PhotoFill, 'width' | 'height' | 'faces' | 'focus' | 'rotate' | 'flipX'>): {
+  width: number;
+  height: number;
+  faces?: FaceBox[];
+  focus?: { x: number; y: number };
+} {
+  if (!isTurned(fill)) return fill;
+  const side = turnOf(fill) % 180 !== 0;
+  const focus = fill.focus ? orientPoint(fill.focus.x, fill.focus.y, fill) : null;
+  return {
+    width: side ? fill.height : fill.width,
+    height: side ? fill.width : fill.height,
+    faces: fill.faces?.map((f) => orientFace(f, fill)),
+    focus: focus ? { x: focus[0], y: focus[1] } : undefined,
+  };
+}
+
+/** The orientation after one more user step, expressed in the canonical mirror-then-turn form. */
+export function turnOrientation(o: FillOrientation, op: TurnOp): { rotate: QuarterTurn; flipX: boolean } {
+  const r = turnOf(o), f = !!o.flipX;
+  switch (op) {
+    case 'cw': return { rotate: quarter(r + 90), flipX: f };
+    case 'ccw': return { rotate: quarter(r - 90), flipX: f };
+    case 'flipH': return { rotate: quarter(-r), flipX: !f };
+    case 'flipV': return { rotate: quarter(180 - r), flipX: !f };
+  }
+}
+
+/**
+ * Turn or mirror a fill, keeping the same part of the photo at the frame centre. The crop is
+ * not re-clamped here: run the result through `fitFill` (or `clampCrop`) for its frame.
+ */
+export function turnFill<T extends PhotoFill>(fill: T, op: TurnOp | 'reset'): T {
+  const next = op === 'reset' ? { rotate: 0 as QuarterTurn, flipX: false } : turnOrientation(fill, op);
+  const [ox, oy] = unorientPoint(fill.crop.cx, fill.crop.cy, fill);
+  const [cx, cy] = orientPoint(ox, oy, next);
+  const out: T = { ...fill, crop: { ...fill.crop, cx, cy } };
+  if (next.rotate) out.rotate = next.rotate;
+  else delete out.rotate;
+  if (next.flipX) out.flipX = true;
+  else delete out.flipX;
+  return out;
+}
+
+/**
+ * Where to draw the un-turned image so that, with `transform` (about its centre), it covers
+ * `place` (the placement computed from `orientedFill`). Width is along the image's own x axis,
+ * so `width × dpi` is the pixel width to request for print.
+ */
+export function imageBox(place: Placement, o: FillOrientation): Placement & { transform?: string } {
+  const t = turnOf(o);
+  const side = t % 180 !== 0;
+  const width = side ? place.height : place.width;
+  const height = side ? place.width : place.height;
+  const parts = [t ? `rotate(${t}deg)` : '', o.flipX ? 'scaleX(-1)' : ''].filter(Boolean);
+  return {
+    left: place.left + (place.width - width) / 2,
+    top: place.top + (place.height - height) / 2,
+    width,
+    height,
+    transform: parts.length ? parts.join(' ') : undefined,
+  };
+}
 
 export function coverScale(frameW: number, frameH: number, imgW: number, imgH: number) {
   return Math.max(frameW / Math.max(1, imgW), frameH / Math.max(1, imgH));

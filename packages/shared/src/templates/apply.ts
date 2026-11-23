@@ -1,5 +1,5 @@
 import { contrastRatio, mixHex, resolveColor } from '../color';
-import { clampCrop, smartCrop } from '../crop';
+import { clampCrop, orientedFill, smartCrop } from '../crop';
 import { orientationOf } from '../formats';
 import { photoContentBox, photoSafeInsets } from '../geometry';
 import { getOccasion, SIGNOFFS, type Occasion } from '../holidays';
@@ -184,16 +184,17 @@ export function fillFromRecord(rec: PhotoRecord): PhotoFill {
 /** (Re)compute crop for a fill placed in an element — smart crop for auto, clamp for manual. */
 export function fitFill(el: Pick<PhotoElement, 'x' | 'y' | 'w' | 'h' | 'frameStyle' | 'rotation' | 'focusArea'> & Partial<PhotoElement>, fill: PhotoFill, format: CardFormat): PhotoFill {
   const box = photoContentBox(el as PhotoElement);
+  const o = orientedFill(fill);
   if (fill.crop.mode === 'manual') {
-    return { ...fill, crop: clampCrop(box.w, box.h, fill.width, fill.height, fill.crop) };
+    return { ...fill, crop: clampCrop(box.w, box.h, o.width, o.height, fill.crop) };
   }
   const r = smartCrop({
     frameW: box.w,
     frameH: box.h,
-    imgW: fill.width,
-    imgH: fill.height,
-    faces: fill.faces,
-    focus: fill.focus,
+    imgW: o.width,
+    imgH: o.height,
+    faces: o.faces,
+    focus: o.focus,
     focusArea: el.focusArea ?? null,
     insets: photoSafeInsets({ ...(el as PhotoElement), type: 'photo' } as PhotoElement, format),
     minDpi: 280,
