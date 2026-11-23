@@ -112,6 +112,13 @@ const MIGRATIONS: string[] = [
     created_at  INTEGER NOT NULL
   );
   `,
+  /* 2: per-user holiday preferences (home banner, lookahead, hidden occasions, own Immich tag names) */ `
+  CREATE TABLE user_holiday_prefs (
+    user_id     TEXT PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE,
+    prefs       TEXT NOT NULL DEFAULT '{}',
+    updated_at  INTEGER NOT NULL
+  );
+  `,
 ];
 
 function migrate(d: DatabaseSync) {

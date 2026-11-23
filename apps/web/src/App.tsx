@@ -7,6 +7,7 @@ import { useAssets } from '@/lib/assets';
 import { PhotoPicker } from '@/picker/PhotoPicker';
 import { SettingsModal } from '@/settings/SettingsModal';
 import { useEditor } from '@/store/editor';
+import { useHolidays } from '@/store/holidays';
 import { useSession } from '@/store/session';
 import { useUi } from '@/store/ui';
 
@@ -20,7 +21,9 @@ export function App() {
       .getState()
       .load()
       .then((u) => {
-        if (u && !u.mustChangePassword) return useAssets.getState().init();
+        if (!u || u.mustChangePassword) return;
+        void useHolidays.getState().load();
+        return useAssets.getState().init();
       })
       .catch((err) => useUi.getState().toast(`Couldn’t reach the HomeCard server: ${err.message}`, 'error'));
   }, []);

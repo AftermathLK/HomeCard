@@ -1,0 +1,636 @@
+{
+  "$schema": "../style-pack.schema.json",
+  "id": "autumn-harvest",
+  "name": "Autumn & Thanksgiving",
+  "version": "1.0.0",
+  "author": "HomeCard contributors",
+  "license": "CC0-1.0",
+  "description": "Maple leaves, orchards, harvest tables, pumpkins, sunflowers and warm woodgrain.",
+  "occasions": [
+    "thanksgiving",
+    "thank-you",
+    "new-home"
+  ],
+  "palettes": [
+    {
+      "id": "autumn-maple-maple-cream",
+      "name": "Maple Cream",
+      "colors": {
+        "background": "#faf3e8",
+        "text": "#332117",
+        "accent": "#bd4a28",
+        "accent2": "#cc8c29"
+      }
+    },
+    {
+      "id": "autumn-maple-sienna-dusk",
+      "name": "Sienna Dusk",
+      "colors": {
+        "background": "#3d1e16",
+        "text": "#faf1e4",
+        "accent": "#e38c42",
+        "accent2": "#d9b252"
+      }
+    },
+    {
+      "id": "autumn-maple-cider-ochre",
+      "name": "Cider Ochre",
+      "colors": {
+        "background": "#f5ebd8",
+        "text": "#2e2218",
+        "accent": "#a83e22",
+        "accent2": "#596e45"
+      }
+    },
+    {
+      "id": "apple-orchard-cider-kraft",
+      "name": "Cider Kraft",
+      "colors": {
+        "background": "#f6efe2",
+        "text": "#2b211a",
+        "accent": "#b02b2b",
+        "accent2": "#4f6e44"
+      }
+    },
+    {
+      "id": "apple-orchard-orchard-check",
+      "name": "Orchard Check",
+      "colors": {
+        "background": "#faf6ee",
+        "text": "#2e201b",
+        "accent": "#bd3330",
+        "accent2": "#c98b32"
+      }
+    },
+    {
+      "id": "apple-orchard-barnwood-red",
+      "name": "Barnwood Red",
+      "colors": {
+        "background": "#5c1b1d",
+        "text": "#faf2e6",
+        "accent": "#e6b865",
+        "accent2": "#94ab84"
+      }
+    },
+    {
+      "id": "amber-woodgrain-warm-walnut",
+      "name": "Warm Walnut",
+      "colors": {
+        "background": "#f2e8da",
+        "text": "#2b2017",
+        "accent": "#9e532b",
+        "accent2": "#5c704d"
+      }
+    },
+    {
+      "id": "amber-woodgrain-deep-timber",
+      "name": "Deep Timber",
+      "colors": {
+        "background": "#2c1e16",
+        "text": "#f5ede0",
+        "accent": "#d49454",
+        "accent2": "#9cb089"
+      }
+    },
+    {
+      "id": "amber-woodgrain-golden-birch",
+      "name": "Golden Birch",
+      "colors": {
+        "background": "#f7f1e6",
+        "text": "#2e241b",
+        "accent": "#bd7c35",
+        "accent2": "#6e5642"
+      }
+    },
+    {
+      "id": "harvest-table-harvest-linen",
+      "name": "Harvest Linen",
+      "colors": {
+        "background": "#f5efe3",
+        "text": "#2d2820",
+        "accent": "#6c7a4e",
+        "accent2": "#b56938"
+      }
+    },
+    {
+      "id": "harvest-table-olive-grove",
+      "name": "Olive Grove",
+      "colors": {
+        "background": "#273022",
+        "text": "#f5efe2",
+        "accent": "#d6a456",
+        "accent2": "#9eb07d"
+      }
+    },
+    {
+      "id": "harvest-table-warm-taupe",
+      "name": "Warm Taupe",
+      "colors": {
+        "background": "#ede5d8",
+        "text": "#2e251e",
+        "accent": "#9c5533",
+        "accent2": "#68784e"
+      }
+    },
+    {
+      "id": "pumpkin-patch-heirloom-sage",
+      "name": "Heirloom Sage",
+      "colors": {
+        "background": "#f5f1e9",
+        "text": "#2c2b26",
+        "accent": "#c46235",
+        "accent2": "#6e8772"
+      }
+    },
+    {
+      "id": "pumpkin-patch-oatmeal-spice",
+      "name": "Oatmeal Spice",
+      "colors": {
+        "background": "#efe7db",
+        "text": "#33251c",
+        "accent": "#b85428",
+        "accent2": "#809479"
+      }
+    },
+    {
+      "id": "pumpkin-patch-autumn-night",
+      "name": "Autumn Night",
+      "colors": {
+        "background": "#242b26",
+        "text": "#f5efe6",
+        "accent": "#df824e",
+        "accent2": "#9cb59e"
+      }
+    },
+    {
+      "id": "thanksgiving-gratitude-espresso-copper",
+      "name": "Espresso Copper",
+      "colors": {
+        "background": "#291c15",
+        "text": "#f7efe2",
+        "accent": "#d68d54",
+        "accent2": "#9ca87b"
+      }
+    },
+    {
+      "id": "thanksgiving-gratitude-parchment-feast",
+      "name": "Parchment Feast",
+      "colors": {
+        "background": "#f7f0e2",
+        "text": "#2c1e16",
+        "accent": "#a8562a",
+        "accent2": "#586e48"
+      }
+    },
+    {
+      "id": "thanksgiving-gratitude-spiced-plum",
+      "name": "Spiced Plum",
+      "colors": {
+        "background": "#381e24",
+        "text": "#f8efe6",
+        "accent": "#d9945b",
+        "accent2": "#c9a66b"
+      }
+    },
+    {
+      "id": "cozy-acorn-nutmeg-forest",
+      "name": "Nutmeg Forest",
+      "colors": {
+        "background": "#f5efe6",
+        "text": "#2c241d",
+        "accent": "#7a5136",
+        "accent2": "#4c6b4a"
+      }
+    },
+    {
+      "id": "cozy-acorn-mossy-hollow",
+      "name": "Mossy Hollow",
+      "colors": {
+        "background": "#243326",
+        "text": "#f4efe4",
+        "accent": "#cfa063",
+        "accent2": "#98b392"
+      }
+    },
+    {
+      "id": "cozy-acorn-acorn-cream",
+      "name": "Acorn Cream",
+      "colors": {
+        "background": "#f8f3eb",
+        "text": "#30261e",
+        "accent": "#945f39",
+        "accent2": "#69825c"
+      }
+    },
+    {
+      "id": "cozy-doorstep-welcome-kraft",
+      "name": "Welcome Kraft",
+      "colors": {
+        "background": "#f5ede0",
+        "text": "#2d2219",
+        "accent": "#9e3b2e",
+        "accent2": "#3d664c"
+      }
+    },
+    {
+      "id": "cozy-doorstep-spruce-door",
+      "name": "Spruce Door",
+      "colors": {
+        "background": "#1e382c",
+        "text": "#f6f0e4",
+        "accent": "#d9a55b",
+        "accent2": "#c45a47"
+      }
+    },
+    {
+      "id": "cozy-doorstep-warm-brick",
+      "name": "Warm Brick",
+      "colors": {
+        "background": "#f7f1ea",
+        "text": "#2e201b",
+        "accent": "#a84434",
+        "accent2": "#5c7559"
+      }
+    },
+    {
+      "id": "sunflower-field-honey-meadow",
+      "name": "Honey Meadow",
+      "colors": {
+        "background": "#fcf7e8",
+        "text": "#302618",
+        "accent": "#d99a1e",
+        "accent2": "#567346"
+      }
+    },
+    {
+      "id": "sunflower-field-sunlit-moss",
+      "name": "Sunlit Moss",
+      "colors": {
+        "background": "#f4f5eb",
+        "text": "#293020",
+        "accent": "#cc8e1c",
+        "accent2": "#6b4728"
+      }
+    },
+    {
+      "id": "sunflower-field-warm-ochre",
+      "name": "Warm Ochre",
+      "colors": {
+        "background": "#3b2c1a",
+        "text": "#fcf5e6",
+        "accent": "#f0ba42",
+        "accent2": "#99b37c"
+      }
+    }
+  ],
+  "backgrounds": [
+    {
+      "id": "autumn-leaf-wash",
+      "name": "Autumn leaf wash",
+      "file": "textures/autumn-leaf-wash.jpg",
+      "mode": "cover",
+      "kind": "image",
+      "tone": "light"
+    },
+    {
+      "id": "harvest-paper",
+      "name": "Harvest paper",
+      "file": "textures/harvest-paper.jpg",
+      "mode": "tile",
+      "kind": "image",
+      "tileSizeIn": 1.71,
+      "tone": "light"
+    },
+    {
+      "id": "orchard-gingham",
+      "name": "Orchard gingham",
+      "file": "textures/orchard-gingham.jpg",
+      "mode": "tile",
+      "kind": "image",
+      "tileSizeIn": 1.6,
+      "tone": "light"
+    },
+    {
+      "id": "cider-kraft",
+      "name": "Cider kraft",
+      "file": "textures/cider-kraft.jpg",
+      "mode": "tile",
+      "kind": "image",
+      "tileSizeIn": 1.71,
+      "tone": "light"
+    },
+    {
+      "id": "warm-amber-timber",
+      "name": "Warm amber timber",
+      "file": "textures/warm-amber-timber.jpg",
+      "mode": "tile",
+      "kind": "image",
+      "tileSizeIn": 1.71,
+      "tone": "light"
+    },
+    {
+      "id": "natural-grain",
+      "name": "Natural grain",
+      "file": "textures/natural-grain.png",
+      "mode": "tile",
+      "kind": "overlay",
+      "tileSizeIn": 1.71,
+      "tone": "light"
+    },
+    {
+      "id": "table-linen",
+      "name": "Table linen",
+      "file": "textures/table-linen.png",
+      "mode": "tile",
+      "kind": "overlay",
+      "tileSizeIn": 1.71,
+      "tone": "light"
+    },
+    {
+      "id": "warm-grain",
+      "name": "Warm grain",
+      "file": "textures/warm-grain.png",
+      "mode": "tile",
+      "kind": "overlay",
+      "tileSizeIn": 1.71,
+      "tone": "light"
+    },
+    {
+      "id": "harvest-check",
+      "name": "Harvest check",
+      "file": "textures/harvest-check.jpg",
+      "mode": "tile",
+      "kind": "image",
+      "tileSizeIn": 1.6,
+      "tone": "light"
+    },
+    {
+      "id": "oatmeal-stock",
+      "name": "Oatmeal stock",
+      "file": "textures/oatmeal-stock.png",
+      "mode": "tile",
+      "kind": "overlay",
+      "tileSizeIn": 1.71,
+      "tone": "light"
+    },
+    {
+      "id": "farmhouse-table",
+      "name": "Farmhouse table",
+      "file": "textures/farmhouse-table.jpg",
+      "mode": "tile",
+      "kind": "image",
+      "tileSizeIn": 1.71,
+      "tone": "dark"
+    },
+    {
+      "id": "warm-hearth",
+      "name": "Warm hearth",
+      "file": "textures/warm-hearth.jpg",
+      "mode": "cover",
+      "kind": "image",
+      "tone": "dark"
+    },
+    {
+      "id": "woodland-weave",
+      "name": "Woodland weave",
+      "file": "textures/woodland-weave.png",
+      "mode": "tile",
+      "kind": "overlay",
+      "tileSizeIn": 1.71,
+      "tone": "light"
+    },
+    {
+      "id": "nutmeg-wash",
+      "name": "Nutmeg wash",
+      "file": "textures/nutmeg-wash.jpg",
+      "mode": "cover",
+      "kind": "image",
+      "tone": "light"
+    },
+    {
+      "id": "welcome-kraft",
+      "name": "Welcome kraft",
+      "file": "textures/welcome-kraft.jpg",
+      "mode": "tile",
+      "kind": "image",
+      "tileSizeIn": 1.71,
+      "tone": "light"
+    },
+    {
+      "id": "porch-timber",
+      "name": "Porch timber",
+      "file": "textures/porch-timber.jpg",
+      "mode": "tile",
+      "kind": "image",
+      "tileSizeIn": 1.71,
+      "tone": "light"
+    },
+    {
+      "id": "golden-honey-wash",
+      "name": "Golden honey wash",
+      "file": "textures/golden-honey-wash.jpg",
+      "mode": "cover",
+      "kind": "image",
+      "tone": "light"
+    },
+    {
+      "id": "country-linen",
+      "name": "Country linen",
+      "file": "textures/country-linen.png",
+      "mode": "tile",
+      "kind": "overlay",
+      "tileSizeIn": 1.71,
+      "tone": "light"
+    }
+  ],
+  "ornaments": [
+    {
+      "id": "stitched-frame",
+      "name": "Stitched frame",
+      "file": "ornaments/stitched-frame.svg",
+      "kind": "frame",
+      "tags": [
+        "stitched"
+      ],
+      "stretch": true
+    },
+    {
+      "id": "botanical-corner",
+      "name": "Botanical corner",
+      "file": "ornaments/botanical-corner.svg",
+      "kind": "corner",
+      "tags": [
+        "botanical"
+      ]
+    },
+    {
+      "id": "maple-motif",
+      "name": "Maple Crest",
+      "file": "ornaments/maple-motif.svg",
+      "kind": "ornament",
+      "tags": [
+        "maple",
+        "thanksgiving",
+        "halloween",
+        "fathers day"
+      ]
+    },
+    {
+      "id": "petals-scatter",
+      "name": "Petals Scatter",
+      "file": "ornaments/petals-scatter.svg",
+      "kind": "scatter",
+      "tags": [
+        "petals"
+      ]
+    },
+    {
+      "id": "petals-scatter-2",
+      "name": "Petals Scatter 2",
+      "file": "ornaments/petals-scatter-2.svg",
+      "kind": "scatter",
+      "tags": [
+        "petals"
+      ]
+    },
+    {
+      "id": "petals-scatter-3",
+      "name": "Petals Scatter 3",
+      "file": "ornaments/petals-scatter-3.svg",
+      "kind": "scatter",
+      "tags": [
+        "petals"
+      ]
+    },
+    {
+      "id": "petals-scatter-4",
+      "name": "Petals Scatter 4",
+      "file": "ornaments/petals-scatter-4.svg",
+      "kind": "scatter",
+      "tags": [
+        "petals"
+      ]
+    },
+    {
+      "id": "pumpkin-motif",
+      "name": "Pumpkin Crest",
+      "file": "ornaments/pumpkin-motif.svg",
+      "kind": "ornament",
+      "tags": [
+        "pumpkin",
+        "thanksgiving",
+        "halloween"
+      ]
+    },
+    {
+      "id": "petals-scatter-5",
+      "name": "Petals Scatter 5",
+      "file": "ornaments/petals-scatter-5.svg",
+      "kind": "scatter",
+      "tags": [
+        "petals"
+      ]
+    },
+    {
+      "id": "petals-scatter-6",
+      "name": "Petals Scatter 6",
+      "file": "ornaments/petals-scatter-6.svg",
+      "kind": "scatter",
+      "tags": [
+        "petals"
+      ]
+    },
+    {
+      "id": "petals-scatter-7",
+      "name": "Petals Scatter 7",
+      "file": "ornaments/petals-scatter-7.svg",
+      "kind": "scatter",
+      "tags": [
+        "petals"
+      ]
+    },
+    {
+      "id": "house-motif",
+      "name": "House Crest",
+      "file": "ornaments/house-motif.svg",
+      "kind": "ornament",
+      "tags": [
+        "house",
+        "moving",
+        "holiday",
+        "thank you"
+      ]
+    },
+    {
+      "id": "petals-scatter-8",
+      "name": "Petals Scatter 8",
+      "file": "ornaments/petals-scatter-8.svg",
+      "kind": "scatter",
+      "tags": [
+        "petals"
+      ]
+    },
+    {
+      "id": "petals-scatter-9",
+      "name": "Petals Scatter 9",
+      "file": "ornaments/petals-scatter-9.svg",
+      "kind": "scatter",
+      "tags": [
+        "petals"
+      ]
+    }
+  ],
+  "stickers": [
+    {
+      "id": "honey-jar-sticker",
+      "name": "Honey Jar",
+      "file": "stickers/honey-jar-sticker.svg",
+      "tags": [
+        "honey jar",
+        "thanksgiving"
+      ]
+    },
+    {
+      "id": "mountain-badge-sticker",
+      "name": "Mountain Badge",
+      "file": "stickers/mountain-badge-sticker.svg",
+      "tags": [
+        "mountain badge",
+        "thanksgiving",
+        "fathers day"
+      ]
+    },
+    {
+      "id": "wax-seal-sticker",
+      "name": "Wax Seal",
+      "file": "stickers/wax-seal-sticker.svg",
+      "tags": [
+        "wax seal",
+        "thanksgiving"
+      ]
+    },
+    {
+      "id": "sunflower-sticker",
+      "name": "Sunflower",
+      "file": "stickers/sunflower-sticker.svg",
+      "tags": [
+        "sunflower",
+        "thanksgiving",
+        "mothers day"
+      ]
+    }
+  ],
+  "templates": [
+    "templates/autumn-maple-framed.json",
+    "templates/autumn-maple-back-note.json",
+    "templates/apple-orchard-polaroid.json",
+    "templates/apple-orchard-back-note.json",
+    "templates/harvest-table-split.json",
+    "templates/pumpkin-patch-polaroid.json",
+    "templates/pumpkin-patch-back-note.json",
+    "templates/thanksgiving-gratitude-trio.json",
+    "templates/cozy-acorn-trio.json",
+    "templates/cozy-doorstep-framed.json",
+    "templates/sunflower-field-framed.json"
+  ]
+}

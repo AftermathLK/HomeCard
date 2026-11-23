@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import clsx from 'clsx';
-import { AlertTriangle, CheckCircle2, FileClock, FolderSync, Images, Package, Printer, Server, Settings2, Type, Upload, UserRound, Users } from 'lucide-react';
+import { AlertTriangle, CalendarDays, CheckCircle2, FileClock, FolderSync, Images, Package, Printer, Server, Settings2, Type, Upload, UserRound, Users } from 'lucide-react';
 import { VENDOR_PRESETS } from '@homecard/shared';
 import { Modal, Spinner } from '@/components/ui';
 import { api, upload } from '@/lib/api';
@@ -10,6 +10,7 @@ import { useUi, type SettingsTab } from '@/store/ui';
 import { AdminAudit } from './AdminAudit';
 import { AdminServer } from './AdminServer';
 import { AdminUsers } from './AdminUsers';
+import { HolidaySettings } from './HolidaySettings';
 import { ImmichConnection } from './ImmichConnection';
 import { ProfileSettings } from './ProfileSettings';
 
@@ -29,6 +30,7 @@ export function SettingsModal() {
       tabs: [
         { id: 'profile', label: 'Profile', icon: <UserRound size={16} /> },
         { id: 'immich', label: 'Immich connection', icon: <Images size={16} /> },
+        { id: 'holidays', label: 'Holidays', icon: <CalendarDays size={16} /> },
         { id: 'printing', label: 'Printing', icon: <Printer size={16} /> },
       ],
     },
@@ -75,6 +77,7 @@ export function SettingsModal() {
         <div className="min-w-0 flex-1 overflow-auto p-5">
           {tab === 'profile' && <ProfileSettings />}
           {tab === 'immich' && <ImmichConnection />}
+          {tab === 'holidays' && <HolidaySettings />}
           {tab === 'fonts' && <FontSettings />}
           {tab === 'styles' && <StyleSettings />}
           {tab === 'printing' && <PrintingSettings />}
@@ -168,6 +171,8 @@ function FontSettings() {
 
 function StyleSettings() {
   const packs = useAssets((s) => s.packs);
+  // Installing and reloading packs changes them for every account, so only admins can; anyone can add to My Uploads.
+  const isAdmin = useSession((s) => s.user?.role === 'admin');
   const [busy, setBusy] = useState<string | null>(null);
   const importRef = useRef<HTMLInputElement>(null);
   const assetRef = useRef<HTMLInputElement>(null);
@@ -193,14 +198,20 @@ function StyleSettings() {
             Palettes, foils, textures, SVG ornaments, stickers, templates and font pairings live in <code>/data/styles</code>. Changes there are picked up automatically. See <code>docs/STYLE_PACKS.md</code> for the format.
           </p>
         </div>
-        <button className="btn" onClick={() => run('rescan', async () => { await api.post('/api/styles/rescan'); await useAssets.getState().loadStyles(); useUi.getState().toast('Style packs reloaded.', 'ok'); })}>
-          {busy === 'rescan' ? <Spinner size={14} /> : <FolderSync size={15} />} Rescan
-        </button>
+        {isAdmin && (
+          <button className="btn" onClick={() => run('rescan', async () => { await api.post('/api/styles/rescan'); await useAssets.getState().loadStyles(); useUi.getState().toast('Style packs reloaded.', 'ok'); })}>
+            {busy === 'rescan' ? <Spinner size={14} /> : <FolderSync size={15} />} Rescan
+          </button>
+        )}
       </div>
       <div className="flex flex-wrap items-center gap-2 rounded-xl border border-line bg-white p-3">
-        <button className="btn btn-primary" onClick={() => importRef.current?.click()} disabled={!!busy}>
-          {busy === 'import' ? <Spinner size={14} className="text-white" /> : <Package size={15} />} Import pack (.zip / .json)
-        </button>
+        {isAdmin ? (
+          <button className="btn btn-primary" onClick={() => importRef.current?.click()} disabled={!!busy}>
+            {busy === 'import' ? <Spinner size={14} className="text-white" /> : <Package size={15} />} Import pack (.zip / .json)
+          </button>
+        ) : (
+          <span className="text-[13px] text-ink-3">An admin can install new style packs.</span>
+        )}
         <input
           ref={importRef}
           type="file"
@@ -214,7 +225,10 @@ function StyleSettings() {
               void run('import', async () => {
                 const r = await upload<{ results: Array<{ file: string; packId?: string; error?: string }> }>('/api/styles/import', files);
                 await useAssets.getState().loadStyles();
-                for (const x of r.results) useUi.getState().toast(x.error ? `${x.file}: ${x.error}` : `Imported ${x.packId}`, x.error ? 'error' : 'ok');
+                // A library zip can hold dozens of packs: one toast for the imports, one per problem.
+                const ok = r.results.filter((x) => !x.error).map((x) => x.packId);
+                if (ok.length) useUi.getState().toast(ok.length === 1 ? `Imported ${ok[0]}` : `Imported ${ok.length} packs (${ok.slice(0, 3).join(', ')}${ok.length > 3 ? ', …' : ''})`, 'ok');
+                for (const x of r.results.filter((y) => y.error).slice(0, 5)) useUi.getState().toast(`${x.file}: ${x.error}`, 'error');
               });
           }}
         />

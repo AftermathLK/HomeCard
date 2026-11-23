@@ -1,0 +1,573 @@
+{
+  "$schema": "../style-pack.schema.json",
+  "id": "milestones",
+  "name": "Graduation, Moving & Thank You",
+  "version": "1.0.0",
+  "author": "HomeCard contributors",
+  "license": "CC0-1.0",
+  "description": "Laurel crests and varsity stripes, new-home keys and drafting grids, airmail and wax-seal stationery.",
+  "occasions": [
+    "graduation",
+    "new-home",
+    "thank-you",
+    "save-the-date"
+  ],
+  "palettes": [
+    {
+      "id": "graduation-laurel-honors-black",
+      "name": "Honors Black",
+      "colors": {
+        "background": "#14161a",
+        "text": "#f7f3e8",
+        "accent": "#dfb856",
+        "accent2": "#8d96a6"
+      }
+    },
+    {
+      "id": "graduation-laurel-diploma-ivory",
+      "name": "Diploma Ivory",
+      "colors": {
+        "background": "#f8f4ea",
+        "text": "#1a1f2b",
+        "accent": "#b58d32",
+        "accent2": "#2e4773"
+      }
+    },
+    {
+      "id": "graduation-laurel-dean-s-navy",
+      "name": "Dean's Navy",
+      "colors": {
+        "background": "#172542",
+        "text": "#f7f3e8",
+        "accent": "#e0bc5e",
+        "accent2": "#8da4cc"
+      }
+    },
+    {
+      "id": "graduation-varsity-varsity-crimson",
+      "name": "Varsity Crimson",
+      "colors": {
+        "background": "#faf7f2",
+        "text": "#1c1c21",
+        "accent": "#a8202c",
+        "accent2": "#243b63"
+      }
+    },
+    {
+      "id": "graduation-varsity-classic-navy",
+      "name": "Classic Navy",
+      "colors": {
+        "background": "#182947",
+        "text": "#ffffff",
+        "accent": "#e3b84f",
+        "accent2": "#c93842"
+      }
+    },
+    {
+      "id": "graduation-varsity-forest-varsity",
+      "name": "Forest Varsity",
+      "colors": {
+        "background": "#183628",
+        "text": "#f7f5ee",
+        "accent": "#e0b84c",
+        "accent2": "#8eb89e"
+      }
+    },
+    {
+      "id": "minimal-gratitude-quiet-ivory",
+      "name": "Quiet Ivory",
+      "colors": {
+        "background": "#f9f7f2",
+        "text": "#1e1e1c",
+        "accent": "#6e6558",
+        "accent2": "#a89060"
+      }
+    },
+    {
+      "id": "minimal-gratitude-ink-bone",
+      "name": "Ink & Bone",
+      "colors": {
+        "background": "#f2efe8",
+        "text": "#18191c",
+        "accent": "#2d3b4e",
+        "accent2": "#9e8554"
+      }
+    },
+    {
+      "id": "minimal-gratitude-slate-note",
+      "name": "Slate Note",
+      "colors": {
+        "background": "#22272e",
+        "text": "#f5f4f0",
+        "accent": "#cfb57c",
+        "accent2": "#8fa0b3"
+      }
+    },
+    {
+      "id": "modern-address-architect-stone",
+      "name": "Architect Stone",
+      "colors": {
+        "background": "#f4f2ee",
+        "text": "#1d1e21",
+        "accent": "#bd5636",
+        "accent2": "#4f687a"
+      }
+    },
+    {
+      "id": "modern-address-blueprint-navy",
+      "name": "Blueprint Navy",
+      "colors": {
+        "background": "#182c47",
+        "text": "#f2f6fa",
+        "accent": "#7cb2e8",
+        "accent2": "#e0a44c"
+      }
+    },
+    {
+      "id": "modern-address-concrete-clay",
+      "name": "Concrete & Clay",
+      "colors": {
+        "background": "#eceae6",
+        "text": "#212121",
+        "accent": "#a64c32",
+        "accent2": "#6e7378"
+      }
+    },
+    {
+      "id": "new-home-keys-sage-doorstep",
+      "name": "Sage Doorstep",
+      "colors": {
+        "background": "#f4f6f0",
+        "text": "#253028",
+        "accent": "#54785b",
+        "accent2": "#c49642"
+      }
+    },
+    {
+      "id": "new-home-keys-brass-navy",
+      "name": "Brass & Navy",
+      "colors": {
+        "background": "#1b2c42",
+        "text": "#f6f3eb",
+        "accent": "#dfb85c",
+        "accent2": "#89ab9a"
+      }
+    },
+    {
+      "id": "new-home-keys-brick-cream",
+      "name": "Brick & Cream",
+      "colors": {
+        "background": "#faf3eb",
+        "text": "#2e231d",
+        "accent": "#ad4c36",
+        "accent2": "#56755b"
+      }
+    },
+    {
+      "id": "postcard-airmail-airmail-cream",
+      "name": "Airmail Cream",
+      "colors": {
+        "background": "#f7f3e8",
+        "text": "#202b3d",
+        "accent": "#bf3636",
+        "accent2": "#2d5996"
+      }
+    },
+    {
+      "id": "postcard-airmail-postage-kraft",
+      "name": "Postage Kraft",
+      "colors": {
+        "background": "#e8dcc8",
+        "text": "#26211c",
+        "accent": "#9e3232",
+        "accent2": "#2c4f78"
+      }
+    },
+    {
+      "id": "postcard-airmail-passport-navy",
+      "name": "Passport Navy",
+      "colors": {
+        "background": "#1b2b45",
+        "text": "#f6f1e4",
+        "accent": "#d9504a",
+        "accent2": "#dfc070"
+      }
+    },
+    {
+      "id": "stamped-stationery-burgundy-seal",
+      "name": "Burgundy Seal",
+      "colors": {
+        "background": "#f8f3ea",
+        "text": "#2a1a1c",
+        "accent": "#7d1f2d",
+        "accent2": "#b59042"
+      }
+    },
+    {
+      "id": "stamped-stationery-royal-oxblood",
+      "name": "Royal Oxblood",
+      "colors": {
+        "background": "#45151e",
+        "text": "#f8f2e8",
+        "accent": "#dfc070",
+        "accent2": "#b87a82"
+      }
+    },
+    {
+      "id": "stamped-stationery-library-cream",
+      "name": "Library Cream",
+      "colors": {
+        "background": "#f4eee2",
+        "text": "#24221e",
+        "accent": "#6b232c",
+        "accent2": "#2d4a3e"
+      }
+    },
+    {
+      "id": "watercolor-thankyou-indigo-tide",
+      "name": "Indigo Tide",
+      "colors": {
+        "background": "#eef4f8",
+        "text": "#1b2c45",
+        "accent": "#2d5d8f",
+        "accent2": "#c49a3d"
+      }
+    },
+    {
+      "id": "watercolor-thankyou-teal-wash",
+      "name": "Teal Wash",
+      "colors": {
+        "background": "#edf6f5",
+        "text": "#193638",
+        "accent": "#2b7a78",
+        "accent2": "#c99642"
+      }
+    },
+    {
+      "id": "watercolor-thankyou-deep-ocean",
+      "name": "Deep Ocean",
+      "colors": {
+        "background": "#152b40",
+        "text": "#f4f7fa",
+        "accent": "#75b5c4",
+        "accent2": "#e3be62"
+      }
+    }
+  ],
+  "backgrounds": [
+    {
+      "id": "diploma-parchment",
+      "name": "Diploma parchment",
+      "file": "textures/diploma-parchment.png",
+      "mode": "tile",
+      "kind": "overlay",
+      "tileSizeIn": 1.71,
+      "tone": "dark"
+    },
+    {
+      "id": "celebration-lights",
+      "name": "Celebration lights",
+      "file": "textures/celebration-lights.jpg",
+      "mode": "cover",
+      "kind": "image",
+      "tone": "dark"
+    },
+    {
+      "id": "varsity-stripe",
+      "name": "Varsity stripe",
+      "file": "textures/varsity-stripe.jpg",
+      "mode": "tile",
+      "kind": "image",
+      "tileSizeIn": 1.71,
+      "tone": "light"
+    },
+    {
+      "id": "yearbook-grid",
+      "name": "Yearbook grid",
+      "file": "textures/yearbook-grid.jpg",
+      "mode": "tile",
+      "kind": "image",
+      "tileSizeIn": 1.6,
+      "tone": "light"
+    },
+    {
+      "id": "cotton-rag-stock",
+      "name": "Cotton rag stock",
+      "file": "textures/cotton-rag-stock.png",
+      "mode": "tile",
+      "kind": "overlay",
+      "tileSizeIn": 1.71,
+      "tone": "light"
+    },
+    {
+      "id": "fine-stationery",
+      "name": "Fine stationery",
+      "file": "textures/fine-stationery.png",
+      "mode": "tile",
+      "kind": "overlay",
+      "tileSizeIn": 1.71,
+      "tone": "light"
+    },
+    {
+      "id": "architectural-grid",
+      "name": "Architectural grid",
+      "file": "textures/architectural-grid.jpg",
+      "mode": "tile",
+      "kind": "image",
+      "tileSizeIn": 1.6,
+      "tone": "light"
+    },
+    {
+      "id": "drafting-paper",
+      "name": "Drafting paper",
+      "file": "textures/drafting-paper.png",
+      "mode": "tile",
+      "kind": "overlay",
+      "tileSizeIn": 1.71,
+      "tone": "light"
+    },
+    {
+      "id": "housewarming-linen",
+      "name": "Housewarming linen",
+      "file": "textures/housewarming-linen.png",
+      "mode": "tile",
+      "kind": "overlay",
+      "tileSizeIn": 1.71,
+      "tone": "light"
+    },
+    {
+      "id": "thick-stationery",
+      "name": "Thick stationery",
+      "file": "textures/thick-stationery.png",
+      "mode": "tile",
+      "kind": "overlay",
+      "tileSizeIn": 1.71,
+      "tone": "light"
+    },
+    {
+      "id": "airmail-stripe",
+      "name": "Airmail stripe",
+      "file": "textures/airmail-stripe.jpg",
+      "mode": "tile",
+      "kind": "image",
+      "tileSizeIn": 1.71,
+      "tone": "light"
+    },
+    {
+      "id": "postcard-stock",
+      "name": "Postcard stock",
+      "file": "textures/postcard-stock.jpg",
+      "mode": "tile",
+      "kind": "image",
+      "tileSizeIn": 1.71,
+      "tone": "light"
+    },
+    {
+      "id": "heavy-cotton-rag",
+      "name": "Heavy cotton rag",
+      "file": "textures/heavy-cotton-rag.png",
+      "mode": "tile",
+      "kind": "overlay",
+      "tileSizeIn": 1.71,
+      "tone": "light"
+    },
+    {
+      "id": "seal-velvet",
+      "name": "Seal velvet",
+      "file": "textures/seal-velvet.jpg",
+      "mode": "cover",
+      "kind": "image",
+      "tone": "light"
+    },
+    {
+      "id": "indigo-wash",
+      "name": "Indigo wash",
+      "file": "textures/indigo-wash.jpg",
+      "mode": "cover",
+      "kind": "image",
+      "tone": "light"
+    },
+    {
+      "id": "cold-press-paper",
+      "name": "Cold-press paper",
+      "file": "textures/cold-press-paper.png",
+      "mode": "tile",
+      "kind": "overlay",
+      "tileSizeIn": 1.71,
+      "tone": "light"
+    }
+  ],
+  "ornaments": [
+    {
+      "id": "bold-editorial-frame",
+      "name": "Bold editorial frame",
+      "file": "ornaments/bold-editorial-frame.svg",
+      "kind": "frame",
+      "tags": [
+        "bold editorial"
+      ],
+      "stretch": true
+    },
+    {
+      "id": "geometric-corner",
+      "name": "Geometric corner",
+      "file": "ornaments/geometric-corner.svg",
+      "kind": "corner",
+      "tags": [
+        "geometric"
+      ]
+    },
+    {
+      "id": "geometric-bar-divider",
+      "name": "Geometric bar divider",
+      "file": "ornaments/geometric-bar-divider.svg",
+      "kind": "divider",
+      "tags": [
+        "geometric bar"
+      ]
+    },
+    {
+      "id": "diamond-rule-divider",
+      "name": "Diamond rule divider",
+      "file": "ornaments/diamond-rule-divider.svg",
+      "kind": "divider",
+      "tags": [
+        "diamond rule"
+      ]
+    },
+    {
+      "id": "grad-cap-motif",
+      "name": "Grad Cap Crest",
+      "file": "ornaments/grad-cap-motif.svg",
+      "kind": "ornament",
+      "tags": [
+        "grad cap",
+        "graduation"
+      ]
+    },
+    {
+      "id": "confetti-scatter",
+      "name": "Confetti Scatter",
+      "file": "ornaments/confetti-scatter.svg",
+      "kind": "scatter",
+      "tags": [
+        "confetti"
+      ]
+    },
+    {
+      "id": "confetti-scatter-2",
+      "name": "Confetti Scatter 2",
+      "file": "ornaments/confetti-scatter-2.svg",
+      "kind": "scatter",
+      "tags": [
+        "confetti"
+      ]
+    },
+    {
+      "id": "petals-scatter",
+      "name": "Petals Scatter",
+      "file": "ornaments/petals-scatter.svg",
+      "kind": "scatter",
+      "tags": [
+        "petals"
+      ]
+    },
+    {
+      "id": "stars-scatter",
+      "name": "Stars Scatter",
+      "file": "ornaments/stars-scatter.svg",
+      "kind": "scatter",
+      "tags": [
+        "stars"
+      ]
+    },
+    {
+      "id": "key-motif",
+      "name": "Key Crest",
+      "file": "ornaments/key-motif.svg",
+      "kind": "ornament",
+      "tags": [
+        "key",
+        "moving"
+      ]
+    },
+    {
+      "id": "stars-scatter-2",
+      "name": "Stars Scatter 2",
+      "file": "ornaments/stars-scatter-2.svg",
+      "kind": "scatter",
+      "tags": [
+        "stars"
+      ]
+    },
+    {
+      "id": "stars-scatter-3",
+      "name": "Stars Scatter 3",
+      "file": "ornaments/stars-scatter-3.svg",
+      "kind": "scatter",
+      "tags": [
+        "stars"
+      ]
+    },
+    {
+      "id": "stars-scatter-4",
+      "name": "Stars Scatter 4",
+      "file": "ornaments/stars-scatter-4.svg",
+      "kind": "scatter",
+      "tags": [
+        "stars"
+      ]
+    },
+    {
+      "id": "petals-scatter-2",
+      "name": "Petals Scatter 2",
+      "file": "ornaments/petals-scatter-2.svg",
+      "kind": "scatter",
+      "tags": [
+        "petals"
+      ]
+    }
+  ],
+  "stickers": [
+    {
+      "id": "wax-seal-sticker",
+      "name": "Wax Seal",
+      "file": "stickers/wax-seal-sticker.svg",
+      "tags": [
+        "wax seal",
+        "graduation"
+      ]
+    },
+    {
+      "id": "firework-sticker",
+      "name": "Firework",
+      "file": "stickers/firework-sticker.svg",
+      "tags": [
+        "firework",
+        "graduation"
+      ]
+    },
+    {
+      "id": "postage-sticker",
+      "name": "Postage",
+      "file": "stickers/postage-sticker.svg",
+      "tags": [
+        "postage",
+        "moving",
+        "thank you"
+      ]
+    }
+  ],
+  "templates": [
+    "templates/graduation-laurel-framed.json",
+    "templates/graduation-varsity-quad.json",
+    "templates/graduation-varsity-back-note.json",
+    "templates/minimal-gratitude-letter.json",
+    "templates/modern-address-editorial.json",
+    "templates/modern-address-back-note.json",
+    "templates/new-home-keys-split.json",
+    "templates/postcard-airmail-postcard.json",
+    "templates/stamped-stationery-letter.json",
+    "templates/watercolor-thankyou-split.json"
+  ]
+}

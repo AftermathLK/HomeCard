@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import clsx from 'clsx';
-import { AlertTriangle, CheckCircle2, Info, Loader2, X } from 'lucide-react';
+import { AlertTriangle, CheckCircle2, ChevronRight, Info, Loader2, X } from 'lucide-react';
 import { useUi } from '@/store/ui';
 
 const modalStack: object[] = [];
@@ -124,6 +124,33 @@ export function Section({ title, children, actions, className }: { title?: React
   );
 }
 
+/**
+ * One style pack inside a panel section: a header that opens and closes the pack's items.
+ * Closed packs don't render their items, so long pack lists stay light.
+ */
+export function PackGroup({ name, count, defaultOpen, swatches, children }: { name: string; count: number; defaultOpen: boolean; swatches?: string[]; children: ReactNode }) {
+  const [open, setOpen] = useState(defaultOpen);
+  return (
+    <div className="border-b border-line/60 last:border-b-0">
+      <button type="button" aria-expanded={open} onClick={() => setOpen(!open)} className="flex w-full items-center gap-2 py-2 text-left text-[12px] font-medium text-ink-2 hover:text-ink">
+        <ChevronRight size={13} className={clsx('shrink-0 transition-transform', open && 'rotate-90')} />
+        <span className="min-w-0 truncate">{name}</span>
+        <span className="ml-auto flex shrink-0 items-center gap-2">
+          {swatches && (
+            <span className="flex pl-1">
+              {swatches.map((c, i) => (
+                <i key={i} className="-ml-1 h-3 w-3 rounded-full border border-white" style={{ background: c }} />
+              ))}
+            </span>
+          )}
+          <span className="text-[11px] font-normal text-ink-3">{count}</span>
+        </span>
+      </button>
+      {open && <div className="pb-3 pt-0.5">{children}</div>}
+    </div>
+  );
+}
+
 export function Segmented<T extends string>({ value, options, onChange, size }: { value: T; options: Array<{ value: T; label: ReactNode; title?: string }>; onChange: (v: T) => void; size?: 'sm' }) {
   return (
     <div className={clsx('seg', size === 'sm' && 'text-[11px]')}>
@@ -196,7 +223,18 @@ export function Toasts() {
           )}
         >
           {t.kind === 'error' ? <AlertTriangle size={16} /> : t.kind === 'ok' ? <CheckCircle2 size={16} /> : <Info size={16} />}
-          {t.text}
+          <span>{t.text}</span>
+          {t.action && (
+            <button
+              className="ml-1 shrink-0 rounded-md bg-white/15 px-2 py-0.5 text-[12px] font-semibold hover:bg-white/25"
+              onClick={() => {
+                t.action!.run();
+                useUi.setState((st) => ({ toasts: st.toasts.filter((x) => x.id !== t.id) }));
+              }}
+            >
+              {t.action.label}
+            </button>
+          )}
         </div>
       ))}
     </div>

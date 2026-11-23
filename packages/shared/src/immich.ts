@@ -24,6 +24,9 @@ export const IMMICH_GET_ALLOWLIST = [
   '/api/people/:id/thumbnail',
   '/api/faces',
   '/api/memories',
+  // Tags are only ever listed and read. Creating, renaming, deleting and tagging assets stay blocked.
+  '/api/tags',
+  '/api/tags/:id',
 ] as const;
 
 /** POST endpoints HomeCard may call — Immich's read-only search endpoints only. */
@@ -108,7 +111,10 @@ export const IMMICH_REQUIRED_SCOPES: ImmichScopeInfo[] = [
   { id: 'apiKey.read', label: 'apiKey.read', why: 'Lets HomeCard confirm the key is read-only' },
 ];
 
-export const IMMICH_OPTIONAL_SCOPES: ImmichScopeInfo[] = [{ id: 'memory.read', label: 'memory.read', why: 'Optional: "On this day" memories' }];
+export const IMMICH_OPTIONAL_SCOPES: ImmichScopeInfo[] = [
+  { id: 'memory.read', label: 'memory.read', why: 'Optional: "On this day" memories' },
+  { id: 'tag.read', label: 'tag.read', why: 'Optional: match your Immich tags to upcoming holidays' },
+];
 
 /** Permission actions that only read. Anything else is treated as able to change data. */
 const READ_ACTIONS = new Set(['read', 'view', 'download', 'statistics', 'search', 'about', 'storage', 'versionCheck', 'apkLinks']);

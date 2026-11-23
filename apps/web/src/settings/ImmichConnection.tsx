@@ -5,6 +5,7 @@ import { IMMICH_OPTIONAL_SCOPES, IMMICH_REQUIRED_SCOPES, type ImmichConnectionDt
 import { Spinner } from '@/components/ui';
 import { api, ApiError } from '@/lib/api';
 import { useAssets } from '@/lib/assets';
+import { useHolidayPhotos } from '@/home/holidayPhotos';
 import { useSession } from '@/store/session';
 import { useUi } from '@/store/ui';
 
@@ -33,7 +34,11 @@ export function ImmichConnection() {
 
   if (!conn) return error ? <ErrorBox>{error}</ErrorBox> : <Spinner />;
 
-  const refreshApp = () => void useAssets.getState().loadHealth(true);
+  const refreshApp = () => {
+    void useAssets.getState().loadHealth(true);
+    // A new (or no) key changes what "pictures from this time" can find.
+    useHolidayPhotos.getState().reset();
+  };
 
   const test = async () => {
     setBusy('test');

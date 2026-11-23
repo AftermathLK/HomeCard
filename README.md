@@ -17,7 +17,7 @@ as they are: real 300 DPI, bleed and safe zones, vector text in the PDF, sRGB or
 * **Clean files.** Exports carry no EXIF, GPS or camera data, so your home location never
   reaches a print shop.
 
-Version 0.12.0 · [MIT licence](LICENSE) · works on any Docker host, with a ready-made script for
+Version 0.13.0 · [MIT licence](LICENSE) · works on any Docker host, with a ready-made script for
 Unraid.
 
 ---
@@ -79,6 +79,11 @@ More detail: [docs/SECURITY.md](docs/SECURITY.md) (security model and how to che
   `photos/shared/` are there for everyone.
 * **Hand a card over.** **⋯ → Share copy with another user** gives someone their own copy to
   change, without access to your photos or your Immich library.
+* **What's coming up.** The home page greets you with the next holiday ("Thanksgiving is in 3
+  days"), print timing and one click to plan its card. **See pictures from this time** gathers
+  your own Immich photos from the same weeks in past years, your recent favourites, matching
+  albums and tags; pick up to six and HomeCard starts the card with them placed. Hide holidays
+  you don't celebrate in **Settings → Holidays**.
 
 **Photos**
 
@@ -106,7 +111,11 @@ More detail: [docs/SECURITY.md](docs/SECURITY.md) (security model and how to che
   glows).
 * **21 open-licence font families** in designer pairings, plus your own fonts.
 * **Style packs** (plain JSON, SVG and images) add palettes, papers, foils, ornaments, stickers,
-  templates and font pairings. Four are included.
+  templates and font pairings. 16 are included: four starter packs plus twelve collections
+  (winter holidays, festivals of light and faith, spring, summer, autumn, Halloween, weddings,
+  baby and birthdays, milestones and everyday styles) with about 310 palettes, 200 papers,
+  180 ornaments and 130 layouts. The editor opens the collections made for your occasion
+  and folds the rest away.
 * **Mockup preview**: the card on a desk or with its envelope, flipped, or opened if folded.
 
 **Print Guardian**, a traffic light that checks before you export:
@@ -324,11 +333,13 @@ name on a shared Docker network (`localhost` would mean the HomeCard container i
 
 1. In Immich, open **Account Settings → API Keys → New API Key**. Leave **all** unticked.
 2. Tick only `album.read`, `asset.read`, `asset.view`, `asset.download`, `person.read`,
-   `apiKey.read` (lets HomeCard confirm the key is read-only) and optionally `memory.read`.
+   `apiKey.read` (lets HomeCard confirm the key is read-only) and optionally `memory.read` and
+   `tag.read` (matches photos you tagged "Christmas" or "Holidays/Easter" to upcoming holidays).
 3. Paste the key into HomeCard → **Check key** → **Save read-only key**.
 
 HomeCard asks Immich what the key may do and **refuses** any key with `all`, create, update,
-delete, upload or admin permissions. On top of that, its Immich client blocks every request
+delete, upload or admin permissions (for tags that includes `tag.create`, `tag.update`,
+`tag.delete` and `tag.asset`: HomeCard only ever reads tags). On top of that, its Immich client blocks every request
 except the read endpoints it needs. Nobody else can browse your library through HomeCard, not
 even the admin.
 
@@ -361,7 +372,7 @@ In the editor: **Words & style → Backgrounds** (Guided) or **Backdrop** (Studi
 * **Fonts** (shared): drop `.ttf`, `.otf`, `.woff` or `.woff2` files into the `fonts` folder, or
   use **Settings → Fonts → Upload**. They appear in every font menu within seconds, and PDFs
   embed them as real vector text.
-* **Style packs**: a folder in `styles` with a `pack.json`, or a `.zip` / `.json` imported in
+* **Style packs**: a folder in `styles` with a `pack.json`, or a `.zip` / `.json` an admin imports in
   **Settings → Style packs**. See **[docs/STYLE_PACKS.md](docs/STYLE_PACKS.md)** for the format.
 * **Quick uploads**: **Settings → Style packs → Upload assets** for papers, SVG ornaments or
   stickers, no JSON needed.
@@ -546,7 +557,9 @@ Cards for family and friends are fine; if you sell cards, check each image's lic
 HomeCard keeps each image's credit and licence next to the file.
 
 **Fonts and artwork.** The bundled fonts are under the SIL Open Font License (a few Apache-2.0):
-you can print with them freely, but not sell the fonts themselves. The starter packs are CC0.
+you can print with them freely, but not sell the fonts themselves. All bundled style packs are
+CC0 (the twelve collections were made with AI assistance; see
+[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)).
 Only add fonts and artwork you're allowed to print.
 
 **Printer specs** in the presets are a convenience, not a promise. Check your printer's current

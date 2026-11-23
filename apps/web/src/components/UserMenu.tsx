@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import clsx from 'clsx';
-import { FileClock, Images, LogOut, Server, Settings, UserRound, Users } from 'lucide-react';
+import { CalendarDays, FileClock, Images, LogOut, Server, Settings, UserRound, Users } from 'lucide-react';
 import { useSession } from '@/store/session';
 import { useUi, type SettingsTab } from '@/store/ui';
 
@@ -60,6 +60,9 @@ export function UserMenu({ compact }: { compact?: boolean }) {
           </button>
           <button role="menuitem" className={item} onClick={() => go('immich')}>
             <Images size={15} /> Immich connection
+          </button>
+          <button role="menuitem" className={item} onClick={() => go('holidays')}>
+            <CalendarDays size={15} /> Holidays
           </button>
           <button role="menuitem" className={item} onClick={() => go('fonts')}>
             <Settings size={15} /> Fonts, styles & printing

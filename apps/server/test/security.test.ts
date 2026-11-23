@@ -5,6 +5,7 @@ import path from 'node:path';
 import { test } from 'node:test';
 import { PDFDocument, PDFName, PDFString } from 'pdf-lib';
 import sharp from 'sharp';
+import { adminOf } from '../src/auth/context';
 import { ImmichWriteBlockedError, ReadOnlyImmichClient, type FetchLike } from '../src/immich/readonly';
 import { findImageMetadata, findPdfMetadata, scrubImage, scrubPdf } from '../src/render/privacy';
 import { renderPathAllowed } from '../src/render/grants';
@@ -296,4 +297,27 @@ test('error responses are never cacheable, and Immich derivatives are re-encoded
   const derivative = sources.slice(sources.indexOf('async function immichDerivative'), sources.indexOf('async function immichFull'));
   assert.match(derivative, /sharp\(/);
   assert.doesNotMatch(derivative, /cachePut\([^)]*arrayBuffer/);
+});
+
+test('installing or reloading style packs is admin-only; My Uploads stays open to members', () => {
+  // A pack is shared by every account on the server, so a member must not be able to add or replace one.
+  const src = fs.readFileSync(path.join(SRC, 'styles', 'styles.ts'), 'utf8');
+  const handler = (route: string) => {
+    const at = src.indexOf(`'${route}'`);
+    assert.ok(at > 0, `route ${route} exists`);
+    const next = src.indexOf('\n  app.', at);
+    return src.slice(at, next > 0 ? next : undefined);
+  };
+  for (const r of ['/api/styles/import', '/api/styles/rescan']) {
+    assert.match(handler(r), /\badminOf\(req\)/, `${r} checks for an admin`);
+    assert.doesNotMatch(handler(r), /\buserOf\(req\)/, `${r} has no member path`);
+  }
+  assert.match(handler('/api/styles/upload'), /\buserOf\(req\)/);
+
+  const req = (role: 'admin' | 'user') => ({ principal: { kind: 'user', user: { id: 'u1', username: 'u', display_name: 'U', role }, session: {} } }) as any;
+  assert.equal(adminOf(req('admin')).role, 'admin');
+  assert.throws(() => adminOf(req('user')), (e: any) => e.statusCode === 403);
+  assert.throws(() => adminOf({ principal: null } as any), (e: any) => e.statusCode === 401);
+  const renderer = { principal: { kind: 'render', grant: { userId: 'u1', username: 'u', displayName: 'U', role: 'admin', scope: null, jobId: 'j' } } } as any;
+  assert.throws(() => adminOf(renderer), (e: any) => e.statusCode === 403, 'the print renderer never gets admin rights');
 });

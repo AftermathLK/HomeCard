@@ -1,0 +1,852 @@
+{
+  "$schema": "../style-pack.schema.json",
+  "id": "winter-holidays",
+  "name": "Winter Holidays",
+  "version": "1.0.0",
+  "author": "HomeCard contributors",
+  "license": "CC0-1.0",
+  "description": "Christmas and winter looks: plaid lodges, Nordic snow, peppermint, gingerbread, letterpress evergreens and starry solstice nights.",
+  "occasions": [
+    "christmas",
+    "holiday",
+    "winter-solstice",
+    "new-year"
+  ],
+  "palettes": [
+    {
+      "id": "alpine-chalet-chalet-timber",
+      "name": "Chalet Timber",
+      "colors": {
+        "background": "#f3ede4",
+        "text": "#242c33",
+        "accent": "#b84a39",
+        "accent2": "#365947"
+      }
+    },
+    {
+      "id": "alpine-chalet-alpine-slate",
+      "name": "Alpine Slate",
+      "colors": {
+        "background": "#24303a",
+        "text": "#f2f0eb",
+        "accent": "#d97352",
+        "accent2": "#9bb5a6"
+      }
+    },
+    {
+      "id": "alpine-chalet-glacier-snow",
+      "name": "Glacier Snow",
+      "colors": {
+        "background": "#edf2f5",
+        "text": "#1f2e3a",
+        "accent": "#3d6b82",
+        "accent2": "#c45a47"
+      }
+    },
+    {
+      "id": "cozy-flannel-buffalo-red",
+      "name": "Buffalo Red",
+      "colors": {
+        "background": "#8c1f24",
+        "text": "#faf3e8",
+        "accent": "#1e1a18",
+        "accent2": "#e0c080"
+      }
+    },
+    {
+      "id": "cozy-flannel-lodge-cream",
+      "name": "Lodge Cream",
+      "colors": {
+        "background": "#f4ede2",
+        "text": "#261d18",
+        "accent": "#9e2a2b",
+        "accent2": "#3a5a40"
+      }
+    },
+    {
+      "id": "cozy-flannel-forest-flannel",
+      "name": "Forest Flannel",
+      "colors": {
+        "background": "#1f3629",
+        "text": "#f4efe4",
+        "accent": "#b53830",
+        "accent2": "#d4b475"
+      }
+    },
+    {
+      "id": "evergreen-letterpress-hunter-emerald",
+      "name": "Hunter Emerald",
+      "colors": {
+        "background": "#142e23",
+        "text": "#f4efe4",
+        "accent": "#d8b464",
+        "accent2": "#89ab97"
+      }
+    },
+    {
+      "id": "evergreen-letterpress-botanical-ivory",
+      "name": "Botanical Ivory",
+      "colors": {
+        "background": "#f8f5ec",
+        "text": "#1a3026",
+        "accent": "#275842",
+        "accent2": "#b89548"
+      }
+    },
+    {
+      "id": "evergreen-letterpress-moss-gold",
+      "name": "Moss & Gold",
+      "colors": {
+        "background": "#22382c",
+        "text": "#f3ede0",
+        "accent": "#d4af52",
+        "accent2": "#9fb8a4"
+      }
+    },
+    {
+      "id": "frost-botanical-dove-eucalyptus",
+      "name": "Dove & Eucalyptus",
+      "colors": {
+        "background": "#eff2f1",
+        "text": "#253330",
+        "accent": "#618077",
+        "accent2": "#b59d6d"
+      }
+    },
+    {
+      "id": "frost-botanical-winter-mist",
+      "name": "Winter Mist",
+      "colors": {
+        "background": "#dfe6e5",
+        "text": "#1f2e2b",
+        "accent": "#4c6b63",
+        "accent2": "#9b4949"
+      }
+    },
+    {
+      "id": "frost-botanical-pine-shadow",
+      "name": "Pine Shadow",
+      "colors": {
+        "background": "#1f2e2b",
+        "text": "#edf2f0",
+        "accent": "#a6c2b9",
+        "accent2": "#d6be86"
+      }
+    },
+    {
+      "id": "gingerbread-hearth-spiced-ginger",
+      "name": "Spiced Ginger",
+      "colors": {
+        "background": "#c79a6b",
+        "text": "#2a1a10",
+        "accent": "#fff9ef",
+        "accent2": "#8f2c24"
+      }
+    },
+    {
+      "id": "gingerbread-hearth-icing-cream",
+      "name": "Icing Cream",
+      "colors": {
+        "background": "#faf3e6",
+        "text": "#3d2616",
+        "accent": "#a85a2d",
+        "accent2": "#9e2b25"
+      }
+    },
+    {
+      "id": "gingerbread-hearth-cinnamon-bark",
+      "name": "Cinnamon Bark",
+      "colors": {
+        "background": "#4a2a19",
+        "text": "#faf0e0",
+        "accent": "#e6b87d",
+        "accent2": "#c74838"
+      }
+    },
+    {
+      "id": "midnight-nativity-starry-indigo",
+      "name": "Starry Indigo",
+      "colors": {
+        "background": "#101b36",
+        "text": "#f5efe0",
+        "accent": "#dfb858",
+        "accent2": "#7d96c4"
+      }
+    },
+    {
+      "id": "midnight-nativity-silent-night",
+      "name": "Silent Night",
+      "colors": {
+        "background": "#182438",
+        "text": "#f6f2e8",
+        "accent": "#cfa84e",
+        "accent2": "#a2b5cc"
+      }
+    },
+    {
+      "id": "midnight-nativity-gold-parchment",
+      "name": "Gold Parchment",
+      "colors": {
+        "background": "#f6f0e2",
+        "text": "#1c253d",
+        "accent": "#b58b32",
+        "accent2": "#47608f"
+      }
+    },
+    {
+      "id": "nordic-hygge-birch-berry",
+      "name": "Birch & Berry",
+      "colors": {
+        "background": "#f7f5f0",
+        "text": "#22252a",
+        "accent": "#b63434",
+        "accent2": "#6e8579"
+      }
+    },
+    {
+      "id": "nordic-hygge-fjord-night",
+      "name": "Fjord Night",
+      "colors": {
+        "background": "#1b2836",
+        "text": "#f4f1ea",
+        "accent": "#d65a52",
+        "accent2": "#9ab5c9"
+      }
+    },
+    {
+      "id": "nordic-hygge-oatmeal-wool",
+      "name": "Oatmeal Wool",
+      "colors": {
+        "background": "#ece6dc",
+        "text": "#2d2621",
+        "accent": "#8f3b32",
+        "accent2": "#7a8c7e"
+      }
+    },
+    {
+      "id": "peppermint-stripe-candy-cane",
+      "name": "Candy Cane",
+      "colors": {
+        "background": "#ffffff",
+        "text": "#261a1a",
+        "accent": "#c9242b",
+        "accent2": "#2e6f4e"
+      }
+    },
+    {
+      "id": "peppermint-stripe-peppermint-blush",
+      "name": "Peppermint Blush",
+      "colors": {
+        "background": "#fdf2f2",
+        "text": "#33191b",
+        "accent": "#d63038",
+        "accent2": "#e5989b"
+      }
+    },
+    {
+      "id": "peppermint-stripe-north-pole-red",
+      "name": "North Pole Red",
+      "colors": {
+        "background": "#9e1c22",
+        "text": "#fffaf5",
+        "accent": "#f6d78a",
+        "accent2": "#ffffff"
+      }
+    },
+    {
+      "id": "sugarplum-frost-frosted-plum",
+      "name": "Frosted Plum",
+      "colors": {
+        "background": "#f5f0f7",
+        "text": "#362240",
+        "accent": "#8e4d82",
+        "accent2": "#7ca4c4"
+      }
+    },
+    {
+      "id": "sugarplum-frost-winter-twilight",
+      "name": "Winter Twilight",
+      "colors": {
+        "background": "#291d3a",
+        "text": "#f7f3fa",
+        "accent": "#d99ac5",
+        "accent2": "#a3c9e8"
+      }
+    },
+    {
+      "id": "sugarplum-frost-ice-ballet",
+      "name": "Ice Ballet",
+      "colors": {
+        "background": "#eef4fa",
+        "text": "#253447",
+        "accent": "#7e68a8",
+        "accent2": "#9bc2db"
+      }
+    },
+    {
+      "id": "tartan-lodge-highland-tartan",
+      "name": "Highland Tartan",
+      "colors": {
+        "background": "#1d382a",
+        "text": "#f5efe2",
+        "accent": "#9e2329",
+        "accent2": "#d6b05c"
+      }
+    },
+    {
+      "id": "tartan-lodge-fireside-cream",
+      "name": "Fireside Cream",
+      "colors": {
+        "background": "#f4ede0",
+        "text": "#281e18",
+        "accent": "#8f1d24",
+        "accent2": "#2a523c"
+      }
+    },
+    {
+      "id": "tartan-lodge-hunting-lodge",
+      "name": "Hunting Lodge",
+      "colors": {
+        "background": "#2a1f1c",
+        "text": "#f3eadb",
+        "accent": "#b83a2d",
+        "accent2": "#c79e54"
+      }
+    },
+    {
+      "id": "vintage-noel-retro-cream",
+      "name": "Retro Cream",
+      "colors": {
+        "background": "#f7eedc",
+        "text": "#232a24",
+        "accent": "#c1292e",
+        "accent2": "#2d6a4f"
+      }
+    },
+    {
+      "id": "vintage-noel-tinsel-pine",
+      "name": "Tinsel Pine",
+      "colors": {
+        "background": "#183a2d",
+        "text": "#faf2e1",
+        "accent": "#e05a47",
+        "accent2": "#e8c66b"
+      }
+    },
+    {
+      "id": "vintage-noel-mint-ornament",
+      "name": "Mint Ornament",
+      "colors": {
+        "background": "#e6f2ec",
+        "text": "#1f332c",
+        "accent": "#c83e3b",
+        "accent2": "#d4a64a"
+      }
+    },
+    {
+      "id": "winter-solstice-celestial-solstice-teal",
+      "name": "Solstice Teal",
+      "colors": {
+        "background": "#0f2b33",
+        "text": "#f4eedc",
+        "accent": "#dfb55b",
+        "accent2": "#6da6ad"
+      }
+    },
+    {
+      "id": "winter-solstice-celestial-lunar-navy",
+      "name": "Lunar Navy",
+      "colors": {
+        "background": "#141d33",
+        "text": "#f2ede0",
+        "accent": "#d4b06a",
+        "accent2": "#8e9cc4"
+      }
+    },
+    {
+      "id": "winter-solstice-celestial-sunlit-cream",
+      "name": "Sunlit Cream",
+      "colors": {
+        "background": "#f6f1e4",
+        "text": "#1b2e35",
+        "accent": "#b58a34",
+        "accent2": "#2c6870"
+      }
+    }
+  ],
+  "backgrounds": [
+    {
+      "id": "chalet-timber",
+      "name": "Chalet timber",
+      "file": "textures/chalet-timber.jpg",
+      "mode": "tile",
+      "kind": "image",
+      "tileSizeIn": 1.71,
+      "tone": "light"
+    },
+    {
+      "id": "alpine-snow",
+      "name": "Alpine snow",
+      "file": "textures/alpine-snow.png",
+      "mode": "tile",
+      "kind": "overlay",
+      "tileSizeIn": 1.71,
+      "tone": "light"
+    },
+    {
+      "id": "buffalo-flannel",
+      "name": "Buffalo flannel",
+      "file": "textures/buffalo-flannel.jpg",
+      "mode": "tile",
+      "kind": "image",
+      "tileSizeIn": 1.71,
+      "tone": "dark"
+    },
+    {
+      "id": "warm-cabin-pine",
+      "name": "Warm cabin pine",
+      "file": "textures/warm-cabin-pine.jpg",
+      "mode": "tile",
+      "kind": "image",
+      "tileSizeIn": 1.71,
+      "tone": "dark"
+    },
+    {
+      "id": "cotton-letterpress",
+      "name": "Cotton letterpress",
+      "file": "textures/cotton-letterpress.png",
+      "mode": "tile",
+      "kind": "overlay",
+      "tileSizeIn": 1.71,
+      "tone": "dark"
+    },
+    {
+      "id": "emerald-velvet",
+      "name": "Emerald velvet",
+      "file": "textures/emerald-velvet.jpg",
+      "mode": "cover",
+      "kind": "image",
+      "tone": "dark"
+    },
+    {
+      "id": "silver-frost-wash",
+      "name": "Silver frost wash",
+      "file": "textures/silver-frost-wash.jpg",
+      "mode": "cover",
+      "kind": "image",
+      "tone": "light"
+    },
+    {
+      "id": "cotton-grain",
+      "name": "Cotton grain",
+      "file": "textures/cotton-grain.png",
+      "mode": "tile",
+      "kind": "overlay",
+      "tileSizeIn": 1.71,
+      "tone": "light"
+    },
+    {
+      "id": "gingerbread-kraft",
+      "name": "Gingerbread kraft",
+      "file": "textures/gingerbread-kraft.jpg",
+      "mode": "tile",
+      "kind": "image",
+      "tileSizeIn": 1.71,
+      "tone": "light"
+    },
+    {
+      "id": "sugar-dusting",
+      "name": "Sugar dusting",
+      "file": "textures/sugar-dusting.png",
+      "mode": "tile",
+      "kind": "overlay",
+      "tileSizeIn": 1.71,
+      "tone": "light"
+    },
+    {
+      "id": "bethlehem-night-sky",
+      "name": "Bethlehem night sky",
+      "file": "textures/bethlehem-night-sky.jpg",
+      "mode": "cover",
+      "kind": "image",
+      "tone": "dark"
+    },
+    {
+      "id": "midnight-velvet",
+      "name": "Midnight velvet",
+      "file": "textures/midnight-velvet.jpg",
+      "mode": "cover",
+      "kind": "image",
+      "tone": "dark"
+    },
+    {
+      "id": "scandi-linen",
+      "name": "Scandi linen",
+      "file": "textures/scandi-linen.png",
+      "mode": "tile",
+      "kind": "overlay",
+      "tileSizeIn": 1.71,
+      "tone": "light"
+    },
+    {
+      "id": "soft-snow-overlay",
+      "name": "Soft snow overlay",
+      "file": "textures/soft-snow-overlay.png",
+      "mode": "tile",
+      "kind": "overlay",
+      "tileSizeIn": 1.71,
+      "tone": "light"
+    },
+    {
+      "id": "candy-cane-stripe",
+      "name": "Candy cane stripe",
+      "file": "textures/candy-cane-stripe.jpg",
+      "mode": "tile",
+      "kind": "image",
+      "tileSizeIn": 1.71,
+      "tone": "light"
+    },
+    {
+      "id": "festive-dots",
+      "name": "Festive dots",
+      "file": "textures/festive-dots.png",
+      "mode": "tile",
+      "kind": "overlay",
+      "tileSizeIn": 1.71,
+      "tone": "light"
+    },
+    {
+      "id": "frosted-wash",
+      "name": "Frosted wash",
+      "file": "textures/frosted-wash.jpg",
+      "mode": "cover",
+      "kind": "image",
+      "tone": "light"
+    },
+    {
+      "id": "crystal-snowfall",
+      "name": "Crystal snowfall",
+      "file": "textures/crystal-snowfall.png",
+      "mode": "tile",
+      "kind": "overlay",
+      "tileSizeIn": 1.71,
+      "tone": "light"
+    },
+    {
+      "id": "woven-tartan",
+      "name": "Woven tartan",
+      "file": "textures/woven-tartan.jpg",
+      "mode": "tile",
+      "kind": "image",
+      "tileSizeIn": 1.71,
+      "tone": "dark"
+    },
+    {
+      "id": "woollen-weave",
+      "name": "Woollen weave",
+      "file": "textures/woollen-weave.png",
+      "mode": "tile",
+      "kind": "overlay",
+      "tileSizeIn": 1.71,
+      "tone": "dark"
+    },
+    {
+      "id": "vintage-cardstock",
+      "name": "Vintage cardstock",
+      "file": "textures/vintage-cardstock.png",
+      "mode": "tile",
+      "kind": "overlay",
+      "tileSizeIn": 1.71,
+      "tone": "light"
+    },
+    {
+      "id": "holiday-diagonal-stripe",
+      "name": "Holiday diagonal stripe",
+      "file": "textures/holiday-diagonal-stripe.jpg",
+      "mode": "tile",
+      "kind": "image",
+      "tileSizeIn": 1.71,
+      "tone": "light"
+    },
+    {
+      "id": "solstice-sky",
+      "name": "Solstice sky",
+      "file": "textures/solstice-sky.jpg",
+      "mode": "cover",
+      "kind": "image",
+      "tone": "dark"
+    },
+    {
+      "id": "deep-celestial",
+      "name": "Deep celestial",
+      "file": "textures/deep-celestial.jpg",
+      "mode": "cover",
+      "kind": "image",
+      "tone": "dark"
+    }
+  ],
+  "ornaments": [
+    {
+      "id": "geometric-corner-frame",
+      "name": "Geometric corner frame",
+      "file": "ornaments/geometric-corner-frame.svg",
+      "kind": "frame",
+      "tags": [
+        "geometric corner"
+      ],
+      "stretch": true
+    },
+    {
+      "id": "evergreen-corner",
+      "name": "Evergreen corner",
+      "file": "ornaments/evergreen-corner.svg",
+      "kind": "corner",
+      "tags": [
+        "evergreen"
+      ]
+    },
+    {
+      "id": "pines-divider",
+      "name": "Pines divider",
+      "file": "ornaments/pines-divider.svg",
+      "kind": "divider",
+      "tags": [
+        "pines"
+      ]
+    },
+    {
+      "id": "snowflake-motif",
+      "name": "Snowflake Crest",
+      "file": "ornaments/snowflake-motif.svg",
+      "kind": "ornament",
+      "tags": [
+        "snowflake",
+        "christmas",
+        "holiday"
+      ]
+    },
+    {
+      "id": "snow-scatter",
+      "name": "Snow Scatter",
+      "file": "ornaments/snow-scatter.svg",
+      "kind": "scatter",
+      "tags": [
+        "snow"
+      ]
+    },
+    {
+      "id": "snow-scatter-2",
+      "name": "Snow Scatter 2",
+      "file": "ornaments/snow-scatter-2.svg",
+      "kind": "scatter",
+      "tags": [
+        "snow"
+      ]
+    },
+    {
+      "id": "snow-scatter-3",
+      "name": "Snow Scatter 3",
+      "file": "ornaments/snow-scatter-3.svg",
+      "kind": "scatter",
+      "tags": [
+        "snow"
+      ]
+    },
+    {
+      "id": "botanical-sprig-motif",
+      "name": "Botanical Sprig Crest",
+      "file": "ornaments/botanical-sprig-motif.svg",
+      "kind": "ornament",
+      "tags": [
+        "botanical sprig",
+        "christmas",
+        "holiday",
+        "mothers day",
+        "wedding",
+        "thanksgiving",
+        "birth",
+        "first birthday",
+        "thank you"
+      ]
+    },
+    {
+      "id": "snow-scatter-4",
+      "name": "Snow Scatter 4",
+      "file": "ornaments/snow-scatter-4.svg",
+      "kind": "scatter",
+      "tags": [
+        "snow"
+      ]
+    },
+    {
+      "id": "lace-corner",
+      "name": "Lace corner",
+      "file": "ornaments/lace-corner.svg",
+      "kind": "corner",
+      "tags": [
+        "lace"
+      ]
+    },
+    {
+      "id": "snow-scatter-5",
+      "name": "Snow Scatter 5",
+      "file": "ornaments/snow-scatter-5.svg",
+      "kind": "scatter",
+      "tags": [
+        "snow"
+      ]
+    },
+    {
+      "id": "arch-border-frame",
+      "name": "Arch border frame",
+      "file": "ornaments/arch-border-frame.svg",
+      "kind": "frame",
+      "tags": [
+        "arch border"
+      ],
+      "stretch": true
+    },
+    {
+      "id": "triple-star-divider",
+      "name": "Triple star divider",
+      "file": "ornaments/triple-star-divider.svg",
+      "kind": "divider",
+      "tags": [
+        "triple star"
+      ]
+    },
+    {
+      "id": "stars-scatter",
+      "name": "Stars Scatter",
+      "file": "ornaments/stars-scatter.svg",
+      "kind": "scatter",
+      "tags": [
+        "stars"
+      ]
+    },
+    {
+      "id": "snow-scatter-6",
+      "name": "Snow Scatter 6",
+      "file": "ornaments/snow-scatter-6.svg",
+      "kind": "scatter",
+      "tags": [
+        "snow"
+      ]
+    },
+    {
+      "id": "confetti-scatter",
+      "name": "Confetti Scatter",
+      "file": "ornaments/confetti-scatter.svg",
+      "kind": "scatter",
+      "tags": [
+        "confetti"
+      ]
+    },
+    {
+      "id": "stars-scatter-2",
+      "name": "Stars Scatter 2",
+      "file": "ornaments/stars-scatter-2.svg",
+      "kind": "scatter",
+      "tags": [
+        "stars"
+      ]
+    },
+    {
+      "id": "snow-scatter-7",
+      "name": "Snow Scatter 7",
+      "file": "ornaments/snow-scatter-7.svg",
+      "kind": "scatter",
+      "tags": [
+        "snow"
+      ]
+    },
+    {
+      "id": "stars-scatter-3",
+      "name": "Stars Scatter 3",
+      "file": "ornaments/stars-scatter-3.svg",
+      "kind": "scatter",
+      "tags": [
+        "stars"
+      ]
+    },
+    {
+      "id": "stars-scatter-4",
+      "name": "Stars Scatter 4",
+      "file": "ornaments/stars-scatter-4.svg",
+      "kind": "scatter",
+      "tags": [
+        "stars"
+      ]
+    }
+  ],
+  "stickers": [
+    {
+      "id": "mountain-badge-sticker",
+      "name": "Mountain Badge",
+      "file": "stickers/mountain-badge-sticker.svg",
+      "tags": [
+        "mountain badge",
+        "christmas",
+        "holiday"
+      ]
+    },
+    {
+      "id": "gift-sticker",
+      "name": "Gift",
+      "file": "stickers/gift-sticker.svg",
+      "tags": [
+        "gift",
+        "christmas",
+        "holiday"
+      ]
+    },
+    {
+      "id": "bauble-sticker",
+      "name": "Bauble",
+      "file": "stickers/bauble-sticker.svg",
+      "tags": [
+        "bauble",
+        "christmas",
+        "holiday"
+      ]
+    },
+    {
+      "id": "firework-sticker",
+      "name": "Firework",
+      "file": "stickers/firework-sticker.svg",
+      "tags": [
+        "firework",
+        "christmas",
+        "winter solstice"
+      ]
+    },
+    {
+      "id": "moon-cloud-sticker",
+      "name": "Moon Cloud",
+      "file": "stickers/moon-cloud-sticker.svg",
+      "tags": [
+        "moon cloud",
+        "winter solstice",
+        "holiday"
+      ]
+    }
+  ],
+  "templates": [
+    "templates/alpine-chalet-full-bleed.json",
+    "templates/cozy-flannel-trio.json",
+    "templates/evergreen-letterpress-split.json",
+    "templates/frost-botanical-oval.json",
+    "templates/gingerbread-hearth-polaroid.json",
+    "templates/midnight-nativity-arch.json",
+    "templates/nordic-hygge-framed.json",
+    "templates/nordic-hygge-back-note.json",
+    "templates/peppermint-stripe-quad.json",
+    "templates/peppermint-stripe-back-note.json",
+    "templates/sugarplum-frost-oval.json",
+    "templates/sugarplum-frost-back-note.json",
+    "templates/tartan-lodge-trio.json",
+    "templates/vintage-noel-arch.json",
+    "templates/winter-solstice-celestial-arch.json",
+    "templates/winter-solstice-celestial-back-note.json"
+  ]
+}

@@ -8,6 +8,7 @@ import { cacheGet, cachePut, once } from '../util/cache';
 import { httpError } from '../util/fsx';
 import { assertId, assetToItem, type ImmichAsset, type SearchResponse } from './assets';
 import { clientForUser, connectionDto, deleteUserKey, immichServerUrl, saveUserKey, verifyImmichKey, verifyStoredKey } from './credentials';
+import { invalidateUserPhotos } from './photoCache';
 
 const PAGE_SIZE = 150;
 
@@ -27,6 +28,7 @@ export function registerImmichRoutes(app: FastifyInstance) {
     if (!typed && check.dangerous.length) {
       // The saved key gained write permissions in Immich: stop using it.
       deleteUserKey(me.userId);
+      invalidateUserPhotos(me.userId);
       audit({ event: 'immich.key_rejected', outcome: 'denied', userId: me.userId, username: me.username, ip: clientIp(req), detail: { reason: 'stored key now has write scopes', dangerous: check.dangerous } });
     } else {
       audit({ event: 'immich.key_tested', outcome: check.authenticated ? 'ok' : 'error', userId: me.userId, username: me.username, ip: clientIp(req), detail: { stored: !typed, verifiable: check.scopesVerifiable } });
@@ -45,6 +47,7 @@ export function registerImmichRoutes(app: FastifyInstance) {
       const code = check.dangerous.length ? 'dangerous_scopes' : !check.authenticated ? 'not_authenticated' : 'manual_verification_required';
       return reply.code(check.dangerous.length ? 422 : check.authenticated ? 409 : 400).send({ error: check.error ?? check.warning ?? 'The key was not saved.', code, check });
     }
+    invalidateUserPhotos(me.userId);
     audit({ event: 'immich.key_saved', userId: me.userId, username: me.username, ip: clientIp(req), detail: { last4: apiKey.slice(-4), scopesVerified: check.scopesVerifiable, manualAck: !check.scopesVerifiable, permissions: check.permissions } });
     return { check, connection: connectionDto(me.userId) };
   });
@@ -52,6 +55,7 @@ export function registerImmichRoutes(app: FastifyInstance) {
   app.delete('/api/me/immich', async (req) => {
     const me = userOf(req);
     deleteUserKey(me.userId);
+    invalidateUserPhotos(me.userId);
     audit({ event: 'immich.key_removed', userId: me.userId, username: me.username, ip: clientIp(req) });
     return connectionDto(me.userId);
   });

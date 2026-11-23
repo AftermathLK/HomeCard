@@ -1,0 +1,645 @@
+{
+  "$schema": "../style-pack.schema.json",
+  "id": "lights-and-faith",
+  "name": "Festivals of Light & Faith",
+  "version": "1.0.0",
+  "author": "HomeCard contributors",
+  "license": "CC0-1.0",
+  "description": "Hanukkah, Kwanzaa, Diwali, Eid, Lunar New Year, Passover and Rosh Hashanah.",
+  "occasions": [
+    "hanukkah",
+    "kwanzaa",
+    "diwali",
+    "eid-al-fitr",
+    "eid-al-adha",
+    "lunar-new-year",
+    "passover",
+    "rosh-hashanah"
+  ],
+  "palettes": [
+    {
+      "id": "hanukkah-lights-sapphire-silver",
+      "name": "Sapphire & Silver",
+      "colors": {
+        "background": "#13294b",
+        "text": "#f4f7fb",
+        "accent": "#c8d6e5",
+        "accent2": "#e2bd62"
+      }
+    },
+    {
+      "id": "hanukkah-lights-ivory-menorah",
+      "name": "Ivory Menorah",
+      "colors": {
+        "background": "#f5f7fa",
+        "text": "#162d50",
+        "accent": "#265396",
+        "accent2": "#c49c40"
+      }
+    },
+    {
+      "id": "hanukkah-lights-royal-cobalt",
+      "name": "Royal Cobalt",
+      "colors": {
+        "background": "#1d3d73",
+        "text": "#ffffff",
+        "accent": "#e5c56c",
+        "accent2": "#9ec0eb"
+      }
+    },
+    {
+      "id": "hanukkah-modern-blue-indigo-wash",
+      "name": "Indigo Wash",
+      "colors": {
+        "background": "#eef3fa",
+        "text": "#1c2c4a",
+        "accent": "#335c9c",
+        "accent2": "#c8a252"
+      }
+    },
+    {
+      "id": "hanukkah-modern-blue-slate-gold",
+      "name": "Slate & Gold",
+      "colors": {
+        "background": "#223452",
+        "text": "#f6f2e8",
+        "accent": "#dec078",
+        "accent2": "#88abd6"
+      }
+    },
+    {
+      "id": "hanukkah-modern-blue-sky-linen",
+      "name": "Sky & Linen",
+      "colors": {
+        "background": "#f6f8fb",
+        "text": "#24354d",
+        "accent": "#4b79b8",
+        "accent2": "#b3924c"
+      }
+    },
+    {
+      "id": "kwanzaa-harvest-umoja-classic",
+      "name": "Umoja Classic",
+      "colors": {
+        "background": "#171717",
+        "text": "#faf4e6",
+        "accent": "#d42b2b",
+        "accent2": "#2a854b"
+      }
+    },
+    {
+      "id": "kwanzaa-harvest-harvest-gold",
+      "name": "Harvest Gold",
+      "colors": {
+        "background": "#f7f0e2",
+        "text": "#1c1916",
+        "accent": "#b82424",
+        "accent2": "#1f6b3c"
+      }
+    },
+    {
+      "id": "kwanzaa-harvest-emerald-kinara",
+      "name": "Emerald Kinara",
+      "colors": {
+        "background": "#143624",
+        "text": "#f9f3e4",
+        "accent": "#e3b23c",
+        "accent2": "#c93232"
+      }
+    },
+    {
+      "id": "diwali-diya-saffron-royal",
+      "name": "Saffron Royal",
+      "colors": {
+        "background": "#38122b",
+        "text": "#fdf4e3",
+        "accent": "#f0b93c",
+        "accent2": "#e0487a"
+      }
+    },
+    {
+      "id": "diwali-diya-marigold-silk",
+      "name": "Marigold Silk",
+      "colors": {
+        "background": "#fcf4e3",
+        "text": "#361829",
+        "accent": "#d97b16",
+        "accent2": "#b8255f"
+      }
+    },
+    {
+      "id": "diwali-diya-peacock-lamp",
+      "name": "Peacock Lamp",
+      "colors": {
+        "background": "#142640",
+        "text": "#fdf4e3",
+        "accent": "#f2c144",
+        "accent2": "#d94a7b"
+      }
+    },
+    {
+      "id": "eid-crescent-royal-teal",
+      "name": "Royal Teal",
+      "colors": {
+        "background": "#10323a",
+        "text": "#f8f2e4",
+        "accent": "#e0b854",
+        "accent2": "#5ea8ab"
+      }
+    },
+    {
+      "id": "eid-crescent-crescent-ivory",
+      "name": "Crescent Ivory",
+      "colors": {
+        "background": "#f8f4e8",
+        "text": "#17333b",
+        "accent": "#1f6873",
+        "accent2": "#c49632"
+      }
+    },
+    {
+      "id": "eid-crescent-lantern-night",
+      "name": "Lantern Night",
+      "colors": {
+        "background": "#17203d",
+        "text": "#f7f1e1",
+        "accent": "#e5c060",
+        "accent2": "#7f9fd4"
+      }
+    },
+    {
+      "id": "lunar-lantern-imperial-red",
+      "name": "Imperial Red",
+      "colors": {
+        "background": "#9e1919",
+        "text": "#fdf3dc",
+        "accent": "#f0c85a",
+        "accent2": "#d95b43"
+      }
+    },
+    {
+      "id": "lunar-lantern-silk-cream",
+      "name": "Silk Cream",
+      "colors": {
+        "background": "#fbf3e4",
+        "text": "#2e1614",
+        "accent": "#b82020",
+        "accent2": "#c9962c"
+      }
+    },
+    {
+      "id": "lunar-lantern-lacquer-gold",
+      "name": "Lacquer & Gold",
+      "colors": {
+        "background": "#261212",
+        "text": "#faf0dc",
+        "accent": "#e8bd52",
+        "accent2": "#c7322c"
+      }
+    },
+    {
+      "id": "lunar-porcelain-cobalt-porcelain",
+      "name": "Cobalt Porcelain",
+      "colors": {
+        "background": "#f6f8fc",
+        "text": "#182f59",
+        "accent": "#24529e",
+        "accent2": "#c4382d"
+      }
+    },
+    {
+      "id": "lunar-porcelain-ming-indigo",
+      "name": "Ming Indigo",
+      "colors": {
+        "background": "#172d54",
+        "text": "#f5f8fc",
+        "accent": "#9bbef0",
+        "accent2": "#e05a47"
+      }
+    },
+    {
+      "id": "lunar-porcelain-tea-celadon",
+      "name": "Tea Celadon",
+      "colors": {
+        "background": "#eef3ee",
+        "text": "#1f3630",
+        "accent": "#3a6ea5",
+        "accent2": "#b83b32"
+      }
+    },
+    {
+      "id": "passover-olive-jerusalem-stone",
+      "name": "Jerusalem Stone",
+      "colors": {
+        "background": "#f5efe4",
+        "text": "#262b36",
+        "accent": "#5c7048",
+        "accent2": "#274775"
+      }
+    },
+    {
+      "id": "passover-olive-olive-gold",
+      "name": "Olive & Gold",
+      "colors": {
+        "background": "#eef0e6",
+        "text": "#253022",
+        "accent": "#5f7545",
+        "accent2": "#b8903a"
+      }
+    },
+    {
+      "id": "passover-olive-seder-navy",
+      "name": "Seder Navy",
+      "colors": {
+        "background": "#1a2a47",
+        "text": "#f6f0e3",
+        "accent": "#d4b262",
+        "accent2": "#8fa677"
+      }
+    },
+    {
+      "id": "rosh-hashanah-honey-honey-cream",
+      "name": "Honey & Cream",
+      "colors": {
+        "background": "#fcf6e8",
+        "text": "#2e2418",
+        "accent": "#d49324",
+        "accent2": "#9e3333"
+      }
+    },
+    {
+      "id": "rosh-hashanah-honey-pomegranate",
+      "name": "Pomegranate",
+      "colors": {
+        "background": "#faf2ee",
+        "text": "#331e21",
+        "accent": "#a62b38",
+        "accent2": "#c9922c"
+      }
+    },
+    {
+      "id": "rosh-hashanah-honey-evening-gold",
+      "name": "Evening Gold",
+      "colors": {
+        "background": "#242230",
+        "text": "#faf3e4",
+        "accent": "#e5b84b",
+        "accent2": "#c95b63"
+      }
+    }
+  ],
+  "backgrounds": [
+    {
+      "id": "candlelight-bokeh",
+      "name": "Candlelight bokeh",
+      "file": "textures/candlelight-bokeh.jpg",
+      "mode": "cover",
+      "kind": "image",
+      "tone": "dark"
+    },
+    {
+      "id": "hanukkah-night",
+      "name": "Hanukkah night",
+      "file": "textures/hanukkah-night.jpg",
+      "mode": "cover",
+      "kind": "image",
+      "tone": "dark"
+    },
+    {
+      "id": "indigo-watercolour",
+      "name": "Indigo watercolour",
+      "file": "textures/indigo-watercolour.jpg",
+      "mode": "cover",
+      "kind": "image",
+      "tone": "light"
+    },
+    {
+      "id": "fine-blue-linen",
+      "name": "Fine blue linen",
+      "file": "textures/fine-blue-linen.png",
+      "mode": "tile",
+      "kind": "overlay",
+      "tileSizeIn": 1.71,
+      "tone": "light"
+    },
+    {
+      "id": "woven-cloth",
+      "name": "Woven cloth",
+      "file": "textures/woven-cloth.png",
+      "mode": "tile",
+      "kind": "overlay",
+      "tileSizeIn": 1.71,
+      "tone": "dark"
+    },
+    {
+      "id": "heritage-stripe",
+      "name": "Heritage stripe",
+      "file": "textures/heritage-stripe.jpg",
+      "mode": "tile",
+      "kind": "image",
+      "tileSizeIn": 1.71,
+      "tone": "dark"
+    },
+    {
+      "id": "diwali-lamp-glow",
+      "name": "Diwali lamp glow",
+      "file": "textures/diwali-lamp-glow.jpg",
+      "mode": "cover",
+      "kind": "image",
+      "tone": "dark"
+    },
+    {
+      "id": "festive-rangoli-wave",
+      "name": "Festive rangoli wave",
+      "file": "textures/festive-rangoli-wave.jpg",
+      "mode": "tile",
+      "kind": "image",
+      "tileSizeIn": 1.6,
+      "tone": "dark"
+    },
+    {
+      "id": "eid-crescent-sky",
+      "name": "Eid crescent sky",
+      "file": "textures/eid-crescent-sky.jpg",
+      "mode": "cover",
+      "kind": "image",
+      "tone": "dark"
+    },
+    {
+      "id": "lantern-shimmer",
+      "name": "Lantern shimmer",
+      "file": "textures/lantern-shimmer.jpg",
+      "mode": "cover",
+      "kind": "image",
+      "tone": "dark"
+    },
+    {
+      "id": "auspicious-cloud-waves",
+      "name": "Auspicious cloud waves",
+      "file": "textures/auspicious-cloud-waves.jpg",
+      "mode": "tile",
+      "kind": "image",
+      "tileSizeIn": 1.6,
+      "tone": "dark"
+    },
+    {
+      "id": "lantern-glow",
+      "name": "Lantern glow",
+      "file": "textures/lantern-glow.jpg",
+      "mode": "cover",
+      "kind": "image",
+      "tone": "dark"
+    },
+    {
+      "id": "porcelain-waves",
+      "name": "Porcelain waves",
+      "file": "textures/porcelain-waves.jpg",
+      "mode": "tile",
+      "kind": "image",
+      "tileSizeIn": 1.6,
+      "tone": "light"
+    },
+    {
+      "id": "silk-paper",
+      "name": "Silk paper",
+      "file": "textures/silk-paper.png",
+      "mode": "tile",
+      "kind": "overlay",
+      "tileSizeIn": 1.71,
+      "tone": "light"
+    },
+    {
+      "id": "stone-linen",
+      "name": "Stone linen",
+      "file": "textures/stone-linen.png",
+      "mode": "tile",
+      "kind": "overlay",
+      "tileSizeIn": 1.71,
+      "tone": "light"
+    },
+    {
+      "id": "olive-wash",
+      "name": "Olive wash",
+      "file": "textures/olive-wash.jpg",
+      "mode": "cover",
+      "kind": "image",
+      "tone": "light"
+    },
+    {
+      "id": "golden-honey-wash",
+      "name": "Golden honey wash",
+      "file": "textures/golden-honey-wash.jpg",
+      "mode": "cover",
+      "kind": "image",
+      "tone": "light"
+    },
+    {
+      "id": "warm-holiday-linen",
+      "name": "Warm holiday linen",
+      "file": "textures/warm-holiday-linen.png",
+      "mode": "tile",
+      "kind": "overlay",
+      "tileSizeIn": 1.71,
+      "tone": "light"
+    }
+  ],
+  "ornaments": [
+    {
+      "id": "deco-fan-corner",
+      "name": "Deco fan corner",
+      "file": "ornaments/deco-fan-corner.svg",
+      "kind": "corner",
+      "tags": [
+        "deco fan"
+      ]
+    },
+    {
+      "id": "menorah-motif",
+      "name": "Menorah Crest",
+      "file": "ornaments/menorah-motif.svg",
+      "kind": "ornament",
+      "tags": [
+        "menorah",
+        "hanukkah",
+        "holiday"
+      ]
+    },
+    {
+      "id": "stars-scatter",
+      "name": "Stars Scatter",
+      "file": "ornaments/stars-scatter.svg",
+      "kind": "scatter",
+      "tags": [
+        "stars"
+      ]
+    },
+    {
+      "id": "stars-scatter-2",
+      "name": "Stars Scatter 2",
+      "file": "ornaments/stars-scatter-2.svg",
+      "kind": "scatter",
+      "tags": [
+        "stars"
+      ]
+    },
+    {
+      "id": "kinara-motif",
+      "name": "Kinara Crest",
+      "file": "ornaments/kinara-motif.svg",
+      "kind": "ornament",
+      "tags": [
+        "kinara",
+        "kwanzaa",
+        "holiday"
+      ]
+    },
+    {
+      "id": "stars-scatter-3",
+      "name": "Stars Scatter 3",
+      "file": "ornaments/stars-scatter-3.svg",
+      "kind": "scatter",
+      "tags": [
+        "stars"
+      ]
+    },
+    {
+      "id": "diya-motif",
+      "name": "Diya Crest",
+      "file": "ornaments/diya-motif.svg",
+      "kind": "ornament",
+      "tags": [
+        "diya",
+        "diwali"
+      ]
+    },
+    {
+      "id": "stars-scatter-4",
+      "name": "Stars Scatter 4",
+      "file": "ornaments/stars-scatter-4.svg",
+      "kind": "scatter",
+      "tags": [
+        "stars"
+      ]
+    },
+    {
+      "id": "stars-scatter-5",
+      "name": "Stars Scatter 5",
+      "file": "ornaments/stars-scatter-5.svg",
+      "kind": "scatter",
+      "tags": [
+        "stars"
+      ]
+    },
+    {
+      "id": "lantern-motif",
+      "name": "Lantern Crest",
+      "file": "ornaments/lantern-motif.svg",
+      "kind": "ornament",
+      "tags": [
+        "lantern",
+        "lunar new year",
+        "thank you"
+      ]
+    },
+    {
+      "id": "stars-scatter-6",
+      "name": "Stars Scatter 6",
+      "file": "ornaments/stars-scatter-6.svg",
+      "kind": "scatter",
+      "tags": [
+        "stars"
+      ]
+    },
+    {
+      "id": "petals-scatter",
+      "name": "Petals Scatter",
+      "file": "ornaments/petals-scatter.svg",
+      "kind": "scatter",
+      "tags": [
+        "petals"
+      ]
+    },
+    {
+      "id": "petals-scatter-2",
+      "name": "Petals Scatter 2",
+      "file": "ornaments/petals-scatter-2.svg",
+      "kind": "scatter",
+      "tags": [
+        "petals"
+      ]
+    },
+    {
+      "id": "petals-scatter-3",
+      "name": "Petals Scatter 3",
+      "file": "ornaments/petals-scatter-3.svg",
+      "kind": "scatter",
+      "tags": [
+        "petals"
+      ]
+    }
+  ],
+  "stickers": [
+    {
+      "id": "dreidel-sticker",
+      "name": "Dreidel",
+      "file": "stickers/dreidel-sticker.svg",
+      "tags": [
+        "dreidel",
+        "hanukkah",
+        "holiday"
+      ]
+    },
+    {
+      "id": "firework-sticker",
+      "name": "Firework",
+      "file": "stickers/firework-sticker.svg",
+      "tags": [
+        "firework",
+        "kwanzaa",
+        "holiday"
+      ]
+    },
+    {
+      "id": "lantern-red-sticker",
+      "name": "Lantern Red",
+      "file": "stickers/lantern-red-sticker.svg",
+      "tags": [
+        "lantern red",
+        "eid"
+      ]
+    },
+    {
+      "id": "wax-seal-sticker",
+      "name": "Wax Seal",
+      "file": "stickers/wax-seal-sticker.svg",
+      "tags": [
+        "wax seal",
+        "lunar new year",
+        "thank you"
+      ]
+    },
+    {
+      "id": "honey-jar-sticker",
+      "name": "Honey Jar",
+      "file": "stickers/honey-jar-sticker.svg",
+      "tags": [
+        "honey jar",
+        "rosh hashanah",
+        "passover"
+      ]
+    }
+  ],
+  "templates": [
+    "templates/hanukkah-lights-framed.json",
+    "templates/hanukkah-modern-blue-split.json",
+    "templates/kwanzaa-harvest-framed.json",
+    "templates/kwanzaa-harvest-back-note.json",
+    "templates/diwali-diya-arch.json",
+    "templates/eid-crescent-arch.json",
+    "templates/lunar-lantern-framed.json",
+    "templates/lunar-lantern-back-note.json",
+    "templates/lunar-porcelain-split.json",
+    "templates/passover-olive-split.json",
+    "templates/rosh-hashanah-honey-oval.json"
+  ]
+}

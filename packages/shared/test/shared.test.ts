@@ -9,12 +9,19 @@ import {
   CARD_SIZES,
   OCCASIONS,
   applyTemplate,
+  clearCustomTemplates,
+  registerCustomTemplates,
+  resolveColor,
+  mixHex,
   autoEnhance,
   buildPipeline,
   changeFormat,
   computeImageStats,
   contrastRatio,
   createProject,
+  defaultYearFor,
+  duplicateProject,
+  getOccasion,
   effectiveDpi,
   extractPalette,
   harmonyThemes,
@@ -244,4 +251,78 @@ test('render pages: panels, spreads, crop marks and exact 300 DPI pixels', () =>
   assert.deepEqual(pagePixels(tentPages[0], 300).w, Math.round((7 + 2 * tentPages[0].trim.x) * 300));
   assert.ok(tentPages[0].marks.some((m) => m.kind === 'fold'));
   assert.equal(Math.round(shareDpi(flat) * 5), 1080);
+});
+
+test('the {{year}} default follows the occasion’s next date, and copies of old cards move to it', () => {
+  const at = (iso: string) => new Date(`${iso}T12:00:00`);
+  const year = (id: string, iso: string) => defaultYearFor(getOccasion(id), at(iso));
+  assert.equal(year('christmas', '2026-11-23'), 2026);
+  assert.equal(year('new-year', '2026-08-31'), 2026);
+  assert.equal(year('new-year', '2026-09-01'), 2027);
+  assert.equal(year('valentines', '2026-02-10'), 2026);
+  assert.equal(year('valentines', '2026-11-23'), 2027);
+  assert.equal(year('halloween', '2026-10-20'), 2026);
+  assert.equal(year('halloween', '2026-11-11'), 2027);
+  assert.equal(year('wedding', '2026-12-31'), 2026);
+
+  const last = createProject({ occasionId: 'christmas', now: at('2025-11-20') });
+  assert.equal(last.year, 2025);
+  assert.equal(resolveTokens('Christmas {{year}}', last), 'Christmas 2025');
+  const again = duplicateProject(last, undefined, at('2026-11-23'));
+  assert.equal(again.year, 2026);
+  assert.equal(resolveTokens('Christmas {{year}}', again), 'Christmas 2026');
+  // A card already set to a later year (made early for next season) keeps it.
+  const ahead = duplicateProject({ ...last, year: 2027 }, undefined, at('2026-11-23'));
+  assert.equal(ahead.year, 2027);
+});
+
+test('accent text that would not read on its backing gets a readable theme colour', () => {
+  registerCustomTemplates(
+    [{
+      id: 'ink',
+      layouts: {
+        any: [
+          { type: 'text', role: 'subhead', rect: [0.1, 0.1, 0.8, 0.1] },
+          { type: 'shape', shape: 'rect', fill: '@text', rect: [0.1, 0.35, 0.8, 0.2] },
+          { type: 'text', role: 'year', rect: [0.15, 0.4, 0.7, 0.1] },
+          { type: 'photo', slot: 0, rect: [0, 0.65, 1, 0.35] },
+          { type: 'text', role: 'monogram', rect: [0.05, 0.75, 0.2, 0.15] },
+          { type: 'shape', shape: 'rect', fill: '@surface', opacity: 0.93, rect: [0.5, 0.7, 0.45, 0.25] },
+          { type: 'text', role: 'message', color: '@accent', rect: [0.55, 0.75, 0.35, 0.15] },
+        ],
+      },
+    }] as any,
+    'test',
+  );
+  try {
+    const need = (e: any) => (e.fontSize >= 18 ? 3 : 4.5);
+    const p = createProject({ occasionId: 'easter' });
+    const c = p.theme.colors;
+    assert.ok(contrastRatio(c.accent, c.background) < 4.5, 'Easter pairs a light accent with light paper');
+    const s = applyTemplate(p, 'front', 'test:ink');
+    const text = (role: string) => s.elements.find((e) => e.type === 'text' && e.role === role) as any;
+    const sub = text('subhead');
+    assert.notEqual(sub.color, '@accent', 'subhead on paper moves off the accent');
+    assert.ok(contrastRatio(resolveColor(sub.color, p.theme), c.background) >= need(sub));
+    const year = text('year');
+    assert.ok(contrastRatio(resolveColor(year.color, p.theme), c.text) >= need(year), 'year on a dark panel reads');
+    assert.equal(text('monogram').color, '@accent', 'text straight on a photo is left to the photo checks');
+    // A 93% plaque over a photo: must read whether the photo beneath is black or white.
+    const msg = text('message');
+    for (const under of ['#000000', '#ffffff']) {
+      const plaque = mixHex(under, c.surface, 0.93);
+      assert.ok(contrastRatio(resolveColor(msg.color, p.theme), plaque) >= need(msg), `message ${msg.color} on the plaque over ${under}`);
+    }
+
+    // Every occasion's own palette: accent text on plain paper always clears the bar.
+    for (const occ of OCCASIONS) {
+      const q = createProject({ occasionId: occ.id });
+      const sub2 = applyTemplate(q, 'front', 'test:ink').elements.find((e) => e.type === 'text' && e.role === 'subhead') as any;
+      const ratio = contrastRatio(resolveColor(sub2.color, q.theme), q.theme.colors.background);
+      assert.ok(ratio >= need(sub2), `${occ.id}: subhead ${sub2.color} reads at ${ratio.toFixed(1)}:1`);
+      if (contrastRatio(q.theme.colors.accent, q.theme.colors.background) >= need(sub2)) assert.equal(sub2.color, '@accent', `${occ.id} keeps a readable accent`);
+    }
+  } finally {
+    clearCustomTemplates();
+  }
 });

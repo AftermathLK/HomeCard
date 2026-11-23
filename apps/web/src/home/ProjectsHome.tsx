@@ -19,8 +19,10 @@ import { api, enc, onServerEvent } from '@/lib/api';
 import { useAssets } from '@/lib/assets';
 import { FormatFields, GreetingStylePicker, OccasionGrid, type FormatChoice } from '@/setup/CardSetup';
 import { useEditor } from '@/store/editor';
+import { useHolidays } from '@/store/holidays';
 import { useSession } from '@/store/session';
 import { useUi } from '@/store/ui';
+import { featuredHolidayId, UpcomingHero } from './UpcomingHero';
 
 type Summary = ProjectSummary & { hasThumb: boolean };
 
@@ -57,6 +59,7 @@ export function ProjectsHome() {
         <UserMenu />
       </header>
       <div className="mx-auto max-w-7xl px-8 py-6">
+        <UpcomingHero />
         {health && (!health.renderer.available || !health.immich.linked) && (
           <div className="mb-5 flex flex-wrap items-center gap-x-4 gap-y-1 rounded-xl border border-line bg-white px-4 py-3 text-[13px]">
             {!health.renderer.available && (
@@ -278,6 +281,7 @@ function ShareCopyModal({ p, onClose }: { p: Summary; onClose: () => void }) {
 
 export function NewCardModal() {
   const open = useUi((s) => s.newCardOpen);
+  const hidden = useHolidays((s) => s.prefs.hiddenOccasions);
   const [step, setStep] = useState<1 | 2>(1);
   const [occasionId, setOccasionId] = useState('christmas');
   const [style, setStyle] = useState<GreetingStyle>('warm');
@@ -289,12 +293,23 @@ export function NewCardModal() {
   const [busy, setBusy] = useState(false);
   useEffect(() => {
     if (!open) return;
-    setStep(1);
+    // From the home page's "Plan a … card": that occasion, straight to the details step.
+    // Otherwise start on the holiday the home page features.
+    const preset = useUi.getState().newCardOccasionId;
+    if (preset) {
+      setOccasionId(preset);
+      setStep(2);
+      useUi.setState({ newCardOccasionId: null });
+    } else {
+      setStep(1);
+      const featured = featuredHolidayId();
+      if (featured) setOccasionId(featured);
+    }
     const vendor = useSession.getState().user?.prefs.defaultVendorId;
     if (vendor) setFmt((f) => ({ ...f, vendorId: vendor }));
   }, [open]);
   if (!open) return null;
-  const close = () => useUi.setState({ newCardOpen: false });
+  const close = () => useUi.setState({ newCardOpen: false, newCardOccasionId: null });
   const occ = getOccasion(occasionId);
 
   const create = async () => {
@@ -343,7 +358,7 @@ export function NewCardModal() {
       }
     >
       {step === 1 ? (
-        <OccasionGrid value={occasionId} onChange={(id) => setOccasionId(id)} columns={4} />
+        <OccasionGrid value={occasionId} onChange={(id) => setOccasionId(id)} columns={4} hidden={hidden} onUnhide={(id) => void useHolidays.getState().unhide(id)} />
       ) : (
         <div className="grid grid-cols-2 gap-6">
           <div className="space-y-4">

@@ -580,9 +580,38 @@ export function searchOccasions(q: string): Occasion[] {
   );
 }
 
-/** Default year for an occasion relative to "now" (New Year cards in Oct–Dec target next year). */
+/**
+ * Last day (month 1–12, day) a card for a dated occasion is still sent for this year's date,
+ * a little after the latest the occasion falls. After it, a new card is for next year's.
+ * Moving dates (Easter, Eid, Diwali…) use the latest date they reach in the coming years.
+ */
+const SEASON_ENDS: Record<string, [number, number]> = {
+  valentines: [2, 28],
+  'lunar-new-year': [2, 28],
+  'st-patricks': [3, 31],
+  easter: [4, 30],
+  passover: [4, 30],
+  'eid-al-fitr': [4, 30],
+  'mothers-day': [5, 31],
+  'eid-al-adha': [6, 30],
+  'fathers-day': [6, 30],
+  'july-4': [7, 31],
+  graduation: [8, 31],
+  'rosh-hashanah': [10, 31],
+  halloween: [11, 10],
+  diwali: [11, 30],
+  thanksgiving: [12, 5],
+};
+
+/**
+ * Default year for an occasion relative to "now": the year of its next date. New Year cards from
+ * September on target next year; a dated occasion whose season has passed (Valentine's Day in
+ * November) targets next year's; Christmas-season and any-time occasions use this year.
+ */
 export function defaultYearFor(occasion: Occasion, now = new Date()): number {
   const y = now.getFullYear();
   if (occasion.yearMode === 'next') return now.getMonth() >= 8 ? y + 1 : y;
+  const end = SEASON_ENDS[occasion.id];
+  if (end && (now.getMonth() + 1 > end[0] || (now.getMonth() + 1 === end[0] && now.getDate() > end[1]))) return y + 1;
   return y;
 }

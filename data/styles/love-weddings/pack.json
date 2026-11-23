@@ -1,0 +1,806 @@
+{
+  "$schema": "../style-pack.schema.json",
+  "id": "love-weddings",
+  "name": "Love & Weddings",
+  "version": "1.0.0",
+  "author": "HomeCard contributors",
+  "license": "CC0-1.0",
+  "description": "Calligraphy, toile, pearl vellum, vineyards, coastal vows and vintage valentines.",
+  "occasions": [
+    "wedding",
+    "save-the-date",
+    "valentines"
+  ],
+  "palettes": [
+    {
+      "id": "champagne-ribbon-warm-silk",
+      "name": "Warm Silk",
+      "colors": {
+        "background": "#faf5eb",
+        "text": "#2e261d",
+        "accent": "#b58e52",
+        "accent2": "#9e7c6a"
+      }
+    },
+    {
+      "id": "champagne-ribbon-espresso-ribbon",
+      "name": "Espresso Ribbon",
+      "colors": {
+        "background": "#2b2119",
+        "text": "#faf4e8",
+        "accent": "#dfc082",
+        "accent2": "#c7a38e"
+      }
+    },
+    {
+      "id": "champagne-ribbon-sand-bronze",
+      "name": "Sand & Bronze",
+      "colors": {
+        "background": "#f2eadc",
+        "text": "#2d241b",
+        "accent": "#9e783d",
+        "accent2": "#7a6657"
+      }
+    },
+    {
+      "id": "coastal-vows-sea-glass",
+      "name": "Sea Glass",
+      "colors": {
+        "background": "#f2f8f8",
+        "text": "#22363b",
+        "accent": "#5c99a0",
+        "accent2": "#c2aa8a"
+      }
+    },
+    {
+      "id": "coastal-vows-driftwood-sand",
+      "name": "Driftwood Sand",
+      "colors": {
+        "background": "#f5f1ea",
+        "text": "#2a3338",
+        "accent": "#6b8fa3",
+        "accent2": "#b89f7d"
+      }
+    },
+    {
+      "id": "coastal-vows-harbor-deep",
+      "name": "Harbor Deep",
+      "colors": {
+        "background": "#1c3642",
+        "text": "#f2f7f7",
+        "accent": "#99cbd1",
+        "accent2": "#dec7a0"
+      }
+    },
+    {
+      "id": "dusty-blue-toile-french-blue",
+      "name": "French Blue",
+      "colors": {
+        "background": "#f5f7fa",
+        "text": "#213247",
+        "accent": "#53769c",
+        "accent2": "#b89f6d"
+      }
+    },
+    {
+      "id": "dusty-blue-toile-delft-evening",
+      "name": "Delft Evening",
+      "colors": {
+        "background": "#233852",
+        "text": "#f4f7fa",
+        "accent": "#9bbbd9",
+        "accent2": "#dec58e"
+      }
+    },
+    {
+      "id": "dusty-blue-toile-porcelain-mist",
+      "name": "Porcelain Mist",
+      "colors": {
+        "background": "#edf2f7",
+        "text": "#233345",
+        "accent": "#486b91",
+        "accent2": "#8ea68c"
+      }
+    },
+    {
+      "id": "modern-love-notes-oxblood-blush",
+      "name": "Oxblood & Blush",
+      "colors": {
+        "background": "#faf0ee",
+        "text": "#2e1518",
+        "accent": "#8f2230",
+        "accent2": "#d48d8d"
+      }
+    },
+    {
+      "id": "modern-love-notes-berry-editorial",
+      "name": "Berry Editorial",
+      "colors": {
+        "background": "#6e1b29",
+        "text": "#fdf4f2",
+        "accent": "#f2b8be",
+        "accent2": "#e3c58f"
+      }
+    },
+    {
+      "id": "modern-love-notes-chalk-cherry",
+      "name": "Chalk & Cherry",
+      "colors": {
+        "background": "#f7f5f2",
+        "text": "#1e1a1a",
+        "accent": "#c42b3b",
+        "accent2": "#8a7a75"
+      }
+    },
+    {
+      "id": "pearl-vellum-vellum-pearl",
+      "name": "Vellum Pearl",
+      "colors": {
+        "background": "#f7f6f8",
+        "text": "#2d2d36",
+        "accent": "#8c899c",
+        "accent2": "#c9b3a8"
+      }
+    },
+    {
+      "id": "pearl-vellum-silk-dove",
+      "name": "Silk Dove",
+      "colors": {
+        "background": "#eff0f2",
+        "text": "#262a30",
+        "accent": "#6e7a8a",
+        "accent2": "#b8a398"
+      }
+    },
+    {
+      "id": "pearl-vellum-oyster-shell",
+      "name": "Oyster Shell",
+      "colors": {
+        "background": "#f5f2ef",
+        "text": "#302b29",
+        "accent": "#9e8c82",
+        "accent2": "#c4b2c7"
+      }
+    },
+    {
+      "id": "romantic-calligraphy-champagne-silk",
+      "name": "Champagne Silk",
+      "colors": {
+        "background": "#f9f5ee",
+        "text": "#2b2520",
+        "accent": "#a68558",
+        "accent2": "#c79a9e"
+      }
+    },
+    {
+      "id": "romantic-calligraphy-charcoal-vow",
+      "name": "Charcoal Vow",
+      "colors": {
+        "background": "#242224",
+        "text": "#f8f4ed",
+        "accent": "#d9b982",
+        "accent2": "#d9a7ad"
+      }
+    },
+    {
+      "id": "romantic-calligraphy-rose-ivory",
+      "name": "Rose Ivory",
+      "colors": {
+        "background": "#faf2f2",
+        "text": "#332628",
+        "accent": "#b57480",
+        "accent2": "#b89b6a"
+      }
+    },
+    {
+      "id": "secret-garden-gold-secret-hunter",
+      "name": "Secret Hunter",
+      "colors": {
+        "background": "#152b22",
+        "text": "#f5f0e4",
+        "accent": "#d9b65c",
+        "accent2": "#7ea38c"
+      }
+    },
+    {
+      "id": "secret-garden-gold-garden-cream",
+      "name": "Garden Cream",
+      "colors": {
+        "background": "#f6f4ec",
+        "text": "#1b3026",
+        "accent": "#2b5944",
+        "accent2": "#bd9840"
+      }
+    },
+    {
+      "id": "secret-garden-gold-moss-velvet",
+      "name": "Moss Velvet",
+      "colors": {
+        "background": "#23362a",
+        "text": "#f5f1e6",
+        "accent": "#dfc070",
+        "accent2": "#9cb89f"
+      }
+    },
+    {
+      "id": "starlit-romance-twilight-sky",
+      "name": "Twilight Sky",
+      "colors": {
+        "background": "#121b33",
+        "text": "#f4f5fa",
+        "accent": "#d6c084",
+        "accent2": "#89a4d4"
+      }
+    },
+    {
+      "id": "starlit-romance-moonlit-indigo",
+      "name": "Moonlit Indigo",
+      "colors": {
+        "background": "#1c2847",
+        "text": "#f7f6fb",
+        "accent": "#cbd8ed",
+        "accent2": "#e3c578"
+      }
+    },
+    {
+      "id": "starlit-romance-starlight-mist",
+      "name": "Starlight Mist",
+      "colors": {
+        "background": "#eff2f8",
+        "text": "#1a2540",
+        "accent": "#455f94",
+        "accent2": "#b89748"
+      }
+    },
+    {
+      "id": "terracotta-boho-desert-clay",
+      "name": "Desert Clay",
+      "colors": {
+        "background": "#f8f1ea",
+        "text": "#36241d",
+        "accent": "#bd5c3e",
+        "accent2": "#768f78"
+      }
+    },
+    {
+      "id": "terracotta-boho-adobe-warmth",
+      "name": "Adobe Warmth",
+      "colors": {
+        "background": "#efe4d8",
+        "text": "#30221b",
+        "accent": "#a84c32",
+        "accent2": "#c49454"
+      }
+    },
+    {
+      "id": "terracotta-boho-canyon-dusk",
+      "name": "Canyon Dusk",
+      "colors": {
+        "background": "#3b231c",
+        "text": "#f7efe6",
+        "accent": "#df8a68",
+        "accent2": "#a4ba9f"
+      }
+    },
+    {
+      "id": "vineyard-wedding-merlot-olive",
+      "name": "Merlot & Olive",
+      "colors": {
+        "background": "#f6f1e8",
+        "text": "#2d1d21",
+        "accent": "#782436",
+        "accent2": "#5d7348"
+      }
+    },
+    {
+      "id": "vineyard-wedding-cellar-wine",
+      "name": "Cellar Wine",
+      "colors": {
+        "background": "#3d1620",
+        "text": "#f6efe4",
+        "accent": "#d4b06a",
+        "accent2": "#99ad7c"
+      }
+    },
+    {
+      "id": "vineyard-wedding-tuscan-sun",
+      "name": "Tuscan Sun",
+      "colors": {
+        "background": "#f4ece0",
+        "text": "#2f271f",
+        "accent": "#944038",
+        "accent2": "#6d8054"
+      }
+    },
+    {
+      "id": "vintage-valentine-crimson-lace",
+      "name": "Crimson Lace",
+      "colors": {
+        "background": "#fbf3f0",
+        "text": "#38181d",
+        "accent": "#b82436",
+        "accent2": "#d98a96"
+      }
+    },
+    {
+      "id": "vintage-valentine-velvet-heart",
+      "name": "Velvet Heart",
+      "colors": {
+        "background": "#591320",
+        "text": "#fcf3f0",
+        "accent": "#f0a3b0",
+        "accent2": "#e6c57a"
+      }
+    },
+    {
+      "id": "vintage-valentine-blush-cherub",
+      "name": "Blush Cherub",
+      "colors": {
+        "background": "#fcedf0",
+        "text": "#3d1e27",
+        "accent": "#cf425c",
+        "accent2": "#b88e52"
+      }
+    }
+  ],
+  "backgrounds": [
+    {
+      "id": "silk-cardstock",
+      "name": "Silk cardstock",
+      "file": "textures/silk-cardstock.png",
+      "mode": "tile",
+      "kind": "overlay",
+      "tileSizeIn": 1.71,
+      "tone": "light"
+    },
+    {
+      "id": "soft-champagne-light",
+      "name": "Soft champagne light",
+      "file": "textures/soft-champagne-light.jpg",
+      "mode": "cover",
+      "kind": "image",
+      "tone": "light"
+    },
+    {
+      "id": "sea-glass-wash",
+      "name": "Sea glass wash",
+      "file": "textures/sea-glass-wash.jpg",
+      "mode": "cover",
+      "kind": "image",
+      "tone": "light"
+    },
+    {
+      "id": "gentle-tide",
+      "name": "Gentle tide",
+      "file": "textures/gentle-tide.jpg",
+      "mode": "tile",
+      "kind": "image",
+      "tileSizeIn": 1.6,
+      "tone": "light"
+    },
+    {
+      "id": "french-cotton",
+      "name": "French cotton",
+      "file": "textures/french-cotton.png",
+      "mode": "tile",
+      "kind": "overlay",
+      "tileSizeIn": 1.71,
+      "tone": "light"
+    },
+    {
+      "id": "dusty-blue-wash",
+      "name": "Dusty blue wash",
+      "file": "textures/dusty-blue-wash.jpg",
+      "mode": "cover",
+      "kind": "image",
+      "tone": "light"
+    },
+    {
+      "id": "fine-cotton",
+      "name": "Fine cotton",
+      "file": "textures/fine-cotton.png",
+      "mode": "tile",
+      "kind": "overlay",
+      "tileSizeIn": 1.71,
+      "tone": "light"
+    },
+    {
+      "id": "love-note-stripe",
+      "name": "Love-note stripe",
+      "file": "textures/love-note-stripe.jpg",
+      "mode": "tile",
+      "kind": "image",
+      "tileSizeIn": 1.71,
+      "tone": "light"
+    },
+    {
+      "id": "pearl-sheen",
+      "name": "Pearl sheen",
+      "file": "textures/pearl-sheen.jpg",
+      "mode": "cover",
+      "kind": "image",
+      "tone": "light"
+    },
+    {
+      "id": "translucent-vellum",
+      "name": "Translucent vellum",
+      "file": "textures/translucent-vellum.png",
+      "mode": "tile",
+      "kind": "overlay",
+      "tileSizeIn": 1.71,
+      "tone": "light"
+    },
+    {
+      "id": "bridal-linen",
+      "name": "Bridal linen",
+      "file": "textures/bridal-linen.png",
+      "mode": "tile",
+      "kind": "overlay",
+      "tileSizeIn": 1.71,
+      "tone": "light"
+    },
+    {
+      "id": "champagne-wash",
+      "name": "Champagne wash",
+      "file": "textures/champagne-wash.jpg",
+      "mode": "cover",
+      "kind": "image",
+      "tone": "light"
+    },
+    {
+      "id": "deep-garden-velvet",
+      "name": "Deep garden velvet",
+      "file": "textures/deep-garden-velvet.jpg",
+      "mode": "cover",
+      "kind": "image",
+      "tone": "dark"
+    },
+    {
+      "id": "fine-cotton-2",
+      "name": "Fine cotton",
+      "file": "textures/fine-cotton-2.png",
+      "mode": "tile",
+      "kind": "overlay",
+      "tileSizeIn": 1.71,
+      "tone": "dark"
+    },
+    {
+      "id": "starlit-sky",
+      "name": "Starlit sky",
+      "file": "textures/starlit-sky.jpg",
+      "mode": "cover",
+      "kind": "image",
+      "tone": "dark"
+    },
+    {
+      "id": "evening-twilight",
+      "name": "Evening twilight",
+      "file": "textures/evening-twilight.jpg",
+      "mode": "cover",
+      "kind": "image",
+      "tone": "dark"
+    },
+    {
+      "id": "terracotta-wash",
+      "name": "Terracotta wash",
+      "file": "textures/terracotta-wash.jpg",
+      "mode": "cover",
+      "kind": "image",
+      "tone": "light"
+    },
+    {
+      "id": "handmade-clay-paper",
+      "name": "Handmade clay paper",
+      "file": "textures/handmade-clay-paper.jpg",
+      "mode": "tile",
+      "kind": "image",
+      "tileSizeIn": 1.71,
+      "tone": "light"
+    },
+    {
+      "id": "tuscan-linen",
+      "name": "Tuscan linen",
+      "file": "textures/tuscan-linen.png",
+      "mode": "tile",
+      "kind": "overlay",
+      "tileSizeIn": 1.71,
+      "tone": "light"
+    },
+    {
+      "id": "merlot-wash",
+      "name": "Merlot wash",
+      "file": "textures/merlot-wash.jpg",
+      "mode": "cover",
+      "kind": "image",
+      "tone": "light"
+    },
+    {
+      "id": "lace-letterpress",
+      "name": "Lace letterpress",
+      "file": "textures/lace-letterpress.png",
+      "mode": "tile",
+      "kind": "overlay",
+      "tileSizeIn": 1.71,
+      "tone": "light"
+    },
+    {
+      "id": "crimson-velvet",
+      "name": "Crimson velvet",
+      "file": "textures/crimson-velvet.jpg",
+      "mode": "cover",
+      "kind": "image",
+      "tone": "light"
+    }
+  ],
+  "ornaments": [
+    {
+      "id": "wreath-motif",
+      "name": "Wreath Crest",
+      "file": "ornaments/wreath-motif.svg",
+      "kind": "ornament",
+      "tags": [
+        "wreath",
+        "christmas",
+        "holiday",
+        "passover",
+        "rosh hashanah",
+        "thanksgiving",
+        "thank you",
+        "wedding",
+        "save the date"
+      ]
+    },
+    {
+      "id": "double-rule-frame",
+      "name": "Double rule frame",
+      "file": "ornaments/double-rule-frame.svg",
+      "kind": "frame",
+      "tags": [
+        "double rule"
+      ],
+      "stretch": true
+    },
+    {
+      "id": "ornate-brackets-frame",
+      "name": "Ornate brackets frame",
+      "file": "ornaments/ornate-brackets-frame.svg",
+      "kind": "frame",
+      "tags": [
+        "ornate brackets"
+      ],
+      "stretch": true
+    },
+    {
+      "id": "flourish-corner",
+      "name": "Flourish corner",
+      "file": "ornaments/flourish-corner.svg",
+      "kind": "corner",
+      "tags": [
+        "flourish"
+      ]
+    },
+    {
+      "id": "heart-line-divider",
+      "name": "Heart line divider",
+      "file": "ornaments/heart-line-divider.svg",
+      "kind": "divider",
+      "tags": [
+        "heart line"
+      ]
+    },
+    {
+      "id": "monogram-seal-motif",
+      "name": "Monogram Seal Crest",
+      "file": "ornaments/monogram-seal-motif.svg",
+      "kind": "ornament",
+      "tags": [
+        "monogram seal",
+        "wedding",
+        "new year",
+        "save the date",
+        "thank you"
+      ]
+    },
+    {
+      "id": "confetti-scatter",
+      "name": "Confetti Scatter",
+      "file": "ornaments/confetti-scatter.svg",
+      "kind": "scatter",
+      "tags": [
+        "confetti"
+      ]
+    },
+    {
+      "id": "petals-scatter",
+      "name": "Petals Scatter",
+      "file": "ornaments/petals-scatter.svg",
+      "kind": "scatter",
+      "tags": [
+        "petals"
+      ]
+    },
+    {
+      "id": "petals-scatter-2",
+      "name": "Petals Scatter 2",
+      "file": "ornaments/petals-scatter-2.svg",
+      "kind": "scatter",
+      "tags": [
+        "petals"
+      ]
+    },
+    {
+      "id": "tape-corner",
+      "name": "Tape corner",
+      "file": "ornaments/tape-corner.svg",
+      "kind": "corner",
+      "tags": [
+        "tape"
+      ]
+    },
+    {
+      "id": "heart-motif",
+      "name": "Heart Crest",
+      "file": "ornaments/heart-motif.svg",
+      "kind": "ornament",
+      "tags": [
+        "heart",
+        "valentines",
+        "save the date",
+        "birth",
+        "thank you",
+        "first birthday"
+      ]
+    },
+    {
+      "id": "confetti-scatter-2",
+      "name": "Confetti Scatter 2",
+      "file": "ornaments/confetti-scatter-2.svg",
+      "kind": "scatter",
+      "tags": [
+        "confetti"
+      ]
+    },
+    {
+      "id": "petals-scatter-3",
+      "name": "Petals Scatter 3",
+      "file": "ornaments/petals-scatter-3.svg",
+      "kind": "scatter",
+      "tags": [
+        "petals"
+      ]
+    },
+    {
+      "id": "petals-scatter-4",
+      "name": "Petals Scatter 4",
+      "file": "ornaments/petals-scatter-4.svg",
+      "kind": "scatter",
+      "tags": [
+        "petals"
+      ]
+    },
+    {
+      "id": "petals-scatter-5",
+      "name": "Petals Scatter 5",
+      "file": "ornaments/petals-scatter-5.svg",
+      "kind": "scatter",
+      "tags": [
+        "petals"
+      ]
+    },
+    {
+      "id": "stars-scatter",
+      "name": "Stars Scatter",
+      "file": "ornaments/stars-scatter.svg",
+      "kind": "scatter",
+      "tags": [
+        "stars"
+      ]
+    },
+    {
+      "id": "petals-scatter-6",
+      "name": "Petals Scatter 6",
+      "file": "ornaments/petals-scatter-6.svg",
+      "kind": "scatter",
+      "tags": [
+        "petals"
+      ]
+    },
+    {
+      "id": "petals-scatter-7",
+      "name": "Petals Scatter 7",
+      "file": "ornaments/petals-scatter-7.svg",
+      "kind": "scatter",
+      "tags": [
+        "petals"
+      ]
+    },
+    {
+      "id": "petals-scatter-8",
+      "name": "Petals Scatter 8",
+      "file": "ornaments/petals-scatter-8.svg",
+      "kind": "scatter",
+      "tags": [
+        "petals"
+      ]
+    }
+  ],
+  "stickers": [
+    {
+      "id": "wax-seal-sticker",
+      "name": "Wax Seal",
+      "file": "stickers/wax-seal-sticker.svg",
+      "tags": [
+        "wax seal",
+        "wedding",
+        "new year"
+      ]
+    },
+    {
+      "id": "shell-sticker",
+      "name": "Shell",
+      "file": "stickers/shell-sticker.svg",
+      "tags": [
+        "shell",
+        "wedding",
+        "save the date"
+      ]
+    },
+    {
+      "id": "flower-bouquet-sticker",
+      "name": "Flower Bouquet",
+      "file": "stickers/flower-bouquet-sticker.svg",
+      "tags": [
+        "flower bouquet",
+        "wedding",
+        "save the date"
+      ]
+    },
+    {
+      "id": "love-letter-sticker",
+      "name": "Love Letter",
+      "file": "stickers/love-letter-sticker.svg",
+      "tags": [
+        "love letter",
+        "valentines",
+        "save the date"
+      ]
+    },
+    {
+      "id": "rings-sticker",
+      "name": "Rings",
+      "file": "stickers/rings-sticker.svg",
+      "tags": [
+        "rings",
+        "wedding",
+        "save the date"
+      ]
+    },
+    {
+      "id": "moon-cloud-sticker",
+      "name": "Moon Cloud",
+      "file": "stickers/moon-cloud-sticker.svg",
+      "tags": [
+        "moon cloud",
+        "wedding",
+        "save the date"
+      ]
+    }
+  ],
+  "templates": [
+    "templates/champagne-ribbon-split.json",
+    "templates/champagne-ribbon-back-note.json",
+    "templates/coastal-vows-oval.json",
+    "templates/coastal-vows-back-note.json",
+    "templates/dusty-blue-toile-framed.json",
+    "templates/modern-love-notes-editorial.json",
+    "templates/modern-love-notes-back-note.json",
+    "templates/pearl-vellum-oval.json",
+    "templates/romantic-calligraphy-arch.json",
+    "templates/secret-garden-gold-framed.json",
+    "templates/secret-garden-gold-back-note.json",
+    "templates/starlit-romance-arch.json",
+    "templates/terracotta-boho-arch.json",
+    "templates/vineyard-wedding-split.json",
+    "templates/vintage-valentine-heart.json"
+  ]
+}

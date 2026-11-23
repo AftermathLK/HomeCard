@@ -1,0 +1,487 @@
+{
+  "$schema": "../style-pack.schema.json",
+  "id": "summer",
+  "name": "Summer & the Fourth",
+  "version": "1.0.0",
+  "author": "HomeCard contributors",
+  "license": "CC0-1.0",
+  "description": "Americana, sunbursts, lake days, harbour stripes, palms and Mediterranean citrus.",
+  "occasions": [
+    "july-4",
+    "fathers-day",
+    "graduation",
+    "thank-you"
+  ],
+  "palettes": [
+    {
+      "id": "patriotic-americana-heritage-liberty",
+      "name": "Heritage Liberty",
+      "colors": {
+        "background": "#f8f4ea",
+        "text": "#192947",
+        "accent": "#b52832",
+        "accent2": "#264780"
+      }
+    },
+    {
+      "id": "patriotic-americana-star-spangled",
+      "name": "Star Spangled",
+      "colors": {
+        "background": "#162647",
+        "text": "#faf6ec",
+        "accent": "#d93842",
+        "accent2": "#e3c068"
+      }
+    },
+    {
+      "id": "patriotic-americana-firecracker-cream",
+      "name": "Firecracker Cream",
+      "colors": {
+        "background": "#fcf9f2",
+        "text": "#1c2a42",
+        "accent": "#c42e38",
+        "accent2": "#3d629c"
+      }
+    },
+    {
+      "id": "summer-sunburst-golden-hour",
+      "name": "Golden Hour",
+      "colors": {
+        "background": "#fdf7ec",
+        "text": "#362319",
+        "accent": "#e07a38",
+        "accent2": "#e8b339"
+      }
+    },
+    {
+      "id": "summer-sunburst-coral-sorbet",
+      "name": "Coral Sorbet",
+      "colors": {
+        "background": "#fef3ef",
+        "text": "#382221",
+        "accent": "#e05f54",
+        "accent2": "#499e9b"
+      }
+    },
+    {
+      "id": "summer-sunburst-sunset-glow",
+      "name": "Sunset Glow",
+      "colors": {
+        "background": "#42201d",
+        "text": "#fdf4eb",
+        "accent": "#f2a654",
+        "accent2": "#f0786c"
+      }
+    },
+    {
+      "id": "lakehouse-summer-lake-denim",
+      "name": "Lake Denim",
+      "colors": {
+        "background": "#f2f6f9",
+        "text": "#1f3242",
+        "accent": "#3b6e91",
+        "accent2": "#487559"
+      }
+    },
+    {
+      "id": "lakehouse-summer-up-north-pine",
+      "name": "Up North Pine",
+      "colors": {
+        "background": "#1b332c",
+        "text": "#f3f5f0",
+        "accent": "#7fb3c9",
+        "accent2": "#d9b56c"
+      }
+    },
+    {
+      "id": "lakehouse-summer-dock-wood",
+      "name": "Dock Wood",
+      "colors": {
+        "background": "#f5f0e6",
+        "text": "#292e33",
+        "accent": "#4a7694",
+        "accent2": "#a86b42"
+      }
+    },
+    {
+      "id": "nautical-harbor-harbor-navy",
+      "name": "Harbor Navy",
+      "colors": {
+        "background": "#f7f9fc",
+        "text": "#162942",
+        "accent": "#234a78",
+        "accent2": "#c44536"
+      }
+    },
+    {
+      "id": "nautical-harbor-captain-s-coat",
+      "name": "Captain's Coat",
+      "colors": {
+        "background": "#13243b",
+        "text": "#f7f9fc",
+        "accent": "#dfb85c",
+        "accent2": "#7aa6d4"
+      }
+    },
+    {
+      "id": "nautical-harbor-sailcloth",
+      "name": "Sailcloth",
+      "colors": {
+        "background": "#f4f1ea",
+        "text": "#1d2e42",
+        "accent": "#2f5d8c",
+        "accent2": "#b89042"
+      }
+    },
+    {
+      "id": "tropical-palms-palm-breeze",
+      "name": "Palm Breeze",
+      "colors": {
+        "background": "#f4f8f3",
+        "text": "#1b3628",
+        "accent": "#2d7a56",
+        "accent2": "#e06458"
+      }
+    },
+    {
+      "id": "tropical-palms-jungle-night",
+      "name": "Jungle Night",
+      "colors": {
+        "background": "#143326",
+        "text": "#f5f8f2",
+        "accent": "#5ec48e",
+        "accent2": "#f08575"
+      }
+    },
+    {
+      "id": "tropical-palms-sand-frond",
+      "name": "Sand & Frond",
+      "colors": {
+        "background": "#faf4e8",
+        "text": "#243628",
+        "accent": "#3c7a57",
+        "accent2": "#d99b38"
+      }
+    },
+    {
+      "id": "citrus-grove-amalfi-sun",
+      "name": "Amalfi Sun",
+      "colors": {
+        "background": "#fdf9ec",
+        "text": "#1d2e4a",
+        "accent": "#e0a91f",
+        "accent2": "#265599"
+      }
+    },
+    {
+      "id": "citrus-grove-cobalt-tile",
+      "name": "Cobalt Tile",
+      "colors": {
+        "background": "#1a3b6e",
+        "text": "#fdfaf0",
+        "accent": "#f2c94c",
+        "accent2": "#74b386"
+      }
+    },
+    {
+      "id": "citrus-grove-orange-blossom",
+      "name": "Orange Blossom",
+      "colors": {
+        "background": "#fef6ee",
+        "text": "#2e2a23",
+        "accent": "#de7b2c",
+        "accent2": "#477a52"
+      }
+    }
+  ],
+  "backgrounds": [
+    {
+      "id": "americana-stripe",
+      "name": "Americana stripe",
+      "file": "textures/americana-stripe.jpg",
+      "mode": "tile",
+      "kind": "image",
+      "tileSizeIn": 1.71,
+      "tone": "light"
+    },
+    {
+      "id": "star-spangled-night",
+      "name": "Star-spangled night",
+      "file": "textures/star-spangled-night.jpg",
+      "mode": "cover",
+      "kind": "image",
+      "tone": "light"
+    },
+    {
+      "id": "sunset-wash",
+      "name": "Sunset wash",
+      "file": "textures/sunset-wash.jpg",
+      "mode": "cover",
+      "kind": "image",
+      "tone": "light"
+    },
+    {
+      "id": "cabana-stripe",
+      "name": "Cabana stripe",
+      "file": "textures/cabana-stripe.jpg",
+      "mode": "tile",
+      "kind": "image",
+      "tileSizeIn": 1.71,
+      "tone": "light"
+    },
+    {
+      "id": "lake-ripples",
+      "name": "Lake ripples",
+      "file": "textures/lake-ripples.jpg",
+      "mode": "tile",
+      "kind": "image",
+      "tileSizeIn": 1.6,
+      "tone": "light"
+    },
+    {
+      "id": "weathered-dock",
+      "name": "Weathered dock",
+      "file": "textures/weathered-dock.jpg",
+      "mode": "tile",
+      "kind": "image",
+      "tileSizeIn": 1.71,
+      "tone": "light"
+    },
+    {
+      "id": "breton-stripe",
+      "name": "Breton stripe",
+      "file": "textures/breton-stripe.jpg",
+      "mode": "tile",
+      "kind": "image",
+      "tileSizeIn": 1.71,
+      "tone": "light"
+    },
+    {
+      "id": "harbor-waves",
+      "name": "Harbor waves",
+      "file": "textures/harbor-waves.jpg",
+      "mode": "tile",
+      "kind": "image",
+      "tileSizeIn": 1.6,
+      "tone": "light"
+    },
+    {
+      "id": "tropical-wash",
+      "name": "Tropical wash",
+      "file": "textures/tropical-wash.jpg",
+      "mode": "cover",
+      "kind": "image",
+      "tone": "light"
+    },
+    {
+      "id": "resort-linen",
+      "name": "Resort linen",
+      "file": "textures/resort-linen.png",
+      "mode": "tile",
+      "kind": "overlay",
+      "tileSizeIn": 1.71,
+      "tone": "light"
+    },
+    {
+      "id": "sunlit-citrus-wash",
+      "name": "Sunlit citrus wash",
+      "file": "textures/sunlit-citrus-wash.jpg",
+      "mode": "cover",
+      "kind": "image",
+      "tone": "light"
+    },
+    {
+      "id": "amalfi-tile-motif",
+      "name": "Amalfi tile motif",
+      "file": "textures/amalfi-tile-motif.jpg",
+      "mode": "tile",
+      "kind": "image",
+      "tileSizeIn": 1.6,
+      "tone": "light"
+    }
+  ],
+  "ornaments": [
+    {
+      "id": "notched-frame",
+      "name": "Notched frame",
+      "file": "ornaments/notched-frame.svg",
+      "kind": "frame",
+      "tags": [
+        "notched"
+      ],
+      "stretch": true
+    },
+    {
+      "id": "wave-divider",
+      "name": "Wave divider",
+      "file": "ornaments/wave-divider.svg",
+      "kind": "divider",
+      "tags": [
+        "wave"
+      ]
+    },
+    {
+      "id": "stamp-frame",
+      "name": "Stamp frame",
+      "file": "ornaments/stamp-frame.svg",
+      "kind": "frame",
+      "tags": [
+        "stamp"
+      ],
+      "stretch": true
+    },
+    {
+      "id": "stars-scatter",
+      "name": "Stars Scatter",
+      "file": "ornaments/stars-scatter.svg",
+      "kind": "scatter",
+      "tags": [
+        "stars"
+      ]
+    },
+    {
+      "id": "sun-motif",
+      "name": "Sun Crest",
+      "file": "ornaments/sun-motif.svg",
+      "kind": "ornament",
+      "tags": [
+        "sun",
+        "independence day",
+        "graduation",
+        "thanksgiving",
+        "mothers day",
+        "wedding",
+        "save the date",
+        "birth",
+        "first birthday"
+      ]
+    },
+    {
+      "id": "confetti-scatter",
+      "name": "Confetti Scatter",
+      "file": "ornaments/confetti-scatter.svg",
+      "kind": "scatter",
+      "tags": [
+        "confetti"
+      ]
+    },
+    {
+      "id": "anchor-motif",
+      "name": "Anchor Crest",
+      "file": "ornaments/anchor-motif.svg",
+      "kind": "ornament",
+      "tags": [
+        "anchor",
+        "fathers day",
+        "independence day"
+      ]
+    },
+    {
+      "id": "stars-scatter-2",
+      "name": "Stars Scatter 2",
+      "file": "ornaments/stars-scatter-2.svg",
+      "kind": "scatter",
+      "tags": [
+        "stars"
+      ]
+    },
+    {
+      "id": "stars-scatter-3",
+      "name": "Stars Scatter 3",
+      "file": "ornaments/stars-scatter-3.svg",
+      "kind": "scatter",
+      "tags": [
+        "stars"
+      ]
+    },
+    {
+      "id": "palm-motif",
+      "name": "Palm Crest",
+      "file": "ornaments/palm-motif.svg",
+      "kind": "ornament",
+      "tags": [
+        "palm",
+        "wedding",
+        "thank you"
+      ]
+    },
+    {
+      "id": "petals-scatter",
+      "name": "Petals Scatter",
+      "file": "ornaments/petals-scatter.svg",
+      "kind": "scatter",
+      "tags": [
+        "petals"
+      ]
+    },
+    {
+      "id": "petals-scatter-2",
+      "name": "Petals Scatter 2",
+      "file": "ornaments/petals-scatter-2.svg",
+      "kind": "scatter",
+      "tags": [
+        "petals"
+      ]
+    }
+  ],
+  "stickers": [
+    {
+      "id": "firework-sticker",
+      "name": "Firework",
+      "file": "stickers/firework-sticker.svg",
+      "tags": [
+        "firework",
+        "independence day"
+      ]
+    },
+    {
+      "id": "sunflower-sticker",
+      "name": "Sunflower",
+      "file": "stickers/sunflower-sticker.svg",
+      "tags": [
+        "sunflower",
+        "independence day",
+        "graduation"
+      ]
+    },
+    {
+      "id": "mountain-badge-sticker",
+      "name": "Mountain Badge",
+      "file": "stickers/mountain-badge-sticker.svg",
+      "tags": [
+        "mountain badge",
+        "fathers day",
+        "independence day"
+      ]
+    },
+    {
+      "id": "shell-sticker",
+      "name": "Shell",
+      "file": "stickers/shell-sticker.svg",
+      "tags": [
+        "shell",
+        "fathers day",
+        "independence day"
+      ]
+    },
+    {
+      "id": "flower-bouquet-sticker",
+      "name": "Flower Bouquet",
+      "file": "stickers/flower-bouquet-sticker.svg",
+      "tags": [
+        "flower bouquet",
+        "wedding",
+        "thank you"
+      ]
+    }
+  ],
+  "templates": [
+    "templates/patriotic-americana-trio.json",
+    "templates/summer-sunburst-full-bleed.json",
+    "templates/summer-sunburst-back-note.json",
+    "templates/lakehouse-summer-polaroid.json",
+    "templates/nautical-harbor-framed.json",
+    "templates/tropical-palms-full-bleed.json",
+    "templates/citrus-grove-framed.json"
+  ]
+}

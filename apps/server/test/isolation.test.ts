@@ -149,3 +149,28 @@ test('stock API keys are stored encrypted and never handed back whole', async ()
   sk.setStockKey('pixabay', '');
   assert.equal(sk.stockKey('pixabay'), '');
 });
+
+test('holiday preferences are per person, validated, merged and removed with the account', async () => {
+  const prefs = await import('../src/holidays/prefs');
+  const { insertUser, deleteUserRow } = mods.users;
+  const DEFAULTS = mods.shared.DEFAULT_HOLIDAY_PREFS;
+  const a = insertUser({ username: 'planner', displayName: 'Planner', passwordHash: 'x', role: 'user', mustChangePassword: false });
+  const b = insertUser({ username: 'cousin', displayName: 'Cousin', passwordHash: 'x', role: 'user', mustChangePassword: false });
+  assert.deepEqual(prefs.getHolidayPrefs(a.id), DEFAULTS);
+  const saved = prefs.saveHolidayPrefs(a.id, { hiddenOccasions: ['halloween', 'not-a-holiday'], lookaheadDays: 90, customTagMap: { christmas: ['card-picks'], bogus: ['x'] }, isAdmin: true });
+  assert.deepEqual(saved, { showHomeBanner: true, lookaheadDays: 90, hiddenOccasions: ['halloween'], customTagMap: { christmas: ['card-picks'] } });
+  assert.deepEqual(prefs.getHolidayPrefs(a.id), saved, 'read back from SQLite');
+  assert.deepEqual(prefs.getHolidayPrefs(b.id), DEFAULTS, 'someone else’s settings are untouched');
+  // A partial update keeps everything else.
+  const merged = prefs.saveHolidayPrefs(a.id, { showHomeBanner: false });
+  assert.equal(merged.showHomeBanner, false);
+  assert.equal(merged.lookaheadDays, 90);
+  assert.deepEqual(merged.hiddenOccasions, ['halloween']);
+  // A damaged row can't break the home page.
+  mods.db.run('UPDATE user_holiday_prefs SET prefs = ? WHERE user_id = ?', '{not json', a.id);
+  assert.deepEqual(prefs.getHolidayPrefs(a.id), DEFAULTS);
+  // Deleting the account deletes its preferences.
+  prefs.saveHolidayPrefs(a.id, { lookaheadDays: 30 });
+  deleteUserRow(a.id);
+  assert.ok(!mods.db.one('SELECT user_id FROM user_holiday_prefs WHERE user_id = ?', a.id));
+});

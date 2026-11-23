@@ -1,0 +1,79 @@
+{
+  "id": "sweet-arrival-neutral-oval",
+  "name": "Sweet Arrival Medallion",
+  "description": "Soft oval portrait medallion accented with matching corner and vine.",
+  "kinds": [
+    "front"
+  ],
+  "category": "cutout",
+  "layouts": {
+    "any": [
+      {
+        "type": "ornament",
+        "asset": "pack:baby-birthdays/ornaments/stars-corner.svg",
+        "rect": [
+          0.02,
+          0.02,
+          0.3,
+          0.22
+        ],
+        "color": "@accent",
+        "color2": "@accent2"
+      },
+      {
+        "type": "photo",
+        "slot": 0,
+        "mask": "ellipse",
+        "rect": [
+          0.16,
+          0.08,
+          0.68,
+          0.56
+        ],
+        "shadow": true
+      },
+      {
+        "type": "text",
+        "role": "headline",
+        "rect": [
+          0.08,
+          0.67,
+          0.84,
+          0.13
+        ]
+      },
+      {
+        "type": "ornament",
+        "asset": "pack:baby-birthdays/ornaments/moon-phase-divider.svg",
+        "rect": [
+          0.26,
+          0.805,
+          0.48,
+          0.04
+        ],
+        "color": "@accent",
+        "color2": "@accent2"
+      },
+      {
+        "type": "text",
+        "role": "names",
+        "rect": [
+          0.1,
+          0.86,
+          0.8,
+          0.05
+        ]
+      },
+      {
+        "type": "text",
+        "role": "year",
+        "rect": [
+          0.34,
+          0.915,
+          0.32,
+          0.035
+        ]
+      }
+    ]
+  }
+}

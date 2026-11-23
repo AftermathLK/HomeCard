@@ -1,0 +1,297 @@
+{
+  "$schema": "../style-pack.schema.json",
+  "id": "mothers-fathers-day",
+  "name": "Mother's & Father's Day",
+  "version": "1.0.0",
+  "author": "HomeCard contributors",
+  "license": "CC0-1.0",
+  "description": "Garden roses and soft florals for Mum; pinstripes, leather and the great outdoors for Dad.",
+  "occasions": [
+    "mothers-day",
+    "fathers-day",
+    "thank-you"
+  ],
+  "palettes": [
+    {
+      "id": "mothers-day-rose-heirloom-rose",
+      "name": "Heirloom Rose",
+      "colors": {
+        "background": "#fcf2f3",
+        "text": "#40232a",
+        "accent": "#c45b74",
+        "accent2": "#7d9674"
+      }
+    },
+    {
+      "id": "mothers-day-rose-mauve-silk",
+      "name": "Mauve Silk",
+      "colors": {
+        "background": "#f5ecef",
+        "text": "#3b242e",
+        "accent": "#9e536e",
+        "accent2": "#c29463"
+      }
+    },
+    {
+      "id": "mothers-day-rose-deep-rose",
+      "name": "Deep Rose",
+      "colors": {
+        "background": "#471e2b",
+        "text": "#faf0f2",
+        "accent": "#eba6b6",
+        "accent2": "#dfc08c"
+      }
+    },
+    {
+      "id": "floral-appreciation-sepia-blossom",
+      "name": "Sepia Blossom",
+      "colors": {
+        "background": "#faf4ef",
+        "text": "#362724",
+        "accent": "#b86b68",
+        "accent2": "#6d8568"
+      }
+    },
+    {
+      "id": "floral-appreciation-eucalyptus-blush",
+      "name": "Eucalyptus Blush",
+      "colors": {
+        "background": "#f5f4f0",
+        "text": "#29302a",
+        "accent": "#5f7d65",
+        "accent2": "#c9858a"
+      }
+    },
+    {
+      "id": "floral-appreciation-warm-rosehip",
+      "name": "Warm Rosehip",
+      "colors": {
+        "background": "#f8f0ec",
+        "text": "#382422",
+        "accent": "#a8534c",
+        "accent2": "#829472"
+      }
+    },
+    {
+      "id": "fathers-day-heritage-tailored-navy",
+      "name": "Tailored Navy",
+      "colors": {
+        "background": "#1a2538",
+        "text": "#f3efe6",
+        "accent": "#c9854b",
+        "accent2": "#889cb8"
+      }
+    },
+    {
+      "id": "fathers-day-heritage-oxford-cream",
+      "name": "Oxford Cream",
+      "colors": {
+        "background": "#f4f0e8",
+        "text": "#24201c",
+        "accent": "#2c4263",
+        "accent2": "#a86234"
+      }
+    },
+    {
+      "id": "fathers-day-heritage-saddle-espresso",
+      "name": "Saddle Espresso",
+      "colors": {
+        "background": "#2b1f18",
+        "text": "#f4ede2",
+        "accent": "#d4965b",
+        "accent2": "#8c9c87"
+      }
+    },
+    {
+      "id": "fathers-day-outdoors-camp-slate",
+      "name": "Camp Slate",
+      "colors": {
+        "background": "#eff2f0",
+        "text": "#222e2b",
+        "accent": "#3d634d",
+        "accent2": "#b55836"
+      }
+    },
+    {
+      "id": "fathers-day-outdoors-timber-night",
+      "name": "Timber Night",
+      "colors": {
+        "background": "#1c2924",
+        "text": "#f3f0e8",
+        "accent": "#d4754a",
+        "accent2": "#89ab95"
+      }
+    },
+    {
+      "id": "fathers-day-outdoors-canyon-kraft",
+      "name": "Canyon Kraft",
+      "colors": {
+        "background": "#e6d8c3",
+        "text": "#29221c",
+        "accent": "#355943",
+        "accent2": "#a6482b"
+      }
+    }
+  ],
+  "backgrounds": [
+    {
+      "id": "rose-petal-wash",
+      "name": "Rose petal wash",
+      "file": "textures/rose-petal-wash.jpg",
+      "mode": "cover",
+      "kind": "image",
+      "tone": "light"
+    },
+    {
+      "id": "cotton-rose-stock",
+      "name": "Cotton rose stock",
+      "file": "textures/cotton-rose-stock.png",
+      "mode": "tile",
+      "kind": "overlay",
+      "tileSizeIn": 1.71,
+      "tone": "light"
+    },
+    {
+      "id": "soft-floral-wash",
+      "name": "Soft floral wash",
+      "file": "textures/soft-floral-wash.jpg",
+      "mode": "cover",
+      "kind": "image",
+      "tone": "light"
+    },
+    {
+      "id": "stationery-weave",
+      "name": "Stationery weave",
+      "file": "textures/stationery-weave.png",
+      "mode": "tile",
+      "kind": "overlay",
+      "tileSizeIn": 1.71,
+      "tone": "light"
+    },
+    {
+      "id": "menswear-pinstripe",
+      "name": "Menswear pinstripe",
+      "file": "textures/menswear-pinstripe.jpg",
+      "mode": "tile",
+      "kind": "image",
+      "tileSizeIn": 1.71,
+      "tone": "dark"
+    },
+    {
+      "id": "walnut-grain",
+      "name": "Walnut grain",
+      "file": "textures/walnut-grain.jpg",
+      "mode": "tile",
+      "kind": "image",
+      "tileSizeIn": 1.71,
+      "tone": "dark"
+    },
+    {
+      "id": "cedar-grain",
+      "name": "Cedar grain",
+      "file": "textures/cedar-grain.jpg",
+      "mode": "tile",
+      "kind": "image",
+      "tileSizeIn": 1.71,
+      "tone": "light"
+    },
+    {
+      "id": "trail-map-paper",
+      "name": "Trail map paper",
+      "file": "textures/trail-map-paper.jpg",
+      "mode": "tile",
+      "kind": "image",
+      "tileSizeIn": 1.71,
+      "tone": "light"
+    }
+  ],
+  "ornaments": [
+    {
+      "id": "petals-scatter",
+      "name": "Petals Scatter",
+      "file": "ornaments/petals-scatter.svg",
+      "kind": "scatter",
+      "tags": [
+        "petals"
+      ]
+    },
+    {
+      "id": "petals-scatter-2",
+      "name": "Petals Scatter 2",
+      "file": "ornaments/petals-scatter-2.svg",
+      "kind": "scatter",
+      "tags": [
+        "petals"
+      ]
+    },
+    {
+      "id": "compass-motif",
+      "name": "Compass Crest",
+      "file": "ornaments/compass-motif.svg",
+      "kind": "ornament",
+      "tags": [
+        "compass",
+        "fathers day",
+        "moving",
+        "thank you"
+      ]
+    },
+    {
+      "id": "stars-scatter",
+      "name": "Stars Scatter",
+      "file": "ornaments/stars-scatter.svg",
+      "kind": "scatter",
+      "tags": [
+        "stars"
+      ]
+    },
+    {
+      "id": "stars-scatter-2",
+      "name": "Stars Scatter 2",
+      "file": "ornaments/stars-scatter-2.svg",
+      "kind": "scatter",
+      "tags": [
+        "stars"
+      ]
+    }
+  ],
+  "stickers": [
+    {
+      "id": "flower-bouquet-sticker",
+      "name": "Flower Bouquet",
+      "file": "stickers/flower-bouquet-sticker.svg",
+      "tags": [
+        "flower bouquet",
+        "mothers day",
+        "valentines"
+      ]
+    },
+    {
+      "id": "wax-seal-sticker",
+      "name": "Wax Seal",
+      "file": "stickers/wax-seal-sticker.svg",
+      "tags": [
+        "wax seal",
+        "fathers day"
+      ]
+    },
+    {
+      "id": "mountain-badge-sticker",
+      "name": "Mountain Badge",
+      "file": "stickers/mountain-badge-sticker.svg",
+      "tags": [
+        "mountain badge",
+        "fathers day",
+        "moving"
+      ]
+    }
+  ],
+  "templates": [
+    "templates/mothers-day-rose-arch.json",
+    "templates/mothers-day-rose-back-note.json",
+    "templates/floral-appreciation-oval.json",
+    "templates/fathers-day-heritage-split.json",
+    "templates/fathers-day-heritage-back-note.json",
+    "templates/fathers-day-outdoors-trio.json"
+  ]
+}

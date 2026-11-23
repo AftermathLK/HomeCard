@@ -1,0 +1,772 @@
+{
+  "$schema": "../style-pack.schema.json",
+  "id": "baby-birthdays",
+  "name": "Baby & Birthdays",
+  "version": "1.0.0",
+  "author": "HomeCard contributors",
+  "license": "CC0-1.0",
+  "description": "Lullaby skies, nursery florals, safari friends, teddy bears, balloons and rainbow confetti.",
+  "occasions": [
+    "birth",
+    "first-birthday"
+  ],
+  "palettes": [
+    {
+      "id": "celestial-lullaby-dreamy-indigo",
+      "name": "Dreamy Indigo",
+      "colors": {
+        "background": "#1b2542",
+        "text": "#f5f4fa",
+        "accent": "#e3c474",
+        "accent2": "#9ab4de"
+      }
+    },
+    {
+      "id": "celestial-lullaby-cloud-nine",
+      "name": "Cloud Nine",
+      "colors": {
+        "background": "#f2f4fa",
+        "text": "#232e4a",
+        "accent": "#5c7ab0",
+        "accent2": "#cca64c"
+      }
+    },
+    {
+      "id": "celestial-lullaby-starlight-plum",
+      "name": "Starlight Plum",
+      "colors": {
+        "background": "#2a2240",
+        "text": "#f7f5fc",
+        "accent": "#e0c27d",
+        "accent2": "#b5a3de"
+      }
+    },
+    {
+      "id": "little-star-blue-powder-sky",
+      "name": "Powder Sky",
+      "colors": {
+        "background": "#eef4fa",
+        "text": "#24354a",
+        "accent": "#6593c2",
+        "accent2": "#d1b062"
+      }
+    },
+    {
+      "id": "little-star-blue-lullaby-navy",
+      "name": "Lullaby Navy",
+      "colors": {
+        "background": "#1f304a",
+        "text": "#f4f7fb",
+        "accent": "#a6c8eb",
+        "accent2": "#e3c578"
+      }
+    },
+    {
+      "id": "little-star-blue-cloud-slate",
+      "name": "Cloud & Slate",
+      "colors": {
+        "background": "#f4f7fa",
+        "text": "#2b394a",
+        "accent": "#789cc2",
+        "accent2": "#a9b8c7"
+      }
+    },
+    {
+      "id": "rosebud-nursery-peach-blossom",
+      "name": "Peach Blossom",
+      "colors": {
+        "background": "#fdf3ef",
+        "text": "#3d292a",
+        "accent": "#d9828f",
+        "accent2": "#e0a984"
+      }
+    },
+    {
+      "id": "rosebud-nursery-ballet-slipper",
+      "name": "Ballet Slipper",
+      "colors": {
+        "background": "#fcf2f5",
+        "text": "#3b262e",
+        "accent": "#cf7a95",
+        "accent2": "#c4a373"
+      }
+    },
+    {
+      "id": "rosebud-nursery-cream-rose",
+      "name": "Cream Rose",
+      "colors": {
+        "background": "#faf5f0",
+        "text": "#382a29",
+        "accent": "#c97a82",
+        "accent2": "#8ca389"
+      }
+    },
+    {
+      "id": "safari-sunshine-savanna-sand",
+      "name": "Savanna Sand",
+      "colors": {
+        "background": "#faf4e6",
+        "text": "#33281d",
+        "accent": "#cf8d36",
+        "accent2": "#63855d"
+      }
+    },
+    {
+      "id": "safari-sunshine-jungle-cream",
+      "name": "Jungle Cream",
+      "colors": {
+        "background": "#f4f5ec",
+        "text": "#283022",
+        "accent": "#557d52",
+        "accent2": "#d48544"
+      }
+    },
+    {
+      "id": "safari-sunshine-sunlit-clay",
+      "name": "Sunlit Clay",
+      "colors": {
+        "background": "#f7efe4",
+        "text": "#36251b",
+        "accent": "#bd683e",
+        "accent2": "#d4a644"
+      }
+    },
+    {
+      "id": "storybook-woodland-storybook-sage",
+      "name": "Storybook Sage",
+      "colors": {
+        "background": "#f5f6ee",
+        "text": "#2c3629",
+        "accent": "#6b8c62",
+        "accent2": "#d6a456"
+      }
+    },
+    {
+      "id": "storybook-woodland-buttercream",
+      "name": "Buttercream",
+      "colors": {
+        "background": "#fbf7ea",
+        "text": "#362f22",
+        "accent": "#c79444",
+        "accent2": "#72916c"
+      }
+    },
+    {
+      "id": "storybook-woodland-forest-nap",
+      "name": "Forest Nap",
+      "colors": {
+        "background": "#26362b",
+        "text": "#f7f5ec",
+        "accent": "#e0bc72",
+        "accent2": "#a2bf9e"
+      }
+    },
+    {
+      "id": "sweet-arrival-neutral-oatmeal-cloud",
+      "name": "Oatmeal Cloud",
+      "colors": {
+        "background": "#f7f3ec",
+        "text": "#332e29",
+        "accent": "#8ca38a",
+        "accent2": "#c9a870"
+      }
+    },
+    {
+      "id": "sweet-arrival-neutral-warm-linen",
+      "name": "Warm Linen",
+      "colors": {
+        "background": "#f5efe6",
+        "text": "#362e26",
+        "accent": "#b89674",
+        "accent2": "#7e9682"
+      }
+    },
+    {
+      "id": "sweet-arrival-neutral-nursery-sage",
+      "name": "Nursery Sage",
+      "colors": {
+        "background": "#edf2ec",
+        "text": "#283329",
+        "accent": "#6c8c6e",
+        "accent2": "#c4a068"
+      }
+    },
+    {
+      "id": "tiny-footprints-alabaster-taupe",
+      "name": "Alabaster Taupe",
+      "colors": {
+        "background": "#faf8f4",
+        "text": "#2e2a26",
+        "accent": "#968575",
+        "accent2": "#b8a898"
+      }
+    },
+    {
+      "id": "tiny-footprints-soft-putty",
+      "name": "Soft Putty",
+      "colors": {
+        "background": "#f2efe9",
+        "text": "#2b2824",
+        "accent": "#7d7266",
+        "accent2": "#8c9c8c"
+      }
+    },
+    {
+      "id": "tiny-footprints-warm-ivory",
+      "name": "Warm Ivory",
+      "colors": {
+        "background": "#fcfaf5",
+        "text": "#292622",
+        "accent": "#b39562",
+        "accent2": "#87827b"
+      }
+    },
+    {
+      "id": "watercolor-bears-warm-honey",
+      "name": "Warm Honey",
+      "colors": {
+        "background": "#faf4e8",
+        "text": "#38291d",
+        "accent": "#c48948",
+        "accent2": "#7c947d"
+      }
+    },
+    {
+      "id": "watercolor-bears-baby-gingham",
+      "name": "Baby Gingham",
+      "colors": {
+        "background": "#f4f6f8",
+        "text": "#2a333d",
+        "accent": "#7494b5",
+        "accent2": "#c9965b"
+      }
+    },
+    {
+      "id": "watercolor-bears-teddy-cream",
+      "name": "Teddy Cream",
+      "colors": {
+        "background": "#f7f1e8",
+        "text": "#36281e",
+        "accent": "#a87446",
+        "accent2": "#b89680"
+      }
+    },
+    {
+      "id": "playful-polka-mint-coral",
+      "name": "Mint & Coral",
+      "colors": {
+        "background": "#f5faf8",
+        "text": "#243633",
+        "accent": "#e36d5d",
+        "accent2": "#4ca393"
+      }
+    },
+    {
+      "id": "playful-polka-butter-blue",
+      "name": "Butter & Blue",
+      "colors": {
+        "background": "#fcf9ee",
+        "text": "#243042",
+        "accent": "#4c84bd",
+        "accent2": "#e3b038"
+      }
+    },
+    {
+      "id": "playful-polka-lilac-pop",
+      "name": "Lilac Pop",
+      "colors": {
+        "background": "#f8f4fc",
+        "text": "#2e243d",
+        "accent": "#9466c4",
+        "accent2": "#e37a8e"
+      }
+    },
+    {
+      "id": "rainbow-confetti-pastel-rainbow",
+      "name": "Pastel Rainbow",
+      "colors": {
+        "background": "#fdfbf5",
+        "text": "#2d2a36",
+        "accent": "#e07a6b",
+        "accent2": "#64a6a1"
+      }
+    },
+    {
+      "id": "rainbow-confetti-sunshine-pop",
+      "name": "Sunshine Pop",
+      "colors": {
+        "background": "#fef9eb",
+        "text": "#332c24",
+        "accent": "#e6a638",
+        "accent2": "#7c88c4"
+      }
+    },
+    {
+      "id": "rainbow-confetti-berry-sky",
+      "name": "Berry Sky",
+      "colors": {
+        "background": "#f4f7fc",
+        "text": "#282e42",
+        "accent": "#d96b8a",
+        "accent2": "#5aa3c2"
+      }
+    },
+    {
+      "id": "balloon-bash-sky-party",
+      "name": "Sky Party",
+      "colors": {
+        "background": "#f2f8fc",
+        "text": "#1f2e42",
+        "accent": "#e86452",
+        "accent2": "#479cc9"
+      }
+    },
+    {
+      "id": "balloon-bash-sunshine-bash",
+      "name": "Sunshine Bash",
+      "colors": {
+        "background": "#fffaf0",
+        "text": "#2d2822",
+        "accent": "#e69f28",
+        "accent2": "#4ca388"
+      }
+    },
+    {
+      "id": "balloon-bash-midnight-party",
+      "name": "Midnight Party",
+      "colors": {
+        "background": "#1d2740",
+        "text": "#faf9f5",
+        "accent": "#f27866",
+        "accent2": "#66c7b4"
+      }
+    }
+  ],
+  "backgrounds": [
+    {
+      "id": "lullaby-sky",
+      "name": "Lullaby sky",
+      "file": "textures/lullaby-sky.jpg",
+      "mode": "cover",
+      "kind": "image",
+      "tone": "dark"
+    },
+    {
+      "id": "dream-cloud-wash",
+      "name": "Dream cloud wash",
+      "file": "textures/dream-cloud-wash.jpg",
+      "mode": "cover",
+      "kind": "image",
+      "tone": "dark"
+    },
+    {
+      "id": "baby-blue-wash",
+      "name": "Baby blue wash",
+      "file": "textures/baby-blue-wash.jpg",
+      "mode": "cover",
+      "kind": "image",
+      "tone": "light"
+    },
+    {
+      "id": "soft-sky-dots",
+      "name": "Soft sky dots",
+      "file": "textures/soft-sky-dots.jpg",
+      "mode": "tile",
+      "kind": "image",
+      "tileSizeIn": 1.6,
+      "tone": "light"
+    },
+    {
+      "id": "blush-nursery-wash",
+      "name": "Blush nursery wash",
+      "file": "textures/blush-nursery-wash.jpg",
+      "mode": "cover",
+      "kind": "image",
+      "tone": "light"
+    },
+    {
+      "id": "sweet-blush-dots",
+      "name": "Sweet blush dots",
+      "file": "textures/sweet-blush-dots.jpg",
+      "mode": "tile",
+      "kind": "image",
+      "tileSizeIn": 1.6,
+      "tone": "light"
+    },
+    {
+      "id": "savanna-wash",
+      "name": "Savanna wash",
+      "file": "textures/savanna-wash.jpg",
+      "mode": "cover",
+      "kind": "image",
+      "tone": "light"
+    },
+    {
+      "id": "natural-safari-cloth",
+      "name": "Natural safari cloth",
+      "file": "textures/natural-safari-cloth.png",
+      "mode": "tile",
+      "kind": "overlay",
+      "tileSizeIn": 1.71,
+      "tone": "light"
+    },
+    {
+      "id": "storybook-wash",
+      "name": "Storybook wash",
+      "file": "textures/storybook-wash.jpg",
+      "mode": "cover",
+      "kind": "image",
+      "tone": "light"
+    },
+    {
+      "id": "nursery-check",
+      "name": "Nursery check",
+      "file": "textures/nursery-check.jpg",
+      "mode": "tile",
+      "kind": "image",
+      "tileSizeIn": 1.6,
+      "tone": "light"
+    },
+    {
+      "id": "nursery-cloud-wash",
+      "name": "Nursery cloud wash",
+      "file": "textures/nursery-cloud-wash.jpg",
+      "mode": "cover",
+      "kind": "image",
+      "tone": "light"
+    },
+    {
+      "id": "soft-cotton",
+      "name": "Soft cotton",
+      "file": "textures/soft-cotton.png",
+      "mode": "tile",
+      "kind": "overlay",
+      "tileSizeIn": 1.71,
+      "tone": "light"
+    },
+    {
+      "id": "fine-cotton-matte",
+      "name": "Fine cotton matte",
+      "file": "textures/fine-cotton-matte.png",
+      "mode": "tile",
+      "kind": "overlay",
+      "tileSizeIn": 1.71,
+      "tone": "light"
+    },
+    {
+      "id": "baby-linen",
+      "name": "Baby linen",
+      "file": "textures/baby-linen.png",
+      "mode": "tile",
+      "kind": "overlay",
+      "tileSizeIn": 1.71,
+      "tone": "light"
+    },
+    {
+      "id": "nursery-gingham",
+      "name": "Nursery gingham",
+      "file": "textures/nursery-gingham.jpg",
+      "mode": "tile",
+      "kind": "image",
+      "tileSizeIn": 1.6,
+      "tone": "light"
+    },
+    {
+      "id": "honey-wash",
+      "name": "Honey wash",
+      "file": "textures/honey-wash.jpg",
+      "mode": "cover",
+      "kind": "image",
+      "tone": "light"
+    },
+    {
+      "id": "playful-polka",
+      "name": "Playful polka",
+      "file": "textures/playful-polka.jpg",
+      "mode": "tile",
+      "kind": "image",
+      "tileSizeIn": 1.6,
+      "tone": "light"
+    },
+    {
+      "id": "bright-scatter",
+      "name": "Bright scatter",
+      "file": "textures/bright-scatter.png",
+      "mode": "tile",
+      "kind": "overlay",
+      "tileSizeIn": 1.71,
+      "tone": "light"
+    },
+    {
+      "id": "rainbow-confetti",
+      "name": "Rainbow confetti",
+      "file": "textures/rainbow-confetti.png",
+      "mode": "tile",
+      "kind": "overlay",
+      "tileSizeIn": 1.71,
+      "tone": "light"
+    },
+    {
+      "id": "cheerful-dots",
+      "name": "Cheerful dots",
+      "file": "textures/cheerful-dots.jpg",
+      "mode": "tile",
+      "kind": "image",
+      "tileSizeIn": 1.6,
+      "tone": "light"
+    },
+    {
+      "id": "birthday-confetti",
+      "name": "Birthday confetti",
+      "file": "textures/birthday-confetti.png",
+      "mode": "tile",
+      "kind": "overlay",
+      "tileSizeIn": 1.71,
+      "tone": "light"
+    },
+    {
+      "id": "party-stripe",
+      "name": "Party stripe",
+      "file": "textures/party-stripe.jpg",
+      "mode": "tile",
+      "kind": "image",
+      "tileSizeIn": 1.71,
+      "tone": "light"
+    }
+  ],
+  "ornaments": [
+    {
+      "id": "beads-divider",
+      "name": "Beads divider",
+      "file": "ornaments/beads-divider.svg",
+      "kind": "divider",
+      "tags": [
+        "beads"
+      ]
+    },
+    {
+      "id": "stars-corner",
+      "name": "Stars corner",
+      "file": "ornaments/stars-corner.svg",
+      "kind": "corner",
+      "tags": [
+        "stars"
+      ]
+    },
+    {
+      "id": "scallop-frame",
+      "name": "Scallop frame",
+      "file": "ornaments/scallop-frame.svg",
+      "kind": "frame",
+      "tags": [
+        "scallop"
+      ],
+      "stretch": true
+    },
+    {
+      "id": "moon-phase-divider",
+      "name": "Moon phase divider",
+      "file": "ornaments/moon-phase-divider.svg",
+      "kind": "divider",
+      "tags": [
+        "moon phase"
+      ]
+    },
+    {
+      "id": "crescent-motif",
+      "name": "Crescent Crest",
+      "file": "ornaments/crescent-motif.svg",
+      "kind": "ornament",
+      "tags": [
+        "crescent",
+        "winter solstice",
+        "holiday",
+        "eid",
+        "wedding",
+        "save the date",
+        "birth",
+        "first birthday"
+      ]
+    },
+    {
+      "id": "stars-scatter",
+      "name": "Stars Scatter",
+      "file": "ornaments/stars-scatter.svg",
+      "kind": "scatter",
+      "tags": [
+        "stars"
+      ]
+    },
+    {
+      "id": "stars-scatter-2",
+      "name": "Stars Scatter 2",
+      "file": "ornaments/stars-scatter-2.svg",
+      "kind": "scatter",
+      "tags": [
+        "stars"
+      ]
+    },
+    {
+      "id": "petals-scatter",
+      "name": "Petals Scatter",
+      "file": "ornaments/petals-scatter.svg",
+      "kind": "scatter",
+      "tags": [
+        "petals"
+      ]
+    },
+    {
+      "id": "stars-scatter-3",
+      "name": "Stars Scatter 3",
+      "file": "ornaments/stars-scatter-3.svg",
+      "kind": "scatter",
+      "tags": [
+        "stars"
+      ]
+    },
+    {
+      "id": "stars-scatter-4",
+      "name": "Stars Scatter 4",
+      "file": "ornaments/stars-scatter-4.svg",
+      "kind": "scatter",
+      "tags": [
+        "stars"
+      ]
+    },
+    {
+      "id": "stars-scatter-5",
+      "name": "Stars Scatter 5",
+      "file": "ornaments/stars-scatter-5.svg",
+      "kind": "scatter",
+      "tags": [
+        "stars"
+      ]
+    },
+    {
+      "id": "stars-scatter-6",
+      "name": "Stars Scatter 6",
+      "file": "ornaments/stars-scatter-6.svg",
+      "kind": "scatter",
+      "tags": [
+        "stars"
+      ]
+    },
+    {
+      "id": "stars-scatter-7",
+      "name": "Stars Scatter 7",
+      "file": "ornaments/stars-scatter-7.svg",
+      "kind": "scatter",
+      "tags": [
+        "stars"
+      ]
+    },
+    {
+      "id": "rainbow-motif",
+      "name": "Rainbow Crest",
+      "file": "ornaments/rainbow-motif.svg",
+      "kind": "ornament",
+      "tags": [
+        "rainbow",
+        "first birthday",
+        "thank you",
+        "birth"
+      ]
+    },
+    {
+      "id": "confetti-scatter",
+      "name": "Confetti Scatter",
+      "file": "ornaments/confetti-scatter.svg",
+      "kind": "scatter",
+      "tags": [
+        "confetti"
+      ]
+    },
+    {
+      "id": "confetti-scatter-2",
+      "name": "Confetti Scatter 2",
+      "file": "ornaments/confetti-scatter-2.svg",
+      "kind": "scatter",
+      "tags": [
+        "confetti"
+      ]
+    },
+    {
+      "id": "confetti-scatter-3",
+      "name": "Confetti Scatter 3",
+      "file": "ornaments/confetti-scatter-3.svg",
+      "kind": "scatter",
+      "tags": [
+        "confetti"
+      ]
+    }
+  ],
+  "stickers": [
+    {
+      "id": "moon-cloud-sticker",
+      "name": "Moon Cloud",
+      "file": "stickers/moon-cloud-sticker.svg",
+      "tags": [
+        "moon cloud",
+        "birth",
+        "first birthday"
+      ]
+    },
+    {
+      "id": "flower-bouquet-sticker",
+      "name": "Flower Bouquet",
+      "file": "stickers/flower-bouquet-sticker.svg",
+      "tags": [
+        "flower bouquet",
+        "birth",
+        "first birthday"
+      ]
+    },
+    {
+      "id": "sunflower-sticker",
+      "name": "Sunflower",
+      "file": "stickers/sunflower-sticker.svg",
+      "tags": [
+        "sunflower",
+        "birth",
+        "first birthday"
+      ]
+    },
+    {
+      "id": "honey-jar-sticker",
+      "name": "Honey Jar",
+      "file": "stickers/honey-jar-sticker.svg",
+      "tags": [
+        "honey jar",
+        "birth",
+        "first birthday"
+      ]
+    },
+    {
+      "id": "balloon-sticker",
+      "name": "Balloon",
+      "file": "stickers/balloon-sticker.svg",
+      "tags": [
+        "balloon",
+        "first birthday",
+        "thank you"
+      ]
+    }
+  ],
+  "templates": [
+    "templates/celestial-lullaby-oval.json",
+    "templates/little-star-blue-framed.json",
+    "templates/rosebud-nursery-oval.json",
+    "templates/safari-sunshine-arch.json",
+    "templates/safari-sunshine-back-note.json",
+    "templates/storybook-woodland-trio.json",
+    "templates/storybook-woodland-back-note.json",
+    "templates/sweet-arrival-neutral-oval.json",
+    "templates/sweet-arrival-neutral-back-note.json",
+    "templates/tiny-footprints-framed.json",
+    "templates/watercolor-bears-polaroid.json",
+    "templates/playful-polka-trio.json",
+    "templates/playful-polka-back-note.json",
+    "templates/rainbow-confetti-trio.json",
+    "templates/balloon-bash-quad.json"
+  ]
+}

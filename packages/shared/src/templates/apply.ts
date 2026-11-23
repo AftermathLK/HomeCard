@@ -1,3 +1,4 @@
+import { contrastRatio, mixHex, resolveColor } from '../color';
 import { clampCrop, smartCrop } from '../crop';
 import { orientationOf } from '../formats';
 import { photoContentBox, photoSafeInsets } from '../geometry';
@@ -16,6 +17,7 @@ import type {
   TemplateParams,
   TextElement,
   TextRole,
+  Theme,
 } from '../types';
 import { uid } from '../units';
 import { BUILTIN_TEMPLATES, ROLE_DEFAULTS } from './builtin';
@@ -304,6 +306,8 @@ export function applyTemplate(project: CardProject, surfaceId: SurfaceId, templa
     }
   }
 
+  settleAccentInk(elements, surface, project.theme);
+
   // Text that the new template has no slot for is stashed (restored if you switch back).
   const newStash: Record<string, string> = {};
   for (const [k, v] of Object.entries(stash)) if (!usedKeys.has(k)) newStash[k] = v;
@@ -320,6 +324,65 @@ export function applyTemplate(project: CardProject, surfaceId: SurfaceId, templa
     photoStash: fills.slice(Math.max(fillIndex, maxSlot + 1)),
     textStash: newStash as Surface['textStash'],
   };
+}
+
+/* ---------------- Readable accent ink ---------------- */
+
+const ACCENT_INKS = new Set(['@accent', '@accent2']);
+const INK_FALLBACKS = ['@textMuted', '@text', '@background'];
+
+function overlapArea(a: CardElement, b: CardElement) {
+  const w = Math.min(a.x + a.w, b.x + b.w) - Math.max(a.x, b.x);
+  const h = Math.min(a.y + a.h, b.y + b.h) - Math.max(a.y, b.y);
+  return w > 0 && h > 0 ? w * h : 0;
+}
+
+/** The darkest and lightest a photo, texture or pattern beneath a see-through panel could be. */
+const UNKNOWN_BENEATH = ['#000000', '#ffffff'];
+
+/**
+ * The colours text element `i` may sit on: the topmost solid panel covering it, else the card's
+ * own colour. A see-through panel is blended over what is beneath it, judged at both extremes
+ * when that is a photo, texture or pattern. Null when text sits straight on a photo, a shade, a
+ * texture or a pattern (those are measured by the Print Guardian, not guessed here).
+ */
+function backingColors(elements: CardElement[], i: number, surface: Surface, theme: Theme, below = i): string[] | null {
+  const t = elements[i];
+  const ta = t.w * t.h;
+  for (let j = below - 1; j >= 0; j--) {
+    const e = elements[j];
+    if (e.hidden) continue;
+    const o = overlapArea(e, t);
+    if ((e.type === 'photo' || e.type === 'scrim') && o > ta * 0.08) return null;
+    if (e.type === 'shape' && e.shape !== 'line' && e.fill && !e.rotation && e.opacity >= 0.85 && o >= ta * 0.85) {
+      const fill = resolveColor(e.fill, theme);
+      if (e.opacity >= 1) return [fill];
+      const under = backingColors(elements, i, surface, theme, j) ?? UNKNOWN_BENEATH;
+      return under.map((u) => mixHex(u, fill, e.opacity));
+    }
+  }
+  if (surface.background.texture || surface.background.backdrop) return null;
+  return [resolveColor(surface.background.color, theme)];
+}
+
+/**
+ * Subheads, years and monograms default to the theme accent, and some palettes pair a light
+ * accent with light paper. Where the accent would fail the Print Guardian's contrast bar against
+ * a flat backing, use the theme's soft text colour (or main text colour) instead, so a fresh
+ * template never starts with a readability warning. Foil and text straight on photos are left alone.
+ */
+function settleAccentInk(elements: CardElement[], surface: Surface, theme: Theme) {
+  elements.forEach((el, i) => {
+    if (el.type !== 'text' || el.fill === 'foil' || !ACCENT_INKS.has(el.color)) return;
+    const backs = backingColors(elements, i, surface, theme);
+    if (!backs) return;
+    const large = el.fontSize >= 18 || ((el.fontWeight ?? 400) >= 700 && el.fontSize >= 14);
+    const need = large ? 3 : 4.5;
+    const reads = (c: string) => backs.every((b) => contrastRatio(resolveColor(c, theme), b) >= need);
+    if (reads(el.color)) return;
+    const pick = INK_FALLBACKS.find(reads);
+    if (pick) el.color = pick;
+  });
 }
 
 /** Put a picked photo into a specific photo element (smart-cropped). */

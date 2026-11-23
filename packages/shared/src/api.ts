@@ -229,6 +229,38 @@ export interface PhotoItem {
   mime?: string | null;
 }
 
+/* ---------- Upcoming holiday photos ---------- */
+
+/** Why a photo was suggested: an Immich tag, an album, the same time in past years, recent, or visual search. */
+export type PhotoMatchKind = 'tag' | 'album' | 'past' | 'recent' | 'smart';
+
+export interface HolidayPhotoMatch extends PhotoItem {
+  /** Short labels for the badges, strongest first: `Tag: Christmas`, `Dec 2025`, `Album: Xmas`. */
+  reasons: string[];
+  kinds: PhotoMatchKind[];
+}
+
+export interface UpcomingPhotosDto {
+  occasionId: string;
+  /** The holiday date the search was built around (null for undated occasions). */
+  date: string | null;
+  items: HolidayPhotoMatch[];
+  /** Optional Immich key permissions that would find more, e.g. ["tag.read"]. */
+  missingScopes: string[];
+  /** What was searched, for the "how we found these" line. */
+  signals: { tags: string[]; albums: string[]; pastYears: number[]; recentDays: number; visual: boolean };
+  generatedAt: string;
+  /** Served from the 15-minute cache. */
+  cached: boolean;
+}
+
+export interface ImmichTagsDto {
+  /** False when the key has no tag.read (or the Immich server has no tags). */
+  available: boolean;
+  tags: Array<{ name: string; value: string }>;
+  missingScopes: string[];
+}
+
 export interface PhotoPage {
   items: PhotoItem[];
   nextPage: string | null;

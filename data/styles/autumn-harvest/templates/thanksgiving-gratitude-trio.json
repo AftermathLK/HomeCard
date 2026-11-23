@@ -1,0 +1,158 @@
+{
+  "id": "thanksgiving-gratitude-trio",
+  "name": "Grateful Hearth Trio Collage",
+  "description": "Three-photo story layout with hero top frame, twin insets and matching trim.",
+  "kinds": [
+    "front"
+  ],
+  "category": "collage",
+  "defaults": {
+    "gutter": 0.025,
+    "radius": 0.08
+  },
+  "layouts": {
+    "portrait": [
+      {
+        "type": "ornament",
+        "asset": "pack:love-weddings/ornaments/double-rule-frame.svg",
+        "rect": [
+          0.035,
+          0.03,
+          0.93,
+          0.94
+        ],
+        "color": "@accent",
+        "color2": "@accent2",
+        "opacity": 0.75
+      },
+      {
+        "type": "photo",
+        "slot": 0,
+        "mask": "rounded",
+        "radiusIn": 0.08,
+        "rect": [
+          0.08,
+          0.07,
+          0.84,
+          0.36
+        ]
+      },
+      {
+        "type": "photo",
+        "slot": 1,
+        "mask": "rounded",
+        "radiusIn": 0.08,
+        "rect": [
+          0.08,
+          0.45,
+          0.405,
+          0.24
+        ]
+      },
+      {
+        "type": "photo",
+        "slot": 2,
+        "mask": "rounded",
+        "radiusIn": 0.08,
+        "rect": [
+          0.515,
+          0.45,
+          0.405,
+          0.24
+        ]
+      },
+      {
+        "type": "text",
+        "role": "headline",
+        "rect": [
+          0.08,
+          0.72,
+          0.84,
+          0.11
+        ],
+        "fill": "foil"
+      },
+      {
+        "type": "ornament",
+        "asset": "pack:milestones/ornaments/diamond-rule-divider.svg",
+        "rect": [
+          0.3,
+          0.835,
+          0.4,
+          0.035
+        ],
+        "color": "@text",
+        "color2": "@accent"
+      },
+      {
+        "type": "text",
+        "role": "names",
+        "rect": [
+          0.1,
+          0.875,
+          0.8,
+          0.05
+        ]
+      }
+    ],
+    "landscape": [
+      {
+        "type": "photo",
+        "slot": 0,
+        "mask": "rounded",
+        "radiusIn": 0.08,
+        "rect": [
+          0.06,
+          0.09,
+          0.44,
+          0.82
+        ]
+      },
+      {
+        "type": "photo",
+        "slot": 1,
+        "mask": "rounded",
+        "radiusIn": 0.08,
+        "rect": [
+          0.525,
+          0.09,
+          0.415,
+          0.39
+        ]
+      },
+      {
+        "type": "photo",
+        "slot": 2,
+        "mask": "rounded",
+        "radiusIn": 0.08,
+        "rect": [
+          0.525,
+          0.51,
+          0.415,
+          0.22
+        ]
+      },
+      {
+        "type": "text",
+        "role": "headline",
+        "rect": [
+          0.525,
+          0.745,
+          0.415,
+          0.1
+        ],
+        "fill": "foil"
+      },
+      {
+        "type": "text",
+        "role": "names",
+        "rect": [
+          0.525,
+          0.85,
+          0.415,
+          0.06
+        ]
+      }
+    ]
+  }
+}

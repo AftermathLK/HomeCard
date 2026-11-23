@@ -1,0 +1,145 @@
+{
+  "id": "watercolor-thankyou-split",
+  "name": "Indigo Watercolor Editorial Split",
+  "description": "Balanced photo-and-typography split card with matching ornament crest.",
+  "kinds": [
+    "front"
+  ],
+  "category": "split",
+  "layouts": {
+    "portrait": [
+      {
+        "type": "photo",
+        "slot": 0,
+        "rect": [
+          0,
+          0,
+          1,
+          0.56
+        ],
+        "bleed": true
+      },
+      {
+        "type": "ornament",
+        "asset": "pack:winter-holidays/ornaments/botanical-sprig-motif.svg",
+        "rect": [
+          0.43,
+          0.59,
+          0.14,
+          0.095
+        ],
+        "color": "@accent",
+        "color2": "@accent2"
+      },
+      {
+        "type": "text",
+        "role": "headline",
+        "rect": [
+          0.09,
+          0.695,
+          0.82,
+          0.11
+        ]
+      },
+      {
+        "type": "ornament",
+        "asset": "pack:summer/ornaments/wave-divider.svg",
+        "rect": [
+          0.28,
+          0.815,
+          0.44,
+          0.035
+        ],
+        "color": "@text",
+        "color2": "@accent"
+      },
+      {
+        "type": "text",
+        "role": "names",
+        "rect": [
+          0.1,
+          0.86,
+          0.8,
+          0.05
+        ]
+      },
+      {
+        "type": "text",
+        "role": "year",
+        "rect": [
+          0.34,
+          0.915,
+          0.32,
+          0.035
+        ]
+      }
+    ],
+    "landscape": [
+      {
+        "type": "photo",
+        "slot": 0,
+        "rect": [
+          0,
+          0,
+          0.54,
+          1
+        ],
+        "bleed": true
+      },
+      {
+        "type": "ornament",
+        "asset": "pack:winter-holidays/ornaments/botanical-sprig-motif.svg",
+        "rect": [
+          0.71,
+          0.14,
+          0.12,
+          0.16
+        ],
+        "color": "@accent",
+        "color2": "@accent2"
+      },
+      {
+        "type": "text",
+        "role": "headline",
+        "rect": [
+          0.58,
+          0.34,
+          0.37,
+          0.26
+        ]
+      },
+      {
+        "type": "ornament",
+        "asset": "pack:summer/ornaments/wave-divider.svg",
+        "rect": [
+          0.64,
+          0.62,
+          0.25,
+          0.045
+        ],
+        "color": "@text",
+        "color2": "@accent"
+      },
+      {
+        "type": "text",
+        "role": "names",
+        "rect": [
+          0.58,
+          0.69,
+          0.37,
+          0.07
+        ]
+      },
+      {
+        "type": "text",
+        "role": "year",
+        "rect": [
+          0.67,
+          0.77,
+          0.19,
+          0.05
+        ]
+      }
+    ]
+  }
+}

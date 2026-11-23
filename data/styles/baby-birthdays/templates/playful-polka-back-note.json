@@ -1,0 +1,83 @@
+{
+  "id": "playful-polka-back-note",
+  "name": "Playful Polka Back Letter",
+  "description": "Companion back-of-card family update with inset photo and matching accents.",
+  "kinds": [
+    "back",
+    "inside"
+  ],
+  "category": "letter",
+  "layouts": {
+    "any": [
+      {
+        "type": "ornament",
+        "asset": "pack:winter-holidays/ornaments/geometric-corner-frame.svg",
+        "rect": [
+          0.05,
+          0.04,
+          0.9,
+          0.92
+        ],
+        "color": "@accent",
+        "color2": "@accent2",
+        "opacity": 0.75
+      },
+      {
+        "type": "photo",
+        "slot": 0,
+        "mask": "rounded",
+        "radiusIn": 0.08,
+        "rect": [
+          0.22,
+          0.09,
+          0.56,
+          0.3
+        ]
+      },
+      {
+        "type": "ornament",
+        "asset": "pack:baby-birthdays/ornaments/beads-divider.svg",
+        "rect": [
+          0.3,
+          0.415,
+          0.4,
+          0.035
+        ],
+        "color": "@accent",
+        "color2": "@accent2"
+      },
+      {
+        "type": "text",
+        "role": "message",
+        "rect": [
+          0.12,
+          0.47,
+          0.76,
+          0.34
+        ]
+      },
+      {
+        "type": "ornament",
+        "asset": "pack:baby-birthdays/ornaments/rainbow-motif.svg",
+        "rect": [
+          0.45,
+          0.82,
+          0.1,
+          0.065
+        ],
+        "color": "@accent",
+        "color2": "@accent2"
+      },
+      {
+        "type": "text",
+        "role": "names",
+        "rect": [
+          0.14,
+          0.89,
+          0.72,
+          0.045
+        ]
+      }
+    ]
+  }
+}

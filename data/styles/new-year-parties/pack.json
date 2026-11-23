@@ -1,0 +1,435 @@
+{
+  "$schema": "../style-pack.schema.json",
+  "id": "new-year-parties",
+  "name": "New Year & Parties",
+  "version": "1.0.0",
+  "author": "HomeCard contributors",
+  "license": "CC0-1.0",
+  "description": "Black-tie countdowns, sparklers, confetti and velvet-and-champagne glamour.",
+  "occasions": [
+    "new-year",
+    "holiday",
+    "graduation",
+    "first-birthday",
+    "wedding"
+  ],
+  "palettes": [
+    {
+      "id": "midnight-countdown-obsidian-spark",
+      "name": "Obsidian Spark",
+      "colors": {
+        "background": "#0f1014",
+        "text": "#f8f3e6",
+        "accent": "#e0bc5c",
+        "accent2": "#9da8ba"
+      }
+    },
+    {
+      "id": "midnight-countdown-champagne-noon",
+      "name": "Champagne Noon",
+      "colors": {
+        "background": "#f7f1e3",
+        "text": "#1a1a1f",
+        "accent": "#b58f32",
+        "accent2": "#5c6473"
+      }
+    },
+    {
+      "id": "midnight-countdown-midnight-slate",
+      "name": "Midnight Slate",
+      "colors": {
+        "background": "#1a202e",
+        "text": "#f5f0e3",
+        "accent": "#e6c66e",
+        "accent2": "#8fa4c9"
+      }
+    },
+    {
+      "id": "silver-sparkler-charcoal-spark",
+      "name": "Charcoal Spark",
+      "colors": {
+        "background": "#1f2329",
+        "text": "#f5f7fa",
+        "accent": "#d2dbe3",
+        "accent2": "#8ca6bf"
+      }
+    },
+    {
+      "id": "silver-sparkler-platinum-mist",
+      "name": "Platinum Mist",
+      "colors": {
+        "background": "#eef1f5",
+        "text": "#20262e",
+        "accent": "#5b7085",
+        "accent2": "#9aa6b2"
+      }
+    },
+    {
+      "id": "silver-sparkler-ice-evening",
+      "name": "Ice Evening",
+      "colors": {
+        "background": "#162230",
+        "text": "#f2f6fa",
+        "accent": "#c4d7eb",
+        "accent2": "#e0c98d"
+      }
+    },
+    {
+      "id": "disco-confetti-party-night",
+      "name": "Party Night",
+      "colors": {
+        "background": "#1a1829",
+        "text": "#fbf9ff",
+        "accent": "#f06ca0",
+        "accent2": "#58c9c9"
+      }
+    },
+    {
+      "id": "disco-confetti-confetti-pop",
+      "name": "Confetti Pop",
+      "colors": {
+        "background": "#fcfaf5",
+        "text": "#211d30",
+        "accent": "#d94e86",
+        "accent2": "#399e9e"
+      }
+    },
+    {
+      "id": "disco-confetti-electric-plum",
+      "name": "Electric Plum",
+      "colors": {
+        "background": "#2d1d42",
+        "text": "#faf7ff",
+        "accent": "#f2c14e",
+        "accent2": "#63d2c6"
+      }
+    },
+    {
+      "id": "modern-minimal-year-swiss-ink",
+      "name": "Swiss Ink",
+      "colors": {
+        "background": "#ffffff",
+        "text": "#111111",
+        "accent": "#b59142",
+        "accent2": "#6e6e6e"
+      }
+    },
+    {
+      "id": "modern-minimal-year-gallery-black",
+      "name": "Gallery Black",
+      "colors": {
+        "background": "#121212",
+        "text": "#f7f7f5",
+        "accent": "#d9b86c",
+        "accent2": "#8a8a8a"
+      }
+    },
+    {
+      "id": "modern-minimal-year-warm-stone",
+      "name": "Warm Stone",
+      "colors": {
+        "background": "#f0ece3",
+        "text": "#181818",
+        "accent": "#9c4a32",
+        "accent2": "#61615c"
+      }
+    },
+    {
+      "id": "emerald-soiree-gala-emerald",
+      "name": "Gala Emerald",
+      "colors": {
+        "background": "#0e3026",
+        "text": "#f7f0df",
+        "accent": "#deb954",
+        "accent2": "#6ca892"
+      }
+    },
+    {
+      "id": "emerald-soiree-jade-ivory",
+      "name": "Jade & Ivory",
+      "colors": {
+        "background": "#f4f5ee",
+        "text": "#123328",
+        "accent": "#1f6b52",
+        "accent2": "#b89238"
+      }
+    },
+    {
+      "id": "emerald-soiree-peacock-deco",
+      "name": "Peacock Deco",
+      "colors": {
+        "background": "#0f2c33",
+        "text": "#f6efe0",
+        "accent": "#d9b44a",
+        "accent2": "#4fa39b"
+      }
+    },
+    {
+      "id": "velvet-champagne-plum-velvet",
+      "name": "Plum Velvet",
+      "colors": {
+        "background": "#2e1628",
+        "text": "#f9f1f0",
+        "accent": "#e2a6ac",
+        "accent2": "#dfc07d"
+      }
+    },
+    {
+      "id": "velvet-champagne-blush-bubbles",
+      "name": "Blush Bubbles",
+      "colors": {
+        "background": "#f8eff0",
+        "text": "#341c2d",
+        "accent": "#b86b77",
+        "accent2": "#b8954e"
+      }
+    },
+    {
+      "id": "velvet-champagne-burgundy-toast",
+      "name": "Burgundy Toast",
+      "colors": {
+        "background": "#471926",
+        "text": "#faf2eb",
+        "accent": "#e3b888",
+        "accent2": "#d48a94"
+      }
+    }
+  ],
+  "backgrounds": [
+    {
+      "id": "midnight-fireworks-bokeh",
+      "name": "Midnight fireworks bokeh",
+      "file": "textures/midnight-fireworks-bokeh.jpg",
+      "mode": "cover",
+      "kind": "image",
+      "tone": "dark"
+    },
+    {
+      "id": "gold-confetti",
+      "name": "Gold confetti",
+      "file": "textures/gold-confetti.png",
+      "mode": "tile",
+      "kind": "overlay",
+      "tileSizeIn": 1.71,
+      "tone": "dark"
+    },
+    {
+      "id": "silver-sparkler-bokeh",
+      "name": "Silver sparkler bokeh",
+      "file": "textures/silver-sparkler-bokeh.jpg",
+      "mode": "cover",
+      "kind": "image",
+      "tone": "dark"
+    },
+    {
+      "id": "shimmer-dust",
+      "name": "Shimmer dust",
+      "file": "textures/shimmer-dust.png",
+      "mode": "tile",
+      "kind": "overlay",
+      "tileSizeIn": 1.71,
+      "tone": "dark"
+    },
+    {
+      "id": "party-confetti",
+      "name": "Party confetti",
+      "file": "textures/party-confetti.png",
+      "mode": "tile",
+      "kind": "overlay",
+      "tileSizeIn": 1.71,
+      "tone": "dark"
+    },
+    {
+      "id": "festive-dots",
+      "name": "Festive dots",
+      "file": "textures/festive-dots.jpg",
+      "mode": "tile",
+      "kind": "image",
+      "tileSizeIn": 1.6,
+      "tone": "dark"
+    },
+    {
+      "id": "heavy-matte-stock",
+      "name": "Heavy matte stock",
+      "file": "textures/heavy-matte-stock.png",
+      "mode": "tile",
+      "kind": "overlay",
+      "tileSizeIn": 1.71,
+      "tone": "light"
+    },
+    {
+      "id": "swiss-layout-grid",
+      "name": "Swiss layout grid",
+      "file": "textures/swiss-layout-grid.jpg",
+      "mode": "tile",
+      "kind": "image",
+      "tileSizeIn": 1.6,
+      "tone": "light"
+    },
+    {
+      "id": "emerald-gala-velvet",
+      "name": "Emerald gala velvet",
+      "file": "textures/emerald-gala-velvet.jpg",
+      "mode": "cover",
+      "kind": "image",
+      "tone": "dark"
+    },
+    {
+      "id": "golden-glow",
+      "name": "Golden glow",
+      "file": "textures/golden-glow.jpg",
+      "mode": "cover",
+      "kind": "image",
+      "tone": "dark"
+    },
+    {
+      "id": "plush-velvet",
+      "name": "Plush velvet",
+      "file": "textures/plush-velvet.jpg",
+      "mode": "cover",
+      "kind": "image",
+      "tone": "dark"
+    },
+    {
+      "id": "champagne-bubbles",
+      "name": "Champagne bubbles",
+      "file": "textures/champagne-bubbles.jpg",
+      "mode": "cover",
+      "kind": "image",
+      "tone": "dark"
+    }
+  ],
+  "ornaments": [
+    {
+      "id": "starburst-motif",
+      "name": "Starburst Crest",
+      "file": "ornaments/starburst-motif.svg",
+      "kind": "ornament",
+      "tags": [
+        "starburst",
+        "christmas",
+        "winter solstice",
+        "holiday",
+        "new year",
+        "first birthday",
+        "valentines",
+        "independence day",
+        "birth",
+        "graduation"
+      ]
+    },
+    {
+      "id": "deco-frame",
+      "name": "Deco frame",
+      "file": "ornaments/deco-frame.svg",
+      "kind": "frame",
+      "tags": [
+        "deco"
+      ],
+      "stretch": true
+    },
+    {
+      "id": "confetti-scatter",
+      "name": "Confetti Scatter",
+      "file": "ornaments/confetti-scatter.svg",
+      "kind": "scatter",
+      "tags": [
+        "confetti"
+      ]
+    },
+    {
+      "id": "stars-scatter",
+      "name": "Stars Scatter",
+      "file": "ornaments/stars-scatter.svg",
+      "kind": "scatter",
+      "tags": [
+        "stars"
+      ]
+    },
+    {
+      "id": "confetti-scatter-2",
+      "name": "Confetti Scatter 2",
+      "file": "ornaments/confetti-scatter-2.svg",
+      "kind": "scatter",
+      "tags": [
+        "confetti"
+      ]
+    },
+    {
+      "id": "stars-scatter-2",
+      "name": "Stars Scatter 2",
+      "file": "ornaments/stars-scatter-2.svg",
+      "kind": "scatter",
+      "tags": [
+        "stars"
+      ]
+    },
+    {
+      "id": "chevron-divider",
+      "name": "Chevron divider",
+      "file": "ornaments/chevron-divider.svg",
+      "kind": "divider",
+      "tags": [
+        "chevron"
+      ]
+    },
+    {
+      "id": "stars-scatter-3",
+      "name": "Stars Scatter 3",
+      "file": "ornaments/stars-scatter-3.svg",
+      "kind": "scatter",
+      "tags": [
+        "stars"
+      ]
+    },
+    {
+      "id": "confetti-scatter-3",
+      "name": "Confetti Scatter 3",
+      "file": "ornaments/confetti-scatter-3.svg",
+      "kind": "scatter",
+      "tags": [
+        "confetti"
+      ]
+    }
+  ],
+  "stickers": [
+    {
+      "id": "firework-sticker",
+      "name": "Firework",
+      "file": "stickers/firework-sticker.svg",
+      "tags": [
+        "firework",
+        "new year"
+      ]
+    },
+    {
+      "id": "balloon-sticker",
+      "name": "Balloon",
+      "file": "stickers/balloon-sticker.svg",
+      "tags": [
+        "balloon",
+        "new year",
+        "first birthday"
+      ]
+    },
+    {
+      "id": "camera-sticker",
+      "name": "Camera",
+      "file": "stickers/camera-sticker.svg",
+      "tags": [
+        "camera",
+        "new year",
+        "holiday"
+      ]
+    }
+  ],
+  "templates": [
+    "templates/midnight-countdown-full-bleed.json",
+    "templates/midnight-countdown-back-note.json",
+    "templates/silver-sparkler-quad.json",
+    "templates/disco-confetti-trio.json",
+    "templates/modern-minimal-year-editorial.json",
+    "templates/emerald-soiree-arch.json",
+    "templates/velvet-champagne-arch.json"
+  ]
+}

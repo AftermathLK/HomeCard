@@ -154,14 +154,20 @@ export function resolveTokens(text: string, project: Pick<CardProject, 'familyNa
     .replace(/\{\{\s*initial\s*\}\}/gi, initial);
 }
 
-/** Deep clone a project as a new variation. */
-export function duplicateProject(p: CardProject, name?: string): CardProject {
-  const now = new Date().toISOString();
+/**
+ * Deep clone a project as a new variation. A copy of a card from an earlier year moves to this
+ * year's default, so reusing last year's card shows the right {{year}} everywhere; copies made in
+ * the same season keep the year the card already has.
+ */
+export function duplicateProject(p: CardProject, name?: string, at = new Date()): CardProject {
+  const now = at.toISOString();
   const copy: CardProject = JSON.parse(JSON.stringify(p));
   copy.id = uid();
   copy.name = name?.trim() || `${p.name} (copy)`;
   copy.createdAt = now;
   copy.updatedAt = now;
+  const year = defaultYearFor(getOccasion(p.occasionId), at);
+  if (!(p.year >= year)) copy.year = year;
   for (const s of copy.surfaces) for (const e of s.elements) e.id = uid('el');
   return copy;
 }

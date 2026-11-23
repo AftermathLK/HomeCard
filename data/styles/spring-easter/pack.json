@@ -1,0 +1,502 @@
+{
+  "$schema": "../style-pack.schema.json",
+  "id": "spring-easter",
+  "name": "Spring & Easter",
+  "version": "1.0.0",
+  "author": "HomeCard contributors",
+  "license": "CC0-1.0",
+  "description": "Pastel meadows, cherry blossom, cottage gardens, lavender fields and lucky clovers.",
+  "occasions": [
+    "easter",
+    "st-patricks",
+    "mothers-day",
+    "thank-you"
+  ],
+  "palettes": [
+    {
+      "id": "easter-meadow-spring-meadow",
+      "name": "Spring Meadow",
+      "colors": {
+        "background": "#f5f9ef",
+        "text": "#2b3b29",
+        "accent": "#78a66e",
+        "accent2": "#e39aa8"
+      }
+    },
+    {
+      "id": "easter-meadow-robin-egg",
+      "name": "Robin Egg",
+      "colors": {
+        "background": "#edf7f8",
+        "text": "#233b40",
+        "accent": "#5aa3ad",
+        "accent2": "#e8b85a"
+      }
+    },
+    {
+      "id": "easter-meadow-lilac-bunny",
+      "name": "Lilac Bunny",
+      "colors": {
+        "background": "#f5f1fa",
+        "text": "#362b47",
+        "accent": "#9778c4",
+        "accent2": "#82b07d"
+      }
+    },
+    {
+      "id": "cherry-blossom-sakura-mist",
+      "name": "Sakura Mist",
+      "colors": {
+        "background": "#fdf3f5",
+        "text": "#3b252c",
+        "accent": "#d97b93",
+        "accent2": "#7d9678"
+      }
+    },
+    {
+      "id": "cherry-blossom-twilight-blossom",
+      "name": "Twilight Blossom",
+      "colors": {
+        "background": "#2d2230",
+        "text": "#fbf2f4",
+        "accent": "#f0a6b8",
+        "accent2": "#c9b3d6"
+      }
+    },
+    {
+      "id": "cherry-blossom-petal-parchment",
+      "name": "Petal Parchment",
+      "colors": {
+        "background": "#f8f2ec",
+        "text": "#382a29",
+        "accent": "#c96880",
+        "accent2": "#8c9e7c"
+      }
+    },
+    {
+      "id": "english-cottage-cottage-butter",
+      "name": "Cottage Butter",
+      "colors": {
+        "background": "#faf6e8",
+        "text": "#2f3328",
+        "accent": "#6d8f68",
+        "accent2": "#d9a74a"
+      }
+    },
+    {
+      "id": "english-cottage-bluebell-garden",
+      "name": "Bluebell Garden",
+      "colors": {
+        "background": "#eef3f8",
+        "text": "#263342",
+        "accent": "#5c82ab",
+        "accent2": "#c98591"
+      }
+    },
+    {
+      "id": "english-cottage-herb-sage",
+      "name": "Herb Sage",
+      "colors": {
+        "background": "#eef2ea",
+        "text": "#263325",
+        "accent": "#567851",
+        "accent2": "#cc8a68"
+      }
+    },
+    {
+      "id": "pastel-gingham-peach-picnic",
+      "name": "Peach Picnic",
+      "colors": {
+        "background": "#fdf3ed",
+        "text": "#3d2922",
+        "accent": "#e08e79",
+        "accent2": "#7ea892"
+      }
+    },
+    {
+      "id": "pastel-gingham-mint-cream",
+      "name": "Mint Cream",
+      "colors": {
+        "background": "#eef8f3",
+        "text": "#233b32",
+        "accent": "#65a68c",
+        "accent2": "#e8a598"
+      }
+    },
+    {
+      "id": "pastel-gingham-buttercup",
+      "name": "Buttercup",
+      "colors": {
+        "background": "#fcf8e8",
+        "text": "#3b3421",
+        "accent": "#deb654",
+        "accent2": "#84a8c4"
+      }
+    },
+    {
+      "id": "wildflower-press-meadow-parchment",
+      "name": "Meadow Parchment",
+      "colors": {
+        "background": "#faf4e6",
+        "text": "#2d2a22",
+        "accent": "#d19336",
+        "accent2": "#5678a8"
+      }
+    },
+    {
+      "id": "wildflower-press-cornflower",
+      "name": "Cornflower",
+      "colors": {
+        "background": "#f0f4fa",
+        "text": "#243045",
+        "accent": "#4c72ad",
+        "accent2": "#d48b4e"
+      }
+    },
+    {
+      "id": "wildflower-press-clover-field",
+      "name": "Clover Field",
+      "colors": {
+        "background": "#f4f6ed",
+        "text": "#2b3626",
+        "accent": "#6a8a55",
+        "accent2": "#cf7283"
+      }
+    },
+    {
+      "id": "french-provence-provence-lavender",
+      "name": "Provence Lavender",
+      "colors": {
+        "background": "#f4f1f9",
+        "text": "#302842",
+        "accent": "#7c65a8",
+        "accent2": "#7b9674"
+      }
+    },
+    {
+      "id": "french-provence-limestone",
+      "name": "Limestone",
+      "colors": {
+        "background": "#f7f3eb",
+        "text": "#2f2c33",
+        "accent": "#6f5d96",
+        "accent2": "#c29c59"
+      }
+    },
+    {
+      "id": "french-provence-twilight-violet",
+      "name": "Twilight Violet",
+      "colors": {
+        "background": "#29223b",
+        "text": "#f5f1fa",
+        "accent": "#bca8e0",
+        "accent2": "#d9c28a"
+      }
+    },
+    {
+      "id": "st-patricks-clover-irish-emerald",
+      "name": "Irish Emerald",
+      "colors": {
+        "background": "#143d29",
+        "text": "#f5f2e6",
+        "accent": "#d6b054",
+        "accent2": "#5ea878"
+      }
+    },
+    {
+      "id": "st-patricks-clover-clover-cream",
+      "name": "Clover Cream",
+      "colors": {
+        "background": "#f4f6ee",
+        "text": "#1a3626",
+        "accent": "#247348",
+        "accent2": "#b58e36"
+      }
+    },
+    {
+      "id": "st-patricks-clover-highland-moss",
+      "name": "Highland Moss",
+      "colors": {
+        "background": "#224231",
+        "text": "#f4f1e6",
+        "accent": "#e0c06c",
+        "accent2": "#89b896"
+      }
+    }
+  ],
+  "backgrounds": [
+    {
+      "id": "pastel-spring-dots",
+      "name": "Pastel spring dots",
+      "file": "textures/pastel-spring-dots.jpg",
+      "mode": "tile",
+      "kind": "image",
+      "tileSizeIn": 1.6,
+      "tone": "light"
+    },
+    {
+      "id": "pastel-meadow",
+      "name": "Pastel meadow",
+      "file": "textures/pastel-meadow.jpg",
+      "mode": "cover",
+      "kind": "image",
+      "tone": "light"
+    },
+    {
+      "id": "sakura-wash",
+      "name": "Sakura wash",
+      "file": "textures/sakura-wash.jpg",
+      "mode": "cover",
+      "kind": "image",
+      "tone": "light"
+    },
+    {
+      "id": "washi-linen",
+      "name": "Washi linen",
+      "file": "textures/washi-linen.png",
+      "mode": "tile",
+      "kind": "overlay",
+      "tileSizeIn": 1.71,
+      "tone": "light"
+    },
+    {
+      "id": "cottage-gingham",
+      "name": "Cottage gingham",
+      "file": "textures/cottage-gingham.jpg",
+      "mode": "tile",
+      "kind": "image",
+      "tileSizeIn": 1.6,
+      "tone": "light"
+    },
+    {
+      "id": "meadow-wash",
+      "name": "Meadow wash",
+      "file": "textures/meadow-wash.jpg",
+      "mode": "cover",
+      "kind": "image",
+      "tone": "light"
+    },
+    {
+      "id": "pastel-gingham",
+      "name": "Pastel gingham",
+      "file": "textures/pastel-gingham.jpg",
+      "mode": "tile",
+      "kind": "image",
+      "tileSizeIn": 1.6,
+      "tone": "light"
+    },
+    {
+      "id": "soft-matte-paper",
+      "name": "Soft matte paper",
+      "file": "textures/soft-matte-paper.png",
+      "mode": "tile",
+      "kind": "overlay",
+      "tileSizeIn": 1.71,
+      "tone": "light"
+    },
+    {
+      "id": "wildflower-wash",
+      "name": "Wildflower wash",
+      "file": "textures/wildflower-wash.jpg",
+      "mode": "cover",
+      "kind": "image",
+      "tone": "light"
+    },
+    {
+      "id": "botanical-paper",
+      "name": "Botanical paper",
+      "file": "textures/botanical-paper.jpg",
+      "mode": "tile",
+      "kind": "image",
+      "tileSizeIn": 1.71,
+      "tone": "light"
+    },
+    {
+      "id": "provence-linen",
+      "name": "Provence linen",
+      "file": "textures/provence-linen.png",
+      "mode": "tile",
+      "kind": "overlay",
+      "tileSizeIn": 1.71,
+      "tone": "light"
+    },
+    {
+      "id": "lavender-mist",
+      "name": "Lavender mist",
+      "file": "textures/lavender-mist.jpg",
+      "mode": "cover",
+      "kind": "image",
+      "tone": "light"
+    },
+    {
+      "id": "emerald-weave",
+      "name": "Emerald weave",
+      "file": "textures/emerald-weave.jpg",
+      "mode": "tile",
+      "kind": "image",
+      "tileSizeIn": 1.71,
+      "tone": "dark"
+    },
+    {
+      "id": "irish-linen",
+      "name": "Irish linen",
+      "file": "textures/irish-linen.png",
+      "mode": "tile",
+      "kind": "overlay",
+      "tileSizeIn": 1.71,
+      "tone": "dark"
+    }
+  ],
+  "ornaments": [
+    {
+      "id": "vine-divider",
+      "name": "Vine divider",
+      "file": "ornaments/vine-divider.svg",
+      "kind": "divider",
+      "tags": [
+        "vine"
+      ]
+    },
+    {
+      "id": "blossom-motif",
+      "name": "Blossom Crest",
+      "file": "ornaments/blossom-motif.svg",
+      "kind": "ornament",
+      "tags": [
+        "blossom",
+        "easter",
+        "mothers day",
+        "birth",
+        "valentines",
+        "thank you",
+        "wedding",
+        "first birthday"
+      ]
+    },
+    {
+      "id": "petals-scatter",
+      "name": "Petals Scatter",
+      "file": "ornaments/petals-scatter.svg",
+      "kind": "scatter",
+      "tags": [
+        "petals"
+      ]
+    },
+    {
+      "id": "petals-scatter-2",
+      "name": "Petals Scatter 2",
+      "file": "ornaments/petals-scatter-2.svg",
+      "kind": "scatter",
+      "tags": [
+        "petals"
+      ]
+    },
+    {
+      "id": "petals-scatter-3",
+      "name": "Petals Scatter 3",
+      "file": "ornaments/petals-scatter-3.svg",
+      "kind": "scatter",
+      "tags": [
+        "petals"
+      ]
+    },
+    {
+      "id": "confetti-scatter",
+      "name": "Confetti Scatter",
+      "file": "ornaments/confetti-scatter.svg",
+      "kind": "scatter",
+      "tags": [
+        "confetti"
+      ]
+    },
+    {
+      "id": "petals-scatter-4",
+      "name": "Petals Scatter 4",
+      "file": "ornaments/petals-scatter-4.svg",
+      "kind": "scatter",
+      "tags": [
+        "petals"
+      ]
+    },
+    {
+      "id": "petals-scatter-5",
+      "name": "Petals Scatter 5",
+      "file": "ornaments/petals-scatter-5.svg",
+      "kind": "scatter",
+      "tags": [
+        "petals"
+      ]
+    },
+    {
+      "id": "shamrock-motif",
+      "name": "Shamrock Crest",
+      "file": "ornaments/shamrock-motif.svg",
+      "kind": "ornament",
+      "tags": [
+        "shamrock",
+        "st patricks"
+      ]
+    },
+    {
+      "id": "petals-scatter-6",
+      "name": "Petals Scatter 6",
+      "file": "ornaments/petals-scatter-6.svg",
+      "kind": "scatter",
+      "tags": [
+        "petals"
+      ]
+    }
+  ],
+  "stickers": [
+    {
+      "id": "easter-egg-sticker",
+      "name": "Easter Egg",
+      "file": "stickers/easter-egg-sticker.svg",
+      "tags": [
+        "easter egg",
+        "easter"
+      ]
+    },
+    {
+      "id": "flower-bouquet-sticker",
+      "name": "Flower Bouquet",
+      "file": "stickers/flower-bouquet-sticker.svg",
+      "tags": [
+        "flower bouquet",
+        "mothers day",
+        "easter"
+      ]
+    },
+    {
+      "id": "sunflower-sticker",
+      "name": "Sunflower",
+      "file": "stickers/sunflower-sticker.svg",
+      "tags": [
+        "sunflower",
+        "mothers day",
+        "easter"
+      ]
+    },
+    {
+      "id": "wax-seal-sticker",
+      "name": "Wax Seal",
+      "file": "stickers/wax-seal-sticker.svg",
+      "tags": [
+        "wax seal",
+        "st patricks"
+      ]
+    }
+  ],
+  "templates": [
+    "templates/easter-meadow-trio.json",
+    "templates/cherry-blossom-oval.json",
+    "templates/english-cottage-framed.json",
+    "templates/english-cottage-back-note.json",
+    "templates/pastel-gingham-polaroid.json",
+    "templates/wildflower-press-trio.json",
+    "templates/french-provence-oval.json",
+    "templates/french-provence-back-note.json",
+    "templates/st-patricks-clover-framed.json",
+    "templates/st-patricks-clover-back-note.json"
+  ]
+}

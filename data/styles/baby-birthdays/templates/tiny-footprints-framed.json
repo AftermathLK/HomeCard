@@ -1,0 +1,145 @@
+{
+  "id": "tiny-footprints-framed",
+  "name": "Minimal Arrival Framed",
+  "description": "Classic framed portrait card featuring matching border and divider.",
+  "kinds": [
+    "front"
+  ],
+  "category": "framed",
+  "layouts": {
+    "portrait": [
+      {
+        "type": "photo",
+        "slot": 0,
+        "rect": [
+          0.1,
+          0.08,
+          0.8,
+          0.58
+        ],
+        "frameStyle": "mat"
+      },
+      {
+        "type": "ornament",
+        "asset": "pack:love-weddings/ornaments/double-rule-frame.svg",
+        "rect": [
+          0.05,
+          0.04,
+          0.9,
+          0.92
+        ],
+        "color": "@accent",
+        "color2": "@accent2"
+      },
+      {
+        "type": "text",
+        "role": "headline",
+        "rect": [
+          0.1,
+          0.69,
+          0.8,
+          0.12
+        ]
+      },
+      {
+        "type": "ornament",
+        "asset": "pack:baby-birthdays/ornaments/beads-divider.svg",
+        "rect": [
+          0.28,
+          0.815,
+          0.44,
+          0.04
+        ],
+        "color": "@text",
+        "color2": "@accent"
+      },
+      {
+        "type": "text",
+        "role": "names",
+        "rect": [
+          0.1,
+          0.865,
+          0.8,
+          0.05
+        ]
+      },
+      {
+        "type": "text",
+        "role": "year",
+        "rect": [
+          0.32,
+          0.912,
+          0.36,
+          0.035
+        ]
+      }
+    ],
+    "landscape": [
+      {
+        "type": "photo",
+        "slot": 0,
+        "rect": [
+          0.07,
+          0.1,
+          0.5,
+          0.8
+        ],
+        "frameStyle": "mat"
+      },
+      {
+        "type": "ornament",
+        "asset": "pack:love-weddings/ornaments/double-rule-frame.svg",
+        "rect": [
+          0.035,
+          0.05,
+          0.93,
+          0.9
+        ],
+        "color": "@accent",
+        "color2": "@accent2"
+      },
+      {
+        "type": "text",
+        "role": "headline",
+        "rect": [
+          0.6,
+          0.22,
+          0.34,
+          0.3
+        ]
+      },
+      {
+        "type": "ornament",
+        "asset": "pack:baby-birthdays/ornaments/beads-divider.svg",
+        "rect": [
+          0.64,
+          0.55,
+          0.26,
+          0.05
+        ],
+        "color": "@text",
+        "color2": "@accent"
+      },
+      {
+        "type": "text",
+        "role": "names",
+        "rect": [
+          0.6,
+          0.63,
+          0.34,
+          0.08
+        ]
+      },
+      {
+        "type": "text",
+        "role": "year",
+        "rect": [
+          0.66,
+          0.72,
+          0.22,
+          0.05
+        ]
+      }
+    ]
+  }
+}

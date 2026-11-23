@@ -2,21 +2,20 @@ import { createReadStream, createWriteStream } from 'node:fs';
 import fsp from 'node:fs/promises';
 import path from 'node:path';
 import { pipeline } from 'node:stream/promises';
-import AdmZip from 'adm-zip';
+import { gzipSync } from 'node:zlib';
 import type { FastifyInstance } from 'fastify';
 import { parsePackAssetRef, resolveStylePack, type ResolvedStylePack, type StylePackManifest } from '@homecard/shared';
-import { clientIp, userOf } from '../auth/context';
+import { adminOf, clientIp, userOf } from '../auth/context';
 import { config } from '../config';
 import { emit } from '../events';
 import { audit } from '../security/audit';
 import { ensureDir, exists, httpError, safeJoin, safeRealPath, sanitizeFileName, slugify, toPosix, uniquePath, writeFileAtomic } from '../util/fsx';
 import { sanitizeSvg } from './sanitize';
+import { planZipImport, RESERVED_PACK_IDS } from './zipimport';
 
 const UPLOADS_DIR = '_uploads';
 /** Downloaded stock backgrounds (not a pack; served by /api/stock/file). */
 export const STOCK_CACHE_DIR = 'stock-cache';
-const RESERVED_IDS = new Set([STOCK_CACHE_DIR, 'my-uploads']);
-const MAX_UNZIPPED = 300 * 1024 * 1024;
 const ASSET_EXT = /\.(svg|png|jpe?g|webp)$/i;
 
 let packs: ResolvedStylePack[] = [];
@@ -149,11 +148,34 @@ export async function sanitizedSvg(packId: string, rel: string) {
 
 const MIME: Record<string, string> = { '.png': 'image/png', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.webp': 'image/webp', '.svg': 'image/svg+xml' };
 
-export function registerStyleRoutes(app: FastifyInstance) {
-  app.get('/api/styles', async () => ({ version, packs }));
+/*
+ * The pack list carries every pack's templates inline, which adds up to megabytes of JSON once
+ * layout libraries are installed. It is serialised and gzipped once per rescan, and browsers
+ * revalidate it with an ETag, so an unchanged list costs a 304.
+ */
+let listBody: { packs: ResolvedStylePack[]; version: number; etag: string; json: string; gz: Buffer } | null = null;
 
+function stylesListBody() {
+  if (!listBody || listBody.packs !== packs || listBody.version !== version) {
+    const json = JSON.stringify({ version, packs });
+    listBody = { packs, version, etag: `"styles-${version}-${json.length}"`, json, gz: gzipSync(json, { level: 6 }) };
+  }
+  return listBody;
+}
+
+export function registerStyleRoutes(app: FastifyInstance) {
+  app.get('/api/styles', async (req, reply) => {
+    const b = stylesListBody();
+    reply.header('ETag', b.etag).header('Cache-Control', 'private, no-cache').header('Vary', 'Accept-Encoding');
+    if (req.headers['if-none-match'] === b.etag) return reply.code(304).send();
+    reply.type('application/json; charset=utf-8');
+    if (/\bgzip\b/i.test(String(req.headers['accept-encoding'] ?? ''))) return reply.header('Content-Encoding', 'gzip').send(b.gz);
+    return reply.send(b.json);
+  });
+
+  // Installing, replacing and reloading packs changes what every account on the server sees: admins only.
   app.post('/api/styles/rescan', async (req) => {
-    userOf(req);
+    adminOf(req);
     await rescanStyles();
     emit('styles', { version });
     return { version, packs };
@@ -209,7 +231,7 @@ export function registerStyleRoutes(app: FastifyInstance) {
 
   /** Import a Style Pack (.zip containing pack.json, or a standalone .json manifest). */
   app.post('/api/styles/import', async (req) => {
-    const me = userOf(req);
+    const me = adminOf(req);
     const results: Array<{ file: string; packId?: string; error?: string }> = [];
     for await (const part of req.files({ limits: { fileSize: 150 * 1024 * 1024 } })) {
       const buf = await part.toBuffer();
@@ -219,50 +241,23 @@ export function registerStyleRoutes(app: FastifyInstance) {
           const json = JSON.parse(buf.toString('utf8'));
           const r = resolveStylePack(json);
           if (!r.id) throw new Error(r.errors.join(' '));
-          if (RESERVED_IDS.has(r.id)) throw new Error(`"${r.id}" is reserved — rename the pack id.`);
+          if (RESERVED_PACK_IDS.has(r.id)) throw new Error(`"${r.id}" is reserved — rename the pack id.`);
           await writeFileAtomic(path.join(config.dirs.styles, `${r.id}.json`), JSON.stringify(json, null, 2));
           results.push({ file: name, packId: r.id });
         } else if (/\.zip$/i.test(name)) {
-          const zip = new AdmZip(buf);
-          const entries = zip.getEntries().filter((e) => !e.isDirectory && !e.entryName.startsWith('__MACOSX'));
-          const manifestEntry = entries
-            .filter((e) => /(^|\/)(pack|style-pack|stylepack)\.json$/i.test(e.entryName))
-            .sort((a, b) => a.entryName.split('/').length - b.entryName.split('/').length)[0];
-          if (!manifestEntry) throw new Error('Zip has no pack.json');
-          const prefix = manifestEntry.entryName.slice(0, manifestEntry.entryName.lastIndexOf('/') + 1);
-          const json = JSON.parse(manifestEntry.getData().toString('utf8'));
-          const r = resolveStylePack(json);
-          if (!r.id) throw new Error(r.errors.join(' '));
-          if (RESERVED_IDS.has(r.id)) throw new Error(`"${r.id}" is reserved — rename the pack id.`);
-          const dest = path.join(config.dirs.styles, r.id);
-          // Pass 1: validate every path and the unpacked size before writing anything, so a bad
-          // archive (zip-slip entry, zip bomb) never leaves a half-imported pack behind.
-          let total = 0;
-          const files: Array<{ out: string; data: Buffer }> = [];
-          for (const e of entries) {
-            if (!e.entryName.startsWith(prefix)) continue;
-            const rel = e.entryName.slice(prefix.length);
-            if (!rel || !/\.(json|svg|png|jpe?g|webp|md|txt)$/i.test(rel)) continue;
-            let out: string;
-            try {
-              out = safeJoin(dest, rel); // zip-slip protection
-            } catch {
-              throw new Error(`Unsafe path in zip: ${e.entryName}`);
-            }
-            // The declared size is checked before inflating; the real size is what counts.
-            if (total + e.header.size > MAX_UNZIPPED) throw new Error('Zip expands to more than 300 MB');
-            const data = e.getData();
-            total += data.length;
-            if (total > MAX_UNZIPPED) throw new Error('Zip expands to more than 300 MB');
-            files.push({ out, data });
-          }
+          // Pass 1 checks every path and the unpacked size of the whole archive before anything
+          // is written, so a bad archive (zip-slip entry, zip bomb) never leaves half-imported packs.
+          const { planned, errors } = planZipImport(buf, name, config.dirs.styles);
+          results.push(...errors);
           // Pass 2: write.
-          await ensureDir(dest);
-          for (const f of files) {
-            await ensureDir(path.dirname(f.out));
-            await fsp.writeFile(f.out, f.data);
+          for (const p of planned) {
+            await ensureDir(p.dest);
+            for (const f of p.files) {
+              await ensureDir(path.dirname(f.out));
+              await fsp.writeFile(f.out, f.data);
+            }
+            results.push({ file: name, packId: p.id });
           }
-          results.push({ file: name, packId: r.id });
         } else {
           throw new Error('Upload a .zip or .json style pack');
         }

@@ -1,0 +1,224 @@
+{
+  "$schema": "../style-pack.schema.json",
+  "id": "halloween",
+  "name": "Halloween",
+  "version": "1.0.0",
+  "author": "HomeCard contributors",
+  "license": "CC0-1.0",
+  "description": "Gothic velvet, retro 1950s pumpkins and friendly little ghosts.",
+  "occasions": [
+    "halloween"
+  ],
+  "palettes": [
+    {
+      "id": "spooky-gothic-gothic-plum",
+      "name": "Gothic Plum",
+      "colors": {
+        "background": "#1c1324",
+        "text": "#f2edf5",
+        "accent": "#b89ec9",
+        "accent2": "#d67a38"
+      }
+    },
+    {
+      "id": "spooky-gothic-midnight-raven",
+      "name": "Midnight Raven",
+      "colors": {
+        "background": "#121318",
+        "text": "#f0eff4",
+        "accent": "#c4ced9",
+        "accent2": "#9b6bc4"
+      }
+    },
+    {
+      "id": "spooky-gothic-haunted-parchment",
+      "name": "Haunted Parchment",
+      "colors": {
+        "background": "#ebe5dc",
+        "text": "#1f1924",
+        "accent": "#5b3275",
+        "accent2": "#b54e24"
+      }
+    },
+    {
+      "id": "vintage-halloween-retro-pumpkin",
+      "name": "Retro Pumpkin",
+      "colors": {
+        "background": "#f6ebd9",
+        "text": "#1e1a18",
+        "accent": "#d45d1e",
+        "accent2": "#2f2a2b"
+      }
+    },
+    {
+      "id": "vintage-halloween-october-night",
+      "name": "October Night",
+      "colors": {
+        "background": "#1d1a1c",
+        "text": "#faf0dc",
+        "accent": "#eb7626",
+        "accent2": "#e8c45a"
+      }
+    },
+    {
+      "id": "vintage-halloween-candy-corn",
+      "name": "Candy Corn",
+      "colors": {
+        "background": "#fcf6e8",
+        "text": "#241d19",
+        "accent": "#e36c20",
+        "accent2": "#ebb834"
+      }
+    },
+    {
+      "id": "whimsical-boo-playful-violet",
+      "name": "Playful Violet",
+      "colors": {
+        "background": "#291e3d",
+        "text": "#faf7ff",
+        "accent": "#f28c38",
+        "accent2": "#a882e0"
+      }
+    },
+    {
+      "id": "whimsical-boo-friendly-boo",
+      "name": "Friendly Boo",
+      "colors": {
+        "background": "#f7f3fa",
+        "text": "#2b213d",
+        "accent": "#e37222",
+        "accent2": "#7c5cb3"
+      }
+    },
+    {
+      "id": "whimsical-boo-witchy-mint",
+      "name": "Witchy Mint",
+      "colors": {
+        "background": "#eef7f3",
+        "text": "#252136",
+        "accent": "#7a58b0",
+        "accent2": "#e67b2e"
+      }
+    }
+  ],
+  "backgrounds": [
+    {
+      "id": "gothic-velvet",
+      "name": "Gothic velvet",
+      "file": "textures/gothic-velvet.jpg",
+      "mode": "cover",
+      "kind": "image",
+      "tone": "dark"
+    },
+    {
+      "id": "moonlit-october",
+      "name": "Moonlit October",
+      "file": "textures/moonlit-october.jpg",
+      "mode": "cover",
+      "kind": "image",
+      "tone": "dark"
+    },
+    {
+      "id": "vintage-october-paper",
+      "name": "Vintage October paper",
+      "file": "textures/vintage-october-paper.jpg",
+      "mode": "tile",
+      "kind": "image",
+      "tileSizeIn": 1.71,
+      "tone": "light"
+    },
+    {
+      "id": "spooky-stripe",
+      "name": "Spooky stripe",
+      "file": "textures/spooky-stripe.jpg",
+      "mode": "tile",
+      "kind": "image",
+      "tileSizeIn": 1.71,
+      "tone": "light"
+    },
+    {
+      "id": "spooky-polka",
+      "name": "Spooky polka",
+      "file": "textures/spooky-polka.jpg",
+      "mode": "tile",
+      "kind": "image",
+      "tileSizeIn": 1.6,
+      "tone": "dark"
+    },
+    {
+      "id": "trick-or-treat-dots",
+      "name": "Trick-or-treat dots",
+      "file": "textures/trick-or-treat-dots.png",
+      "mode": "tile",
+      "kind": "overlay",
+      "tileSizeIn": 1.71,
+      "tone": "dark"
+    }
+  ],
+  "ornaments": [
+    {
+      "id": "bat-motif",
+      "name": "Bat Crest",
+      "file": "ornaments/bat-motif.svg",
+      "kind": "ornament",
+      "tags": [
+        "bat",
+        "halloween",
+        "first birthday"
+      ]
+    },
+    {
+      "id": "stars-scatter",
+      "name": "Stars Scatter",
+      "file": "ornaments/stars-scatter.svg",
+      "kind": "scatter",
+      "tags": [
+        "stars"
+      ]
+    },
+    {
+      "id": "stars-scatter-2",
+      "name": "Stars Scatter 2",
+      "file": "ornaments/stars-scatter-2.svg",
+      "kind": "scatter",
+      "tags": [
+        "stars"
+      ]
+    },
+    {
+      "id": "stars-scatter-3",
+      "name": "Stars Scatter 3",
+      "file": "ornaments/stars-scatter-3.svg",
+      "kind": "scatter",
+      "tags": [
+        "stars"
+      ]
+    }
+  ],
+  "stickers": [
+    {
+      "id": "ghost-sticker",
+      "name": "Ghost",
+      "file": "stickers/ghost-sticker.svg",
+      "tags": [
+        "ghost",
+        "halloween"
+      ]
+    },
+    {
+      "id": "jack-o-lantern-sticker",
+      "name": "Jack O Lantern",
+      "file": "stickers/jack-o-lantern-sticker.svg",
+      "tags": [
+        "jack o lantern",
+        "halloween"
+      ]
+    }
+  ],
+  "templates": [
+    "templates/spooky-gothic-arch.json",
+    "templates/vintage-halloween-framed.json",
+    "templates/whimsical-boo-trio.json",
+    "templates/whimsical-boo-back-note.json"
+  ]
+}

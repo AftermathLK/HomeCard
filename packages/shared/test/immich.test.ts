@@ -5,6 +5,7 @@ import {
   checkImmichRequest,
   IMMICH_GET_ALLOWLIST,
   IMMICH_MUTATING_METHODS,
+  IMMICH_OPTIONAL_SCOPES,
   IMMICH_POST_ALLOWLIST,
   IMMICH_REQUIRED_SCOPES,
 } from '../src/immich';
@@ -91,4 +92,47 @@ test('Layer 2: the guided read-only key passes and reports missing scopes', () =
   assert.deepEqual(partial.dangerous, []);
   assert.ok(partial.missingRequired.includes('asset.download'));
   assert.ok(partial.missingOptional.includes('memory.read'));
+});
+
+test('Tags: the tag list and a single tag can be read', () => {
+  assert.equal(checkImmichRequest('GET', '/api/tags').ok, true);
+  assert.equal(checkImmichRequest('GET', `/api/tags/${ID}`).ok, true);
+  assert.equal(checkImmichRequest('GET', '/api/tags/not-a-uuid').ok, false);
+  assert.equal(checkImmichRequest('GET', `/api/tags/${ID}/../../admin/users`).ok, false);
+});
+
+test('Tags: creating, renaming, deleting and tagging assets are all blocked', () => {
+  const writes: Array<[string, string]> = [
+    ['POST', '/api/tags'], // create
+    ['PUT', '/api/tags'], // upsert
+    ['PUT', `/api/tags/${ID}`], // rename / recolour
+    ['PATCH', `/api/tags/${ID}`],
+    ['DELETE', `/api/tags/${ID}`],
+    ['PUT', '/api/tags/assets'], // bulk tag assets
+    ['POST', '/api/tags/assets'],
+    ['PUT', `/api/tags/${ID}/assets`], // tag assets
+    ['POST', `/api/tags/${ID}/assets`],
+    ['DELETE', `/api/tags/${ID}/assets`], // untag assets
+  ];
+  for (const [m, p] of writes) {
+    const c = checkImmichRequest(m, p);
+    assert.equal(c.ok, false, `${m} ${p} must be blocked`);
+    if (IMMICH_MUTATING_METHODS.includes(m as any)) assert.equal(!c.ok && c.fatal, true, `${m} ${p} is fatal`);
+  }
+});
+
+test('Tags: tag.read is an optional, safe scope; every tag write scope is refused', () => {
+  const required = IMMICH_REQUIRED_SCOPES.map((s) => s.id);
+  assert.ok(IMMICH_OPTIONAL_SCOPES.some((s) => s.id === 'tag.read'));
+  assert.ok(!required.includes('tag.read'), 'never required: discovery works without it');
+  const withTags = analyzeImmichScopes([...required, 'tag.read']);
+  assert.deepEqual(withTags.dangerous, []);
+  assert.equal(withTags.readOnly, true);
+  assert.ok(!withTags.missingOptional.includes('tag.read'));
+  assert.ok(analyzeImmichScopes(required).missingOptional.includes('tag.read'));
+  for (const p of ['tag.create', 'tag.update', 'tag.delete', 'tag.asset', 'all']) {
+    const a = analyzeImmichScopes([...required, 'tag.read', p]);
+    assert.deepEqual(a.dangerous, [p], p);
+    assert.equal(a.readOnly, false, p);
+  }
 });

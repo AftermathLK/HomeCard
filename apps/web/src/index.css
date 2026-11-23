@@ -145,12 +145,13 @@ input[type="range"].range::-moz-range-thumb {
 .hc-surface * {
   box-sizing: border-box;
 }
+/*
+ * Shapes without their own fill are filled, as SVG would fill them, unless they sit inside a
+ * fill="none" group: those are outlines (frames, borders), and filling them would paint a solid
+ * block over the card.
+ */
 .hc-recolor svg [fill]:not([fill="none"]),
-.hc-recolor svg path:not([fill]),
-.hc-recolor svg circle:not([fill]),
-.hc-recolor svg ellipse:not([fill]),
-.hc-recolor svg polygon:not([fill]),
-.hc-recolor svg rect:not([fill]) {
+.hc-recolor svg :is(path, circle, ellipse, polygon, rect):not([fill]):not([fill="none"] *) {
   fill: currentColor;
 }
 .hc-recolor svg [stroke]:not([stroke="none"]) {
@@ -158,11 +159,7 @@ input[type="range"].range::-moz-range-thumb {
 }
 /* Style-pack SVGs: elements with class="tone2" take the ornament's second colour. */
 .hc-recolor svg .tone2[fill]:not([fill="none"]),
-.hc-recolor svg path.tone2:not([fill]),
-.hc-recolor svg circle.tone2:not([fill]),
-.hc-recolor svg ellipse.tone2:not([fill]),
-.hc-recolor svg polygon.tone2:not([fill]),
-.hc-recolor svg rect.tone2:not([fill]) {
+.hc-recolor svg :is(path, circle, ellipse, polygon, rect).tone2:not([fill]):not([fill="none"] *) {
   fill: var(--hc-orn2, currentColor);
 }
 .hc-recolor svg .tone2[stroke]:not([stroke="none"]) {

@@ -1,0 +1,91 @@
+{
+  "id": "stamped-stationery-letter",
+  "name": "Wax Seal Stationery Stationery Note",
+  "description": "Refined letterpress note or back-of-card family update with matching crest.",
+  "kinds": [
+    "back",
+    "inside",
+    "front"
+  ],
+  "category": "letter",
+  "layouts": {
+    "any": [
+      {
+        "type": "ornament",
+        "asset": "pack:love-weddings/ornaments/ornate-brackets-frame.svg",
+        "rect": [
+          0.055,
+          0.045,
+          0.89,
+          0.91
+        ],
+        "color": "@accent",
+        "color2": "@accent2"
+      },
+      {
+        "type": "ornament",
+        "asset": "pack:love-weddings/ornaments/monogram-seal-motif.svg",
+        "rect": [
+          0.42,
+          0.09,
+          0.16,
+          0.11
+        ],
+        "color": "@accent",
+        "color2": "@accent2"
+      },
+      {
+        "type": "text",
+        "role": "headline",
+        "rect": [
+          0.12,
+          0.22,
+          0.76,
+          0.1
+        ]
+      },
+      {
+        "type": "ornament",
+        "asset": "pack:milestones/ornaments/diamond-rule-divider.svg",
+        "rect": [
+          0.3,
+          0.335,
+          0.4,
+          0.035
+        ],
+        "color": "@text",
+        "color2": "@accent"
+      },
+      {
+        "type": "text",
+        "role": "message",
+        "rect": [
+          0.13,
+          0.39,
+          0.74,
+          0.38
+        ]
+      },
+      {
+        "type": "text",
+        "role": "names",
+        "rect": [
+          0.14,
+          0.8,
+          0.72,
+          0.06
+        ]
+      },
+      {
+        "type": "text",
+        "role": "year",
+        "rect": [
+          0.34,
+          0.87,
+          0.32,
+          0.04
+        ]
+      }
+    ]
+  }
+}

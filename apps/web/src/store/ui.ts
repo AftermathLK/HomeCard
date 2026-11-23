@@ -3,7 +3,7 @@ import type { RectIn } from '@homecard/shared';
 
 export type AppMode = 'guided' | 'studio';
 export type StudioTab = 'card' | 'templates' | 'photos' | 'text' | 'style' | 'backgrounds' | 'polish' | 'decor' | 'layers' | 'check';
-export type SettingsTab = 'profile' | 'immich' | 'users' | 'audit' | 'server' | 'fonts' | 'styles' | 'printing' | 'system';
+export type SettingsTab = 'profile' | 'immich' | 'holidays' | 'users' | 'audit' | 'server' | 'fonts' | 'styles' | 'printing' | 'system';
 export type ViewMode = 'editor' | 'mockup';
 
 export interface PickerTarget {
@@ -31,7 +31,9 @@ interface UiState {
   settingsTab: SettingsTab;
   exportOpen: boolean;
   newCardOpen: boolean;
-  toasts: Array<{ id: number; kind: 'info' | 'ok' | 'error'; text: string }>;
+  /** Occasion to start the New card wizard on (e.g. from the home page's upcoming holiday). */
+  newCardOccasionId: string | null;
+  toasts: Toast[];
   /** Text measurements from the live canvas (Print Guardian). */
   textInk: Record<string, RectIn | undefined>;
   textOverflow: Record<string, boolean | undefined>;
@@ -40,9 +42,21 @@ interface UiState {
 
   go: (r: UiState['route']) => void;
   set: (patch: Partial<UiState>) => void;
-  toast: (text: string, kind?: 'info' | 'ok' | 'error') => void;
+  toast: (text: string, kind?: 'info' | 'ok' | 'error', action?: ToastAction) => void;
   setCompare: (id: string, on: boolean) => void;
   openSettings: (tab?: SettingsTab) => void;
+}
+
+export interface ToastAction {
+  label: string;
+  run: () => void;
+}
+
+export interface Toast {
+  id: number;
+  kind: 'info' | 'ok' | 'error';
+  text: string;
+  action?: ToastAction;
 }
 
 let toastId = 0;
@@ -70,6 +84,7 @@ export const useUi = create<UiState>((set, get) => ({
   settingsTab: 'profile',
   exportOpen: false,
   newCardOpen: false,
+  newCardOccasionId: null,
   toasts: [],
   textInk: {},
   textOverflow: {},
@@ -85,10 +100,11 @@ export const useUi = create<UiState>((set, get) => ({
     if (patch.mode) localStorage.setItem('hc.mode', patch.mode);
     set(patch);
   },
-  toast(text, kind = 'info') {
+  toast(text, kind = 'info', action) {
     const id = ++toastId;
-    set({ toasts: [...get().toasts, { id, kind, text }] });
-    setTimeout(() => set({ toasts: get().toasts.filter((t) => t.id !== id) }), kind === 'error' ? 7000 : 3500);
+    set({ toasts: [...get().toasts, { id, kind, text, action }] });
+    // A toast with a button (Undo) stays long enough to reach it.
+    setTimeout(() => set({ toasts: get().toasts.filter((t) => t.id !== id) }), action ? 8000 : kind === 'error' ? 7000 : 3500);
   },
   setCompare(id, on) {
     const next = new Set(get().compareIds);

@@ -13,8 +13,19 @@ A Style Pack adds new looks to HomeCard without any code. A pack can contain:
 Packs are plain files in the `/data/styles` volume. HomeCard watches that folder, so changes
 show up in an open editor within a second or two. No restart or reload is needed.
 
-HomeCard ships four starter packs, which are good examples to copy from:
+HomeCard ships 16 packs. The four starter packs are the easiest examples to copy from:
 `classic-paper`, `winter-woodland`, `gilded-holiday` and `spring-garden`.
+
+The twelve **collections** group looks by season and occasion: `winter-holidays`,
+`new-year-parties`, `lights-and-faith`, `spring-easter`, `mothers-fathers-day`, `summer`,
+`autumn-harvest`, `halloween`, `love-weddings`, `baby-birthdays`, `milestones` and
+`everyday-styles` (which also holds the shared foils and font pairings). Each ornament exists
+once, in the collection that uses it most, and layouts in other collections point to it there
+(`pack:<other-pack>/ornaments/…`). If you delete a collection, layouts in the others may lose
+an ornament; the Print Guardian lists any that are missing.
+
+In the editor, the packs made for the card's occasion are open and the others are folded away
+(palettes, papers), and layouts from other occasions sit behind **Show all style-pack layouts**.
 
 ---
 
@@ -23,7 +34,7 @@ HomeCard ships four starter packs, which are good examples to copy from:
 | You have… | Do this |
 |---|---|
 | A few images, and you don't want to write JSON | **Settings → Style packs**: pick *Textures / papers*, *SVG ornaments* or *Stickers*, then **Upload assets**. The Decor panel's *Upload SVG ornament* and *Upload PNG sticker* buttons do the same. Files are saved in `/data/styles/_uploads/<kind>/` and appear in a pack called **My Uploads**. |
-| A pack someone gave you (`.zip` or `.json`) | **Settings → Style packs → Import pack (.zip / .json)**. A zip is unpacked into `/data/styles/<pack-id>/`. |
+| A pack someone gave you (`.zip` or `.json`) | **Settings → Style packs → Import pack (.zip / .json)** (admins only, since a pack is shared by every account). A zip is unpacked into `/data/styles/<pack-id>/`; a zip holding several pack folders installs each of them. |
 | Your own pack | Create a folder `/data/styles/<pack-id>/` with a `pack.json` (below) and your files. |
 
 ## 2. Folder layout
@@ -300,6 +311,13 @@ Every element has `rect` and may have these common fields:
   `@onPhoto`, `@scrim`
 * hex: `#rrggbb` or `#rrggbbaa`
 
+**Years and names in fixed text.** Never write a year into `text`. Use the tokens instead:
+`{{year}}`, `{{nextYear}}`, `{{lastYear}}`, `{{family}}` and `{{initial}}`. A `year` element
+with no `text` shows `{{year}}`. The card's year starts at the year of the occasion's next date:
+a Christmas card made in November uses this year; a New Year card made from September on, or a
+Valentine's card made after February, uses next year. Duplicating last year's card moves the
+copy to this year's date, so a layout made once keeps working every year.
+
 Text sizes are defaults: auto-fit shrinks long names to fit the box, and people can still
 change everything. Leave at least the vendor's safe margin (about 0.25″, so roughly `0.05` of
 a 5″ side) between text and the trim. The Print Guardian flags text outside the safe zone.
@@ -315,7 +333,7 @@ pack without stopping the rest of it from loading. Typical problems:
 * `Duplicate pack id "x" — ignored other-folder.`
 * `Could not parse pack.json: Unexpected token …` (a JSON syntax error)
 
-After editing files on a share where change events don't arrive (SMB/NFS), click **Rescan**.
+After editing files on a share where change events don't arrive (SMB/NFS), an admin clicks **Rescan**.
 You can also set `WATCH_POLLING=true`.
 
 ## 6. Sharing a pack
@@ -329,4 +347,73 @@ Import limits:
 * only `.json`, `.svg`, `.png`, `.jpg`, `.jpeg`, `.webp`, `.md` and `.txt` files are extracted
 * paths are checked against zip-slip
 
-Set `license` to make clear what people may do with your artwork. All four starter packs are CC0.
+Set `license` to make clear what people may do with your artwork. All bundled packs are CC0.
+
+## 7. The layout library generator
+
+`scripts/generate-mega-layouts.mjs` builds a large layout library as style packs:
+
+* `layouts-generic-0p` … `layouts-generic-6p`: 50 layouts for each photo count (0–6) that
+  work for every occasion (`occasions: []`), spread over all eight categories.
+* `layouts-<occasion-id>`: one pack per occasion (28) with 12 layouts for each photo count.
+  Each pack draws five recolourable ornaments (crest, divider, corner, frame and scatter) for
+  its occasion and uses them in every layout.
+
+Every layout has portrait, landscape and square versions. In the editor, a card sees the
+generic layouts plus its own occasion's; **Show all style-pack layouts** shows the rest.
+Thumbnails render as they scroll into view, so long lists stay quick.
+
+```bash
+npm run layouts:mega                                   # writes dist/mega-layouts and the zip
+npm run layouts:mega -- --per-occasion-count=15        # 10–20 themed layouts per photo count
+npm run layouts:mega -- --generic-count=60 --no-zip    # 10–80 generic layouts per photo count
+npm run layouts:mega -- --review=dist/review           # also writes schematic contact sheets
+```
+
+The output is deterministic: the same options give byte-identical files and zip. To install
+the library, extract `dist/homecard-mega-layouts.zip` into the `/data/styles` volume (it holds
+one folder per pack). HomeCard picks the packs up without a restart. To remove it, delete the
+`layouts-*` folders.
+
+Layouts are built from parametric families (bento grids, hero and strip, mosaics, cut-out
+masks, polaroid scrapbooks, split panels, letters, postcards, type-led designs and more).
+Before anything is written, the generator checks:
+
+* **Distinct layouts.** Within what one card shows (the generic layouts plus its occasion's),
+  no two layouts share the same photo boxes and text zones. Changing only an ornament never
+  counts as a new layout. For photo-free layouts, the text zones, their alignment, the panels
+  and the frames, corners and scatter must differ; changing only the text stack does not count.
+* **Geometry.**
+  * Photo slots run exactly 0…N-1.
+  * Every rect lies inside the card.
+  * Elements that touch an edge get `bleed`.
+  * Ellipses, masked photos, ornaments and rotated boxes never run off the card. Clipping them
+    to the trim would squash them out of shape.
+  * Text stays inside the 6% safe zone.
+  * No two text boxes overlap, and no text role appears twice (it would print the same words twice).
+* **Readability.**
+  * Text over a photo always has a scrim or a backing panel.
+  * Text never sits on a bold accent shape (a ribbon, block or circle) unless a panel covers it.
+  * Text on a scrim uses `@onPhoto`, and on a dark panel `@background`.
+  * Foil is never used over photos. On paper or a panel it is kept only where the occasion's
+    default foil reaches 3:1 against that colour (gold reads on navy or deep green, not on
+    cream). Text that loses its foil keeps its ink colour.
+  * Accent-coloured text (subheads, years, monograms) must clear the Print Guardian's bar
+    (4.5:1, or 3:1 for 18 pt and larger, judged on a 4″ card) against the occasion's default
+    theme. Where it would not, it uses `@textMuted` (or `@text`). A see-through panel over a
+    photo has to clear the bar by an extra 20%.
+  * HomeCard applies the same accent rule when any template (built-in or from a pack) is put on
+    a card, using that card's own theme. A template never starts with a readability warning on
+    plain paper or a solid panel, whatever the palette.
+* **Years.** No layout contains a fixed year. New Year and Graduation layouts lead with big
+  `{{year}}` numerals where they fit.
+* **Packs.**
+  * The JSON schema passes, and `resolveStylePack` reports no errors.
+  * There are no duplicate pack or template ids, and none clash with the packs already in
+    `data/styles`.
+  * Every `pack:` reference exists.
+  * Each SVG has a `viewBox`, no scripts, no event handlers, no external links and no inline
+    styles, and it passes the server's SVG sanitiser.
+  * Every template builds with the right photo count at 5×7, 7×5, 5×5, 4×8, A2 and 6×8.
+
+The run ends with a summary per photo count, category and occasion, plus the zip's path and size.

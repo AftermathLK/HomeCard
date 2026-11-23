@@ -18,7 +18,7 @@ import {
   type PaletteColor,
   type ThemeColors,
 } from '@homecard/shared';
-import { ColorField, Section, Segmented, Slider, Spinner, Swatch } from '@/components/ui';
+import { ColorField, PackGroup, Section, Segmented, Slider, Spinner, Swatch } from '@/components/ui';
 import { allFoils, useAssets } from '@/lib/assets';
 import { analyzeImage } from '@/lib/image';
 import { useEditor, useProject } from '@/store/editor';
@@ -110,16 +110,26 @@ export function PalettePanel() {
           ))}
         </div>
       </Section>
-      {packPalettes.map((pack) => (
-        <Section key={pack.id} title={pack.name}>
-          <div className="grid grid-cols-2 gap-2">
-            {pack.palettes.map((p) => {
-              const id = p.id;
-              return <ThemeTile key={id} name={p.name} colors={p.colors} active={project.theme.paletteId === id} onClick={() => applyColors(p.colors, id, p.name)} />;
-            })}
-          </div>
+      {packPalettes.length > 0 && (
+        <Section title="Style pack palettes">
+          {packPalettes.map((pack) => (
+            <PackGroup
+              key={pack.id}
+              name={pack.name}
+              count={pack.palettes.length}
+              swatches={pack.palettes.slice(0, 5).map((p) => p.colors.accent)}
+              defaultOpen={packPalettes.length <= 2 || pack.occasions.includes(project.occasionId) || pack.palettes.some((p) => p.id === project.theme.paletteId)}
+            >
+              <div className="grid grid-cols-2 gap-2">
+                {pack.palettes.map((p) => {
+                  const id = p.id;
+                  return <ThemeTile key={id} name={p.name} colors={p.colors} active={project.theme.paletteId === id} onClick={() => applyColors(p.colors, id, p.name)} />;
+                })}
+              </div>
+            </PackGroup>
+          ))}
         </Section>
-      ))}
+      )}
       <Section
         title="Fine-tune colours"
         actions={
@@ -331,11 +341,13 @@ export function FinishPanel() {
   const surfaceId = useEditor((s) => s.surfaceId);
   const packs = useAssets((s) => s.packs);
   const foils = useMemo(() => [...BUILTIN_FOILS, ...allFoils(packs)], [packs]);
-  const backgrounds = useMemo(() => packs.flatMap((p) => p.backgrounds.map((b) => ({ ...b, pack: p.name }))), [packs]);
+  const bgPacks = useMemo(() => packs.filter((p) => p.backgrounds.length), [packs]);
   if (!project) return null;
   const ed = useEditor.getState();
   const surface = project.surfaces.find((s) => s.id === surfaceId)!;
   const bg = surface.background;
+  // Your uploads first, then packs made for this occasion (both open), then the rest (closed).
+  const rankPack = (p: (typeof packs)[number]) => (p.source === 'uploads' ? 2 : p.occasions.includes(project.occasionId) ? 1 : 0);
   const texts = project.surfaces.flatMap((s) => s.elements.filter((e) => e.type === 'text'));
   const foilCount = texts.filter((e) => e.type === 'text' && e.fill === 'foil').length;
 
@@ -403,37 +415,50 @@ export function FinishPanel() {
           <span className="mx-1 h-5 w-px bg-line" />
           <ColorField value={resolveColor(bg.color, project.theme, '#ffffff').slice(0, 7)} onChange={(hex) => setBg((b) => void (b.color = hex), 'bg-color')} />
         </div>
-        <div className="label mt-3">Paper & texture</div>
-        <div className="grid grid-cols-4 gap-1.5">
-          <button onClick={() => setBg((b) => void (b.texture = null))} className={clsx('flex aspect-square items-center justify-center rounded-lg border text-[11px] text-ink-3', !bg.texture ? 'border-brand ring-2 ring-brand' : 'border-line bg-white')}>
+        <div className="label mt-3 flex items-center justify-between">
+          Paper & texture
+          <button onClick={() => setBg((b) => void (b.texture = null))} className={clsx('chip', !bg.texture && 'chip-on')}>
             None
           </button>
-          {backgrounds.map((b) => (
-            <button
-              key={b.asset}
-              title={`${b.name} — ${b.pack}`}
-              onClick={() =>
-                setBg((x) => {
-                  x.texture = b.asset;
-                  x.textureMode = b.mode;
-                  x.textureScaleIn = b.tileSizeIn;
-                  x.textureOpacity = 1;
-                  // Pixel size, credit and Soften belong to the previous (stock) image.
-                  x.textureWidth = undefined;
-                  x.textureHeight = undefined;
-                  x.credit = null;
-                  x.creditUrl = null;
-                  x.soften = false;
-                })
-              }
-              className={clsx('aspect-square overflow-hidden rounded-lg border', bg.texture === b.asset ? 'border-brand ring-2 ring-brand' : 'border-line')}
-              style={{ background: resolveColor(bg.color, project.theme, '#fff') }}
-            >
-              <img src={b.url} alt="" loading="lazy" className="h-full w-full object-cover" />
-            </button>
-          ))}
         </div>
-        {!backgrounds.length && <p className="mt-2 text-xs text-ink-3">Drop textures into /data/styles or upload them in Settings → Style packs.</p>}
+        {[...bgPacks]
+          .sort((a, b) => rankPack(b) - rankPack(a))
+          .map((pack) => (
+            <PackGroup
+              key={pack.id}
+              name={pack.name}
+              count={pack.backgrounds.length}
+              defaultOpen={bgPacks.length <= 2 || rankPack(pack) > 0 || pack.backgrounds.some((b) => b.asset === bg.texture)}
+            >
+              <div className="grid grid-cols-4 gap-1.5">
+                {pack.backgrounds.map((b) => (
+                  <button
+                    key={b.asset}
+                    title={b.name}
+                    onClick={() =>
+                      setBg((x) => {
+                        x.texture = b.asset;
+                        x.textureMode = b.mode;
+                        x.textureScaleIn = b.tileSizeIn;
+                        x.textureOpacity = 1;
+                        // Pixel size, credit and Soften belong to the previous (stock) image.
+                        x.textureWidth = undefined;
+                        x.textureHeight = undefined;
+                        x.credit = null;
+                        x.creditUrl = null;
+                        x.soften = false;
+                      })
+                    }
+                    className={clsx('aspect-square overflow-hidden rounded-lg border', bg.texture === b.asset ? 'border-brand ring-2 ring-brand' : 'border-line')}
+                    style={{ background: resolveColor(bg.color, project.theme, '#fff') }}
+                  >
+                    <img src={b.url} alt="" loading="lazy" className="h-full w-full object-cover" />
+                  </button>
+                ))}
+              </div>
+            </PackGroup>
+          ))}
+        {!bgPacks.length && <p className="mt-2 text-xs text-ink-3">Drop textures into /data/styles or upload them in Settings → Style packs.</p>}
         <button className="btn btn-sm mt-2 w-full" onClick={() => (useUi.getState().mode === 'guided' ? useUi.getState().set({ subTab: 'backgrounds' }) : useUi.getState().set({ tab: 'backgrounds' }))}>
           <Wallpaper size={13} /> Stock backgrounds & pattern studio
         </button>

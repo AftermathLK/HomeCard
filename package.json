@@ -1,6 +1,6 @@
 {
   "name": "homecard",
-  "version": "0.12.0",
+  "version": "0.13.0",
   "license": "MIT",
   "private": true,
   "description": "HomeCard — self-hosted, print-ready holiday & occasion card studio with Immich integration.",
@@ -12,6 +12,7 @@
   "scripts": {
     "assets": "node --import tsx scripts/collect-fonts.mjs && node scripts/collect-vendor.mjs",
     "textures": "node scripts/generate-textures.mjs",
+    "layouts:mega": "node --import tsx scripts/generate-mega-layouts.mjs",
     "dev": "npm run assets && concurrently -k -n server,web -c blue,green \"npm run dev -w @homecard/server\" \"npm run dev -w @homecard/web\"",
     "build": "npm run assets && npm run build -w @homecard/web && npm run build -w @homecard/server",
     "start": "npm run start -w @homecard/server",

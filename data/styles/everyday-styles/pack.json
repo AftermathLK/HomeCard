@@ -1,0 +1,1400 @@
+{
+  "$schema": "../style-pack.schema.json",
+  "id": "everyday-styles",
+  "name": "Everyday Styles",
+  "version": "1.0.0",
+  "author": "HomeCard contributors",
+  "license": "CC0-1.0",
+  "description": "Looks for any occasion: Art Nouveau, Bauhaus, editorial black-and-white, cyanotype, marble, terrazzo, washi, darkroom film and gallery mats. Also holds the shared foils and font pairings.",
+  "occasions": [],
+  "palettes": [
+    {
+      "id": "art-nouveau-gold-peacock-nouveau",
+      "name": "Peacock Nouveau",
+      "colors": {
+        "background": "#102e33",
+        "text": "#f6f0e0",
+        "accent": "#d9b452",
+        "accent2": "#4ca39d"
+      }
+    },
+    {
+      "id": "art-nouveau-gold-mucha-ivory",
+      "name": "Mucha Ivory",
+      "colors": {
+        "background": "#f7f1e3",
+        "text": "#242c29",
+        "accent": "#2a6b66",
+        "accent2": "#b88e35"
+      }
+    },
+    {
+      "id": "art-nouveau-gold-plum-nouveau",
+      "name": "Plum Nouveau",
+      "colors": {
+        "background": "#2d1b2e",
+        "text": "#f7f0e4",
+        "accent": "#dfb860",
+        "accent2": "#8a9e7a"
+      }
+    },
+    {
+      "id": "bauhaus-primary-dessau-cream",
+      "name": "Dessau Cream",
+      "colors": {
+        "background": "#f6f2e8",
+        "text": "#181818",
+        "accent": "#c9342b",
+        "accent2": "#24549c"
+      }
+    },
+    {
+      "id": "bauhaus-primary-bauhaus-ochre",
+      "name": "Bauhaus Ochre",
+      "colors": {
+        "background": "#f4eedc",
+        "text": "#1a1a1a",
+        "accent": "#d99c26",
+        "accent2": "#234e8c"
+      }
+    },
+    {
+      "id": "bauhaus-primary-modern-slate",
+      "name": "Modern Slate",
+      "colors": {
+        "background": "#1e2126",
+        "text": "#f5f2ea",
+        "accent": "#e04638",
+        "accent2": "#e8b438"
+      }
+    },
+    {
+      "id": "black-white-editorial-vogue-white",
+      "name": "Vogue White",
+      "colors": {
+        "background": "#ffffff",
+        "text": "#111111",
+        "accent": "#111111",
+        "accent2": "#777777"
+      }
+    },
+    {
+      "id": "black-white-editorial-noir-matte",
+      "name": "Noir Matte",
+      "colors": {
+        "background": "#111111",
+        "text": "#ffffff",
+        "accent": "#e5e5e5",
+        "accent2": "#888888"
+      }
+    },
+    {
+      "id": "black-white-editorial-warm-alabaster",
+      "name": "Warm Alabaster",
+      "colors": {
+        "background": "#f4f2ee",
+        "text": "#171717",
+        "accent": "#2e2e2e",
+        "accent2": "#948e84"
+      }
+    },
+    {
+      "id": "botanical-cyanotype-prussian-sunprint",
+      "name": "Prussian Sunprint",
+      "colors": {
+        "background": "#16355c",
+        "text": "#f5f8fc",
+        "accent": "#ffffff",
+        "accent2": "#8eb4de"
+      }
+    },
+    {
+      "id": "botanical-cyanotype-cyanotype-mist",
+      "name": "Cyanotype Mist",
+      "colors": {
+        "background": "#edf3fa",
+        "text": "#16355c",
+        "accent": "#24548f",
+        "accent2": "#7299c7"
+      }
+    },
+    {
+      "id": "botanical-cyanotype-indigo-print",
+      "name": "Indigo Print",
+      "colors": {
+        "background": "#102745",
+        "text": "#f2f6fb",
+        "accent": "#c4dcf5",
+        "accent2": "#e0c278"
+      }
+    },
+    {
+      "id": "botanical-herbarium-archival-cream",
+      "name": "Archival Cream",
+      "colors": {
+        "background": "#f6f3e8",
+        "text": "#1f2e24",
+        "accent": "#3b6148",
+        "accent2": "#8f754f"
+      }
+    },
+    {
+      "id": "botanical-herbarium-pressed-fern",
+      "name": "Pressed Fern",
+      "colors": {
+        "background": "#edf0ea",
+        "text": "#202e23",
+        "accent": "#496e52",
+        "accent2": "#9e6b4b"
+      }
+    },
+    {
+      "id": "botanical-herbarium-herbarium-ink",
+      "name": "Herbarium Ink",
+      "colors": {
+        "background": "#1d2b22",
+        "text": "#f2efe4",
+        "accent": "#98b89d",
+        "accent2": "#ccb078"
+      }
+    },
+    {
+      "id": "coastal-linen-sea-salt-flax",
+      "name": "Sea Salt Flax",
+      "colors": {
+        "background": "#f6f4ef",
+        "text": "#243038",
+        "accent": "#5b7d94",
+        "accent2": "#a89880"
+      }
+    },
+    {
+      "id": "coastal-linen-dune-grass",
+      "name": "Dune Grass",
+      "colors": {
+        "background": "#f3f1ea",
+        "text": "#2a3028",
+        "accent": "#6d826e",
+        "accent2": "#7694a8"
+      }
+    },
+    {
+      "id": "coastal-linen-stormy-coast",
+      "name": "Stormy Coast",
+      "colors": {
+        "background": "#243440",
+        "text": "#f2f5f7",
+        "accent": "#94b5c9",
+        "accent2": "#cfc0a8"
+      }
+    },
+    {
+      "id": "dark-academia-library-espresso",
+      "name": "Library Espresso",
+      "colors": {
+        "background": "#241b17",
+        "text": "#f2eadc",
+        "accent": "#c9a054",
+        "accent2": "#8f3238"
+      }
+    },
+    {
+      "id": "dark-academia-aged-parchment",
+      "name": "Aged Parchment",
+      "colors": {
+        "background": "#efe6d4",
+        "text": "#261d17",
+        "accent": "#73232b",
+        "accent2": "#455942"
+      }
+    },
+    {
+      "id": "dark-academia-oxblood-study",
+      "name": "Oxblood Study",
+      "colors": {
+        "background": "#3b171d",
+        "text": "#f5ede0",
+        "accent": "#d4ae60",
+        "accent2": "#8c9c7d"
+      }
+    },
+    {
+      "id": "film-contact-sheet-darkroom-black",
+      "name": "Darkroom Black",
+      "colors": {
+        "background": "#141414",
+        "text": "#f2f0ec",
+        "accent": "#d4b46a",
+        "accent2": "#858585"
+      }
+    },
+    {
+      "id": "film-contact-sheet-silver-gelatin",
+      "name": "Silver Gelatin",
+      "colors": {
+        "background": "#f2f1ee",
+        "text": "#1a1a1a",
+        "accent": "#4a4a4a",
+        "accent2": "#a68a4c"
+      }
+    },
+    {
+      "id": "film-contact-sheet-warm-film",
+      "name": "Warm Film",
+      "colors": {
+        "background": "#1f1c18",
+        "text": "#f7f1e3",
+        "accent": "#e3a634",
+        "accent2": "#9e8d76"
+      }
+    },
+    {
+      "id": "gallery-museum-museum-alabaster",
+      "name": "Museum Alabaster",
+      "colors": {
+        "background": "#faf9f6",
+        "text": "#1a1a1a",
+        "accent": "#4a4a4a",
+        "accent2": "#a6926a"
+      }
+    },
+    {
+      "id": "gallery-museum-graphite-mat",
+      "name": "Graphite Mat",
+      "colors": {
+        "background": "#1e1f21",
+        "text": "#f6f5f2",
+        "accent": "#c9b58c",
+        "accent2": "#7c8085"
+      }
+    },
+    {
+      "id": "gallery-museum-warm-gallery",
+      "name": "Warm Gallery",
+      "colors": {
+        "background": "#f2efe9",
+        "text": "#1f1d1a",
+        "accent": "#6e6254",
+        "accent2": "#9e8860"
+      }
+    },
+    {
+      "id": "japanese-washi-aizome-indigo",
+      "name": "Aizome Indigo",
+      "colors": {
+        "background": "#f6f4ee",
+        "text": "#1a2840",
+        "accent": "#264778",
+        "accent2": "#c43c2b"
+      }
+    },
+    {
+      "id": "japanese-washi-kyoto-night",
+      "name": "Kyoto Night",
+      "colors": {
+        "background": "#172338",
+        "text": "#f5f2ea",
+        "accent": "#e05a47",
+        "accent2": "#9cb4d6"
+      }
+    },
+    {
+      "id": "japanese-washi-matcha-paper",
+      "name": "Matcha Paper",
+      "colors": {
+        "background": "#f2f4ec",
+        "text": "#242e23",
+        "accent": "#58754c",
+        "accent2": "#bf4332"
+      }
+    },
+    {
+      "id": "marble-vein-carrara-white",
+      "name": "Carrara White",
+      "colors": {
+        "background": "#f7f7f8",
+        "text": "#222428",
+        "accent": "#949aa3",
+        "accent2": "#c4848c"
+      }
+    },
+    {
+      "id": "marble-vein-nero-marquina",
+      "name": "Nero Marquina",
+      "colors": {
+        "background": "#17181c",
+        "text": "#f5f4f2",
+        "accent": "#d9b664",
+        "accent2": "#6a6f78"
+      }
+    },
+    {
+      "id": "marble-vein-rose-marble",
+      "name": "Rose Marble",
+      "colors": {
+        "background": "#faf4f4",
+        "text": "#2d2528",
+        "accent": "#c28690",
+        "accent2": "#9c9498"
+      }
+    },
+    {
+      "id": "midcentury-atomic-atomic-teal",
+      "name": "Atomic Teal",
+      "colors": {
+        "background": "#f6f1e4",
+        "text": "#242422",
+        "accent": "#26787a",
+        "accent2": "#d99b26"
+      }
+    },
+    {
+      "id": "midcentury-atomic-walnut-lounge",
+      "name": "Walnut Lounge",
+      "colors": {
+        "background": "#2b211b",
+        "text": "#f6f0e2",
+        "accent": "#48a6a3",
+        "accent2": "#e6b042"
+      }
+    },
+    {
+      "id": "midcentury-atomic-mustard-mod",
+      "name": "Mustard Mod",
+      "colors": {
+        "background": "#faf4e2",
+        "text": "#26231e",
+        "accent": "#c98b1e",
+        "accent2": "#c44d34"
+      }
+    },
+    {
+      "id": "polaroid-scrapbook-scrapbook-kraft",
+      "name": "Scrapbook Kraft",
+      "colors": {
+        "background": "#e8d8c0",
+        "text": "#29221c",
+        "accent": "#b84a39",
+        "accent2": "#466e5c"
+      }
+    },
+    {
+      "id": "polaroid-scrapbook-notebook-cream",
+      "name": "Notebook Cream",
+      "colors": {
+        "background": "#faf7f0",
+        "text": "#262524",
+        "accent": "#3d6b94",
+        "accent2": "#cf634e"
+      }
+    },
+    {
+      "id": "polaroid-scrapbook-charcoal-album",
+      "name": "Charcoal Album",
+      "colors": {
+        "background": "#262524",
+        "text": "#f7f3eb",
+        "accent": "#e3a654",
+        "accent2": "#89b09c"
+      }
+    },
+    {
+      "id": "terrazzo-studio-coral-terrazzo",
+      "name": "Coral Terrazzo",
+      "colors": {
+        "background": "#faf6f0",
+        "text": "#2b2928",
+        "accent": "#d96b56",
+        "accent2": "#6d9480"
+      }
+    },
+    {
+      "id": "terrazzo-studio-cobalt-terrazzo",
+      "name": "Cobalt Terrazzo",
+      "colors": {
+        "background": "#f4f5f7",
+        "text": "#222936",
+        "accent": "#3d68a6",
+        "accent2": "#d48c46"
+      }
+    },
+    {
+      "id": "terrazzo-studio-charcoal-stone",
+      "name": "Charcoal Stone",
+      "colors": {
+        "background": "#26282b",
+        "text": "#f7f5f0",
+        "accent": "#e3846b",
+        "accent2": "#8eb8a3"
+      }
+    }
+  ],
+  "backgrounds": [
+    {
+      "id": "nouveau-wash",
+      "name": "Nouveau wash",
+      "file": "textures/nouveau-wash.jpg",
+      "mode": "cover",
+      "kind": "image",
+      "tone": "dark"
+    },
+    {
+      "id": "peacock-velvet",
+      "name": "Peacock velvet",
+      "file": "textures/peacock-velvet.jpg",
+      "mode": "cover",
+      "kind": "image",
+      "tone": "dark"
+    },
+    {
+      "id": "bauhaus-grid",
+      "name": "Bauhaus grid",
+      "file": "textures/bauhaus-grid.jpg",
+      "mode": "tile",
+      "kind": "image",
+      "tileSizeIn": 1.6,
+      "tone": "light"
+    },
+    {
+      "id": "printmaking-stock",
+      "name": "Printmaking stock",
+      "file": "textures/printmaking-stock.png",
+      "mode": "tile",
+      "kind": "overlay",
+      "tileSizeIn": 1.71,
+      "tone": "light"
+    },
+    {
+      "id": "gallery-matte",
+      "name": "Gallery matte",
+      "file": "textures/gallery-matte.png",
+      "mode": "tile",
+      "kind": "overlay",
+      "tileSizeIn": 1.71,
+      "tone": "light"
+    },
+    {
+      "id": "monochrome-weave",
+      "name": "Monochrome weave",
+      "file": "textures/monochrome-weave.png",
+      "mode": "tile",
+      "kind": "overlay",
+      "tileSizeIn": 1.71,
+      "tone": "light"
+    },
+    {
+      "id": "cyanotype-wash",
+      "name": "Cyanotype wash",
+      "file": "textures/cyanotype-wash.jpg",
+      "mode": "cover",
+      "kind": "image",
+      "tone": "dark"
+    },
+    {
+      "id": "sunprint-cotton",
+      "name": "Sunprint cotton",
+      "file": "textures/sunprint-cotton.png",
+      "mode": "tile",
+      "kind": "overlay",
+      "tileSizeIn": 1.71,
+      "tone": "dark"
+    },
+    {
+      "id": "archival-cotton",
+      "name": "Archival cotton",
+      "file": "textures/archival-cotton.png",
+      "mode": "tile",
+      "kind": "overlay",
+      "tileSizeIn": 1.71,
+      "tone": "light"
+    },
+    {
+      "id": "museum-flax",
+      "name": "Museum flax",
+      "file": "textures/museum-flax.png",
+      "mode": "tile",
+      "kind": "overlay",
+      "tileSizeIn": 1.71,
+      "tone": "light"
+    },
+    {
+      "id": "woven-coastal-flax",
+      "name": "Woven coastal flax",
+      "file": "textures/woven-coastal-flax.png",
+      "mode": "tile",
+      "kind": "overlay",
+      "tileSizeIn": 1.71,
+      "tone": "light"
+    },
+    {
+      "id": "soft-coastal-tide",
+      "name": "Soft coastal tide",
+      "file": "textures/soft-coastal-tide.jpg",
+      "mode": "tile",
+      "kind": "image",
+      "tileSizeIn": 1.6,
+      "tone": "light"
+    },
+    {
+      "id": "aged-book-paper",
+      "name": "Aged book paper",
+      "file": "textures/aged-book-paper.jpg",
+      "mode": "tile",
+      "kind": "image",
+      "tileSizeIn": 1.71,
+      "tone": "dark"
+    },
+    {
+      "id": "study-velvet",
+      "name": "Study velvet",
+      "file": "textures/study-velvet.jpg",
+      "mode": "cover",
+      "kind": "image",
+      "tone": "dark"
+    },
+    {
+      "id": "silver-gelatin-grain",
+      "name": "Silver gelatin grain",
+      "file": "textures/silver-gelatin-grain.png",
+      "mode": "tile",
+      "kind": "overlay",
+      "tileSizeIn": 1.71,
+      "tone": "dark"
+    },
+    {
+      "id": "contact-sheet-grid",
+      "name": "Contact sheet grid",
+      "file": "textures/contact-sheet-grid.jpg",
+      "mode": "tile",
+      "kind": "image",
+      "tileSizeIn": 1.6,
+      "tone": "dark"
+    },
+    {
+      "id": "archival-mat-board",
+      "name": "Archival mat board",
+      "file": "textures/archival-mat-board.png",
+      "mode": "tile",
+      "kind": "overlay",
+      "tileSizeIn": 1.71,
+      "tone": "light"
+    },
+    {
+      "id": "gallery-linen",
+      "name": "Gallery linen",
+      "file": "textures/gallery-linen.png",
+      "mode": "tile",
+      "kind": "overlay",
+      "tileSizeIn": 1.71,
+      "tone": "light"
+    },
+    {
+      "id": "seigaiha-wave",
+      "name": "Seigaiha wave",
+      "file": "textures/seigaiha-wave.jpg",
+      "mode": "tile",
+      "kind": "image",
+      "tileSizeIn": 1.6,
+      "tone": "light"
+    },
+    {
+      "id": "washi-fibers",
+      "name": "Washi fibers",
+      "file": "textures/washi-fibers.jpg",
+      "mode": "tile",
+      "kind": "image",
+      "tileSizeIn": 1.71,
+      "tone": "light"
+    },
+    {
+      "id": "carrara-marble",
+      "name": "Carrara marble",
+      "file": "textures/carrara-marble.jpg",
+      "mode": "cover",
+      "kind": "image",
+      "tone": "light"
+    },
+    {
+      "id": "satin-finish",
+      "name": "Satin finish",
+      "file": "textures/satin-finish.png",
+      "mode": "tile",
+      "kind": "overlay",
+      "tileSizeIn": 1.71,
+      "tone": "light"
+    },
+    {
+      "id": "midcentury-weave",
+      "name": "Midcentury weave",
+      "file": "textures/midcentury-weave.png",
+      "mode": "tile",
+      "kind": "overlay",
+      "tileSizeIn": 1.71,
+      "tone": "light"
+    },
+    {
+      "id": "atomic-dots",
+      "name": "Atomic dots",
+      "file": "textures/atomic-dots.jpg",
+      "mode": "tile",
+      "kind": "image",
+      "tileSizeIn": 1.6,
+      "tone": "light"
+    },
+    {
+      "id": "scrapbook-kraft",
+      "name": "Scrapbook kraft",
+      "file": "textures/scrapbook-kraft.jpg",
+      "mode": "tile",
+      "kind": "image",
+      "tileSizeIn": 1.71,
+      "tone": "light"
+    },
+    {
+      "id": "journal-grid",
+      "name": "Journal grid",
+      "file": "textures/journal-grid.jpg",
+      "mode": "tile",
+      "kind": "image",
+      "tileSizeIn": 1.6,
+      "tone": "light"
+    },
+    {
+      "id": "speckled-terrazzo",
+      "name": "Speckled terrazzo",
+      "file": "textures/speckled-terrazzo.jpg",
+      "mode": "tile",
+      "kind": "image",
+      "tileSizeIn": 1.71,
+      "tone": "light"
+    },
+    {
+      "id": "matte-stone",
+      "name": "Matte stone",
+      "file": "textures/matte-stone.png",
+      "mode": "tile",
+      "kind": "overlay",
+      "tileSizeIn": 1.71,
+      "tone": "light"
+    }
+  ],
+  "foils": [
+    {
+      "id": "burnished-copper",
+      "name": "Burnished Copper",
+      "stops": [
+        "#6e3317",
+        "#e8a578",
+        "#a85a31",
+        "#f8ccae",
+        "#874422"
+      ],
+      "angle": 135,
+      "mid": "#c0784e"
+    },
+    {
+      "id": "sterling-silver",
+      "name": "Sterling Silver",
+      "stops": [
+        "#7c8791",
+        "#f0f5f9",
+        "#a4afb8",
+        "#ffffff",
+        "#85919b"
+      ],
+      "angle": 125,
+      "mid": "#bfc8d0"
+    },
+    {
+      "id": "antique-bronze",
+      "name": "Antique Bronze",
+      "stops": [
+        "#5a4320",
+        "#b89652",
+        "#785d2d",
+        "#d8bb7a",
+        "#664d24"
+      ],
+      "angle": 140,
+      "mid": "#997c3e"
+    },
+    {
+      "id": "warm-gold",
+      "name": "Warm Gold",
+      "stops": [
+        "#7d5a14",
+        "#f5de8a",
+        "#c4962c",
+        "#fff0b6",
+        "#8c6518"
+      ],
+      "angle": 130,
+      "mid": "#cfa43c"
+    },
+    {
+      "id": "champagne-foil",
+      "name": "Champagne Foil",
+      "stops": [
+        "#9c8658",
+        "#efe2bd",
+        "#b59e6c",
+        "#fbf3da",
+        "#a48d5e"
+      ],
+      "angle": 120,
+      "mid": "#cdb98a"
+    },
+    {
+      "id": "iridescent-pearl",
+      "name": "Iridescent Pearl",
+      "stops": [
+        "#b8b5c2",
+        "#ffffff",
+        "#dce8ef",
+        "#f8e8f2",
+        "#c4c6d0"
+      ],
+      "angle": 110,
+      "mid": "#dcdde4"
+    },
+    {
+      "id": "brushed-brass",
+      "name": "Brushed Brass",
+      "stops": [
+        "#6b5723",
+        "#d4ba68",
+        "#947a34",
+        "#f0dc98",
+        "#7d662a"
+      ],
+      "angle": 128,
+      "mid": "#b09648"
+    },
+    {
+      "id": "platinum-sheen",
+      "name": "Platinum Sheen",
+      "stops": [
+        "#72747c",
+        "#eceef2",
+        "#9da0a9",
+        "#ffffff",
+        "#7f828b"
+      ],
+      "angle": 115,
+      "mid": "#bcc0c8"
+    },
+    {
+      "id": "emerald-foil",
+      "name": "Emerald Foil",
+      "stops": [
+        "#124d38",
+        "#6ed4aa",
+        "#227a59",
+        "#aaf0d2",
+        "#165c43"
+      ],
+      "angle": 130,
+      "mid": "#3a9a74"
+    },
+    {
+      "id": "blush-rose-gold",
+      "name": "Blush Rose Gold",
+      "stops": [
+        "#9a5b62",
+        "#f5cfd2",
+        "#c6858b",
+        "#ffecee",
+        "#a4666d"
+      ],
+      "angle": 135,
+      "mid": "#d4989e"
+    },
+    {
+      "id": "sapphire-foil",
+      "name": "Sapphire Foil",
+      "stops": [
+        "#15326b",
+        "#7ca6f0",
+        "#2854a8",
+        "#bad4ff",
+        "#1c3f82"
+      ],
+      "angle": 130,
+      "mid": "#4170c4"
+    },
+    {
+      "id": "crimson-foil",
+      "name": "Crimson Foil",
+      "stops": [
+        "#6d1322",
+        "#e8788a",
+        "#a6263a",
+        "#f8b4be",
+        "#7f1a2b"
+      ],
+      "angle": 135,
+      "mid": "#c04055"
+    }
+  ],
+  "ornaments": [
+    {
+      "id": "petals-scatter",
+      "name": "Petals Scatter",
+      "file": "ornaments/petals-scatter.svg",
+      "kind": "scatter",
+      "tags": [
+        "petals"
+      ]
+    },
+    {
+      "id": "confetti-scatter",
+      "name": "Confetti Scatter",
+      "file": "ornaments/confetti-scatter.svg",
+      "kind": "scatter",
+      "tags": [
+        "confetti"
+      ]
+    },
+    {
+      "id": "stars-scatter",
+      "name": "Stars Scatter",
+      "file": "ornaments/stars-scatter.svg",
+      "kind": "scatter",
+      "tags": [
+        "stars"
+      ]
+    },
+    {
+      "id": "petals-scatter-2",
+      "name": "Petals Scatter 2",
+      "file": "ornaments/petals-scatter-2.svg",
+      "kind": "scatter",
+      "tags": [
+        "petals"
+      ]
+    },
+    {
+      "id": "petals-scatter-3",
+      "name": "Petals Scatter 3",
+      "file": "ornaments/petals-scatter-3.svg",
+      "kind": "scatter",
+      "tags": [
+        "petals"
+      ]
+    },
+    {
+      "id": "petals-scatter-4",
+      "name": "Petals Scatter 4",
+      "file": "ornaments/petals-scatter-4.svg",
+      "kind": "scatter",
+      "tags": [
+        "petals"
+      ]
+    },
+    {
+      "id": "stars-scatter-2",
+      "name": "Stars Scatter 2",
+      "file": "ornaments/stars-scatter-2.svg",
+      "kind": "scatter",
+      "tags": [
+        "stars"
+      ]
+    },
+    {
+      "id": "film-frame",
+      "name": "Film frame",
+      "file": "ornaments/film-frame.svg",
+      "kind": "frame",
+      "tags": [
+        "film"
+      ],
+      "stretch": true
+    },
+    {
+      "id": "stars-scatter-3",
+      "name": "Stars Scatter 3",
+      "file": "ornaments/stars-scatter-3.svg",
+      "kind": "scatter",
+      "tags": [
+        "stars"
+      ]
+    },
+    {
+      "id": "stars-scatter-4",
+      "name": "Stars Scatter 4",
+      "file": "ornaments/stars-scatter-4.svg",
+      "kind": "scatter",
+      "tags": [
+        "stars"
+      ]
+    },
+    {
+      "id": "petals-scatter-5",
+      "name": "Petals Scatter 5",
+      "file": "ornaments/petals-scatter-5.svg",
+      "kind": "scatter",
+      "tags": [
+        "petals"
+      ]
+    },
+    {
+      "id": "stars-scatter-5",
+      "name": "Stars Scatter 5",
+      "file": "ornaments/stars-scatter-5.svg",
+      "kind": "scatter",
+      "tags": [
+        "stars"
+      ]
+    },
+    {
+      "id": "stars-scatter-6",
+      "name": "Stars Scatter 6",
+      "file": "ornaments/stars-scatter-6.svg",
+      "kind": "scatter",
+      "tags": [
+        "stars"
+      ]
+    },
+    {
+      "id": "confetti-scatter-2",
+      "name": "Confetti Scatter 2",
+      "file": "ornaments/confetti-scatter-2.svg",
+      "kind": "scatter",
+      "tags": [
+        "confetti"
+      ]
+    },
+    {
+      "id": "confetti-scatter-3",
+      "name": "Confetti Scatter 3",
+      "file": "ornaments/confetti-scatter-3.svg",
+      "kind": "scatter",
+      "tags": [
+        "confetti"
+      ]
+    }
+  ],
+  "stickers": [
+    {
+      "id": "flower-bouquet-sticker",
+      "name": "Flower Bouquet",
+      "file": "stickers/flower-bouquet-sticker.svg",
+      "tags": [
+        "flower bouquet"
+      ]
+    },
+    {
+      "id": "camera-sticker",
+      "name": "Camera",
+      "file": "stickers/camera-sticker.svg",
+      "tags": [
+        "camera"
+      ]
+    },
+    {
+      "id": "shell-sticker",
+      "name": "Shell",
+      "file": "stickers/shell-sticker.svg",
+      "tags": [
+        "shell"
+      ]
+    },
+    {
+      "id": "wax-seal-sticker",
+      "name": "Wax Seal",
+      "file": "stickers/wax-seal-sticker.svg",
+      "tags": [
+        "wax seal"
+      ]
+    },
+    {
+      "id": "rings-sticker",
+      "name": "Rings",
+      "file": "stickers/rings-sticker.svg",
+      "tags": [
+        "rings"
+      ]
+    },
+    {
+      "id": "firework-sticker",
+      "name": "Firework",
+      "file": "stickers/firework-sticker.svg",
+      "tags": [
+        "firework"
+      ]
+    },
+    {
+      "id": "postage-sticker",
+      "name": "Postage",
+      "file": "stickers/postage-sticker.svg",
+      "tags": [
+        "postage"
+      ]
+    }
+  ],
+  "templates": [
+    "templates/art-nouveau-gold-arch.json",
+    "templates/bauhaus-primary-editorial.json",
+    "templates/bauhaus-primary-back-note.json",
+    "templates/black-white-editorial-full-bleed.json",
+    "templates/botanical-cyanotype-framed.json",
+    "templates/botanical-herbarium-split.json",
+    "templates/coastal-linen-framed.json",
+    "templates/dark-academia-letter.json",
+    "templates/film-contact-sheet-quad.json",
+    "templates/film-contact-sheet-back-note.json",
+    "templates/gallery-museum-split.json",
+    "templates/gallery-museum-back-note.json",
+    "templates/japanese-washi-split.json",
+    "templates/marble-vein-framed.json",
+    "templates/marble-vein-back-note.json",
+    "templates/midcentury-atomic-trio.json",
+    "templates/polaroid-scrapbook-polaroid.json",
+    "templates/terrazzo-studio-polaroid.json"
+  ],
+  "fontPairings": [
+    {
+      "id": "modern-statement",
+      "name": "Modern Statement",
+      "mood": "Bold & graphic",
+      "display": {
+        "family": "Bebas Neue",
+        "weight": 400,
+        "style": "normal",
+        "letterSpacing": 0.08,
+        "transform": "uppercase"
+      },
+      "body": {
+        "family": "Work Sans",
+        "weight": 400,
+        "style": "normal"
+      },
+      "accent": {
+        "family": "Montserrat",
+        "weight": 700,
+        "style": "normal",
+        "letterSpacing": 0.24,
+        "transform": "uppercase"
+      }
+    },
+    {
+      "id": "handwritten-note",
+      "name": "Handwritten Note",
+      "mood": "Cosy & personal",
+      "display": {
+        "family": "Caveat",
+        "weight": 700,
+        "style": "normal"
+      },
+      "body": {
+        "family": "Nunito",
+        "weight": 400,
+        "style": "normal"
+      },
+      "accent": {
+        "family": "Work Sans",
+        "weight": 600,
+        "style": "normal",
+        "letterSpacing": 0.2,
+        "transform": "uppercase"
+      }
+    },
+    {
+      "id": "editorial-serif",
+      "name": "Editorial Serif",
+      "mood": "Timeless & refined",
+      "display": {
+        "family": "DM Serif Display",
+        "weight": 400,
+        "style": "normal",
+        "letterSpacing": 0.01
+      },
+      "body": {
+        "family": "EB Garamond",
+        "weight": 400,
+        "style": "normal"
+      },
+      "accent": {
+        "family": "Raleway",
+        "weight": 600,
+        "style": "normal",
+        "letterSpacing": 0.25,
+        "transform": "uppercase"
+      }
+    },
+    {
+      "id": "classic-garamond",
+      "name": "Classic Garamond",
+      "mood": "Literary & poised",
+      "display": {
+        "family": "Cormorant Garamond",
+        "weight": 600,
+        "style": "italic",
+        "letterSpacing": 0.02
+      },
+      "body": {
+        "family": "EB Garamond",
+        "weight": 400,
+        "style": "normal"
+      },
+      "accent": {
+        "family": "Josefin Sans",
+        "weight": 600,
+        "style": "normal",
+        "letterSpacing": 0.26,
+        "transform": "uppercase"
+      }
+    },
+    {
+      "id": "merry-whimsy",
+      "name": "Merry Whimsy",
+      "mood": "Playful holiday",
+      "display": {
+        "family": "Mountains of Christmas",
+        "weight": 700,
+        "style": "normal",
+        "letterSpacing": 0.02
+      },
+      "body": {
+        "family": "Nunito",
+        "weight": 400,
+        "style": "normal"
+      },
+      "accent": {
+        "family": "Montserrat",
+        "weight": 600,
+        "style": "normal",
+        "letterSpacing": 0.2,
+        "transform": "uppercase"
+      }
+    },
+    {
+      "id": "gilded-deco",
+      "name": "Gilded Deco",
+      "mood": "Glamorous & bold",
+      "display": {
+        "family": "Cinzel",
+        "weight": 700,
+        "style": "normal",
+        "letterSpacing": 0.14,
+        "transform": "uppercase"
+      },
+      "body": {
+        "family": "Cormorant Garamond",
+        "weight": 500,
+        "style": "normal"
+      },
+      "accent": {
+        "family": "Josefin Sans",
+        "weight": 600,
+        "style": "normal",
+        "letterSpacing": 0.3,
+        "transform": "uppercase"
+      }
+    },
+    {
+      "id": "nordic-clean",
+      "name": "Nordic Clean",
+      "mood": "Crisp & minimal",
+      "display": {
+        "family": "Playfair Display",
+        "weight": 600,
+        "style": "normal",
+        "letterSpacing": 0.04
+      },
+      "body": {
+        "family": "Work Sans",
+        "weight": 400,
+        "style": "normal"
+      },
+      "accent": {
+        "family": "Montserrat",
+        "weight": 600,
+        "style": "normal",
+        "letterSpacing": 0.22,
+        "transform": "uppercase"
+      }
+    },
+    {
+      "id": "soft-parisian",
+      "name": "Soft Parisian",
+      "mood": "Delicate & floral",
+      "display": {
+        "family": "Parisienne",
+        "weight": 400,
+        "style": "normal"
+      },
+      "body": {
+        "family": "EB Garamond",
+        "weight": 400,
+        "style": "italic"
+      },
+      "accent": {
+        "family": "Raleway",
+        "weight": 500,
+        "style": "normal",
+        "letterSpacing": 0.26,
+        "transform": "uppercase"
+      }
+    },
+    {
+      "id": "fireside-script",
+      "name": "Fireside Script",
+      "mood": "Warm & inviting",
+      "display": {
+        "family": "Dancing Script",
+        "weight": 700,
+        "style": "normal"
+      },
+      "body": {
+        "family": "Lora",
+        "weight": 400,
+        "style": "normal"
+      },
+      "accent": {
+        "family": "Montserrat",
+        "weight": 500,
+        "style": "normal",
+        "letterSpacing": 0.22,
+        "transform": "uppercase"
+      }
+    },
+    {
+      "id": "vintage-poster",
+      "name": "Vintage Poster",
+      "mood": "Retro & rich",
+      "display": {
+        "family": "Abril Fatface",
+        "weight": 400,
+        "style": "normal",
+        "letterSpacing": 0.02
+      },
+      "body": {
+        "family": "Lora",
+        "weight": 400,
+        "style": "normal"
+      },
+      "accent": {
+        "family": "Raleway",
+        "weight": 600,
+        "style": "normal",
+        "letterSpacing": 0.22,
+        "transform": "uppercase"
+      }
+    },
+    {
+      "id": "museum-minimal",
+      "name": "Museum Minimal",
+      "mood": "Quiet & architectural",
+      "display": {
+        "family": "Montserrat",
+        "weight": 500,
+        "style": "normal",
+        "letterSpacing": 0.16,
+        "transform": "uppercase"
+      },
+      "body": {
+        "family": "Work Sans",
+        "weight": 400,
+        "style": "normal"
+      },
+      "accent": {
+        "family": "Raleway",
+        "weight": 600,
+        "style": "normal",
+        "letterSpacing": 0.28,
+        "transform": "uppercase"
+      }
+    },
+    {
+      "id": "heirloom-script",
+      "name": "Heirloom Script",
+      "mood": "Romantic & airy",
+      "display": {
+        "family": "Pinyon Script",
+        "weight": 400,
+        "style": "normal"
+      },
+      "body": {
+        "family": "Cormorant Garamond",
+        "weight": 400,
+        "style": "italic"
+      },
+      "accent": {
+        "family": "Work Sans",
+        "weight": 500,
+        "style": "normal",
+        "letterSpacing": 0.24,
+        "transform": "uppercase"
+      }
+    },
+    {
+      "id": "storybook",
+      "name": "Storybook",
+      "mood": "Sweet & gentle",
+      "display": {
+        "family": "Sacramento",
+        "weight": 400,
+        "style": "normal"
+      },
+      "body": {
+        "family": "Nunito",
+        "weight": 400,
+        "style": "normal"
+      },
+      "accent": {
+        "family": "Josefin Sans",
+        "weight": 600,
+        "style": "normal",
+        "letterSpacing": 0.24,
+        "transform": "uppercase"
+      }
+    },
+    {
+      "id": "farmers-market",
+      "name": "Farmers Market",
+      "mood": "Charming & handmade",
+      "display": {
+        "family": "Amatic SC",
+        "weight": 700,
+        "style": "normal",
+        "letterSpacing": 0.08,
+        "transform": "uppercase"
+      },
+      "body": {
+        "family": "Lora",
+        "weight": 400,
+        "style": "normal"
+      },
+      "accent": {
+        "family": "Work Sans",
+        "weight": 500,
+        "style": "normal",
+        "letterSpacing": 0.2,
+        "transform": "uppercase"
+      }
+    },
+    {
+      "id": "festive-script",
+      "name": "Festive Script",
+      "mood": "Warm & joyful",
+      "display": {
+        "family": "Great Vibes",
+        "weight": 400,
+        "style": "normal"
+      },
+      "body": {
+        "family": "Lora",
+        "weight": 400,
+        "style": "normal"
+      },
+      "accent": {
+        "family": "Josefin Sans",
+        "weight": 600,
+        "style": "normal",
+        "letterSpacing": 0.24,
+        "transform": "uppercase"
+      }
+    }
+  ]
+}

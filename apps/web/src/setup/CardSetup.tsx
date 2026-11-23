@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import clsx from 'clsx';
-import { AlertTriangle, Search } from 'lucide-react';
+import { AlertTriangle, Eye, EyeOff, Search } from 'lucide-react';
 import {
   CARD_SIZES,
   changeFormat,
@@ -23,13 +23,34 @@ import {
 import { OccasionGlyph } from '@/components/MiniCard';
 import { Section, Segmented, Toggle } from '@/components/ui';
 import { useEditor, useProject } from '@/store/editor';
+import { useHolidays } from '@/store/holidays';
 
 /* ---------------- Occasion catalog ---------------- */
 
-export function OccasionGrid({ value, onChange, columns = 3 }: { value: string; onChange: (id: string) => void; columns?: number }) {
+/**
+ * Occasion catalog. Occasions the person hid (Settings → Holidays) stay out of the list unless
+ * asked for, except the one already chosen.
+ */
+export function OccasionGrid({
+  value,
+  onChange,
+  columns = 3,
+  hidden = [],
+  onUnhide,
+}: {
+  value: string;
+  onChange: (id: string) => void;
+  columns?: number;
+  hidden?: readonly string[];
+  onUnhide?: (id: string) => void;
+}) {
   const [q, setQ] = useState('');
   const [cat, setCat] = useState<'all' | OccasionCategory>('all');
-  const list = useMemo(() => (q.trim() ? searchOccasions(q) : OCCASIONS).filter((o) => cat === 'all' || q.trim() || o.category === cat), [q, cat]);
+  const [showHidden, setShowHidden] = useState(false);
+  const hiddenSet = useMemo(() => new Set(hidden), [hidden]);
+  const matching = useMemo(() => (q.trim() ? searchOccasions(q) : OCCASIONS).filter((o) => cat === 'all' || q.trim() || o.category === cat), [q, cat]);
+  const hiddenHere = matching.filter((o) => hiddenSet.has(o.id) && o.id !== value).length;
+  const list = showHidden ? matching : matching.filter((o) => !hiddenSet.has(o.id) || o.id === value);
   return (
     <div>
       <div className="relative mb-2">
@@ -52,24 +73,45 @@ export function OccasionGrid({ value, onChange, columns = 3 }: { value: string; 
         {list.map((o) => {
           const pal = o.palettes[0].colors;
           const on = o.id === value;
+          const isHidden = hiddenSet.has(o.id);
           return (
-            <button
-              key={o.id}
-              onClick={() => onChange(o.id)}
-              className={clsx('flex items-center gap-2 rounded-lg border px-2 py-2 text-left transition', on ? 'border-brand bg-brand-soft ring-1 ring-brand' : 'border-line bg-white hover:border-line-2')}
-            >
-              <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md" style={{ background: pal.background, color: pal.accent, ['--hc-orn2' as any]: pal.accent2 }}>
-                <OccasionGlyph occasionId={o.id} size={20} />
-              </span>
-              <span className="min-w-0">
-                <span className="block truncate text-[13px] font-medium leading-tight">{o.name}</span>
-                <span className="block truncate text-[11px] text-ink-3">{o.when}</span>
-              </span>
-            </button>
+            <div key={o.id} className="relative">
+              <button
+                onClick={() => onChange(o.id)}
+                className={clsx(
+                  'flex w-full items-center gap-2 rounded-lg border px-2 py-2 text-left transition',
+                  on ? 'border-brand bg-brand-soft ring-1 ring-brand' : 'border-line bg-white hover:border-line-2',
+                  isHidden && !on && 'opacity-60',
+                )}
+              >
+                <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-md" style={{ background: pal.background, color: pal.accent, ['--hc-orn2' as any]: pal.accent2 }}>
+                  <OccasionGlyph occasionId={o.id} size={20} />
+                </span>
+                <span className={clsx('min-w-0', isHidden && onUnhide && 'pr-12')}>
+                  <span className="block truncate text-[13px] font-medium leading-tight">{o.name}</span>
+                  <span className="block truncate text-[11px] text-ink-3">{isHidden ? 'Hidden' : o.when}</span>
+                </span>
+              </button>
+              {isHidden && onUnhide && (
+                <button
+                  className="absolute right-1.5 top-1/2 flex -translate-y-1/2 items-center gap-1 rounded-md border border-line bg-white px-1.5 py-0.5 text-[11px] font-medium text-brand hover:border-brand"
+                  title={`Show ${o.name} again on the home page and here`}
+                  onClick={() => onUnhide(o.id)}
+                >
+                  <Eye size={11} /> Unhide
+                </button>
+              )}
+            </div>
           );
         })}
       </div>
-      {!list.length && <p className="py-4 text-center text-[13px] text-ink-3">No occasion matches — try “Custom Blank”.</p>}
+      {!list.length && <p className="py-4 text-center text-[13px] text-ink-3">{hiddenHere ? 'Everything here is hidden.' : 'No occasion matches — try “Custom Blank”.'}</p>}
+      {(hiddenHere > 0 || showHidden) && hidden.length > 0 && (
+        <button className="mt-2.5 flex items-center gap-1.5 text-[12px] font-medium text-ink-3 hover:text-brand" onClick={() => setShowHidden((v) => !v)}>
+          {showHidden ? <EyeOff size={13} /> : <Eye size={13} />}
+          {showHidden ? 'Hide hidden occasions again' : `Show ${hiddenHere} hidden occasion${hiddenHere === 1 ? '' : 's'}`}
+        </button>
+      )}
     </div>
   );
 }
@@ -219,6 +261,7 @@ export function FormatFields({ value, onChange }: { value: FormatChoice; onChang
 export function CardSetupPanel() {
   const project = useProject();
   const [fmt, setFmt] = useState<FormatChoice | null>(null);
+  const hidden = useHolidays((s) => s.prefs.hiddenOccasions);
   if (!project) return null;
   const ed = useEditor.getState();
   const choice = fmt ?? formatChoiceOf(project.format);
@@ -238,6 +281,8 @@ export function CardSetupPanel() {
         <OccasionGrid
           value={project.occasionId}
           columns={2}
+          hidden={hidden}
+          onUnhide={(id) => void useHolidays.getState().unhide(id)}
           onChange={(id) => {
             if (id === project.occasionId) return;
             const p = changeOccasion(project, id);

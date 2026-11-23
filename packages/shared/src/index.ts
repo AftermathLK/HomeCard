@@ -9,6 +9,7 @@ export * from './crop';
 export * from './geometry';
 export * from './fonts';
 export * from './holidays';
+export * from './calendar';
 export * from './ornaments';
 export * from './templates/types';
 export * from './templates/builtin';

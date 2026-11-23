@@ -1,0 +1,130 @@
+{
+  "id": "tropical-palms-full-bleed",
+  "name": "Tropical Palms Full Bleed",
+  "description": "Edge-to-edge hero photograph with soft readability scrim and matching accents.",
+  "kinds": [
+    "front"
+  ],
+  "category": "full-bleed",
+  "layouts": {
+    "portrait": [
+      {
+        "type": "photo",
+        "slot": 0,
+        "rect": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "bleed": true
+      },
+      {
+        "type": "scrim",
+        "rect": [
+          0,
+          0.56,
+          1,
+          0.44
+        ],
+        "bleed": true,
+        "direction": "to-top",
+        "strength": 0.72
+      },
+      {
+        "type": "ornament",
+        "asset": "pack:summer/ornaments/notched-frame.svg",
+        "rect": [
+          0.04,
+          0.03,
+          0.92,
+          0.94
+        ],
+        "color": "@onPhoto",
+        "color2": "@accent",
+        "opacity": 0.7
+      },
+      {
+        "type": "text",
+        "role": "headline",
+        "rect": [
+          0.08,
+          0.68,
+          0.84,
+          0.14
+        ],
+        "color": "@onPhoto"
+      },
+      {
+        "type": "ornament",
+        "asset": "pack:spring-easter/ornaments/vine-divider.svg",
+        "rect": [
+          0.28,
+          0.825,
+          0.44,
+          0.035
+        ],
+        "color": "@onPhoto",
+        "color2": "@accent"
+      },
+      {
+        "type": "text",
+        "role": "names",
+        "rect": [
+          0.1,
+          0.87,
+          0.8,
+          0.05
+        ],
+        "color": "@onPhoto"
+      }
+    ],
+    "landscape": [
+      {
+        "type": "photo",
+        "slot": 0,
+        "rect": [
+          0,
+          0,
+          1,
+          1
+        ],
+        "bleed": true
+      },
+      {
+        "type": "scrim",
+        "rect": [
+          0,
+          0.52,
+          1,
+          0.48
+        ],
+        "bleed": true,
+        "direction": "to-top",
+        "strength": 0.72
+      },
+      {
+        "type": "text",
+        "role": "headline",
+        "rect": [
+          0.08,
+          0.64,
+          0.84,
+          0.16
+        ],
+        "color": "@onPhoto"
+      },
+      {
+        "type": "text",
+        "role": "names",
+        "rect": [
+          0.12,
+          0.82,
+          0.76,
+          0.07
+        ],
+        "color": "@onPhoto"
+      }
+    ]
+  }
+}

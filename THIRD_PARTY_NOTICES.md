@@ -28,8 +28,17 @@ be sold on their own.
 
 ## Starter Style Packs
 
-`data/styles/*`: the textures, ornaments and stickers are generated procedurally for HomeCard
-(`scripts/generate-textures.mjs`) and are released under **CC0-1.0**.
+All bundled style packs in `data/styles/*` are released under **CC0-1.0**.
+
+* The four starter packs (`classic-paper`, `gilded-holiday`, `spring-garden`, `winter-woodland`):
+  textures, ornaments and stickers generated procedurally for HomeCard
+  (`scripts/generate-textures.mjs`).
+* The twelve collections (`winter-holidays`, `new-year-parties`, `lights-and-faith`,
+  `spring-easter`, `mothers-fathers-day`, `summer`, `autumn-harvest`, `halloween`,
+  `love-weddings`, `baby-birthdays`, `milestones`, `everyday-styles`): palettes, SVG artwork,
+  layouts and procedural textures created with the help of an AI assistant, then checked,
+  de-duplicated, merged and fixed for HomeCard. They contain no third-party images, logos or
+  trademarks.
 
 ## Docker image (system packages)
 

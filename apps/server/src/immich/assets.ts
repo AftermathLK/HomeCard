@@ -16,6 +16,11 @@ export interface ImmichAsset {
   fileCreatedAt?: string;
   localDateTime?: string;
   isFavorite?: boolean;
+  /** Older Immich. */
+  isArchived?: boolean;
+  isTrashed?: boolean;
+  /** Newer Immich: "timeline" | "archive" | "hidden" | "locked". */
+  visibility?: string;
   width?: number | null;
   height?: number | null;
   exifInfo?: { exifImageWidth?: number | null; exifImageHeight?: number | null; orientation?: string | number | null } | null;
