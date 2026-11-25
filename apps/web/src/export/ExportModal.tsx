@@ -22,6 +22,7 @@ import { useGuardian } from '@/editor/GuardianHost';
 import { TrafficLight } from '@/editor/GuardianPanel';
 import { api, enc, onServerEvent } from '@/lib/api';
 import { useAssets } from '@/lib/assets';
+import { useMeasure } from '@/lib/units';
 import { useEditor, useProject } from '@/store/editor';
 import { useUi } from '@/store/ui';
 
@@ -47,6 +48,7 @@ function ExportDialog({ project }: { project: CardProject }) {
   const health = useAssets((s) => s.health);
   const report = useGuardian(project);
   const vendor = getVendor(project.format.vendorId);
+  const { dims, len } = useMeasure();
   const allSurfaces = project.surfaces.map((s) => s.id);
   const [opts, setOpts] = useState<ExportOptions>(() => ({
     ...DEFAULT_EXPORT_OPTIONS,
@@ -116,7 +118,7 @@ function ExportDialog({ project }: { project: CardProject }) {
   };
 
   return (
-    <Modal open onClose={close} width="max-w-[1180px]" bodyClass="p-0" title="Export for print" subtitle={`${project.name} · ${project.format.widthIn}×${project.format.heightIn}" ${project.format.fold} · ${vendor.name}`}>
+    <Modal open onClose={close} width="max-w-[1180px]" bodyClass="p-0" title="Export for print" subtitle={`${project.name} · ${dims(project.format.widthIn, project.format.heightIn)} ${project.format.fold} · ${vendor.name}`}>
       <div className="grid min-h-[560px] grid-cols-[360px_1fr]">
         {/* ---------- Options ---------- */}
         <div className="max-h-[78vh] overflow-auto border-r border-line bg-paper-2/40">
@@ -172,7 +174,7 @@ function ExportDialog({ project }: { project: CardProject }) {
           </Section>
           {opts.format !== 'share' ? (
             <Section title="Print settings">
-              <Toggle checked={opts.includeBleed} onChange={(v) => set({ includeBleed: v })} label={`Include ${project.format.bleedIn}" bleed`} hint="Background extends past the trim so there are no white slivers. Leave on unless your printer says otherwise." />
+              <Toggle checked={opts.includeBleed} onChange={(v) => set({ includeBleed: v })} label={`Include ${len(project.format.bleedIn)} bleed`} hint="Background extends past the trim so there are no white slivers. Leave on unless your printer says otherwise." />
               <Toggle checked={opts.cropMarks} onChange={(v) => set({ cropMarks: v })} label="Crop marks" hint="Adds trim marks in a white margin — for print shops that cut by hand. Labs like Mpix don’t want them." />
               {opts.format === 'pdf' && (
                 <div className="mt-2">
@@ -294,6 +296,8 @@ export function ExportVerification({ rec, onDelete }: { rec: ExportRecord; onDel
   const viewable = rec.files.filter((f) => f.kind !== 'zip');
   const zip = rec.files.find((f) => f.kind === 'zip');
   const [viewer, setViewer] = useState<{ src: string; title: string; widthPx?: number; heightPx?: number; dpi?: number } | null>(null);
+  const m = useMeasure();
+  const exact = (w: number, h: number) => m.dims(w, h, m.units === 'mm' ? 1 : 3);
 
   if (rec.status === 'queued' || rec.status === 'rendering')
     return (
@@ -382,9 +386,7 @@ export function ExportVerification({ rec, onDelete }: { rec: ExportRecord; onDel
                 </div>
                 <div className="mt-0.5 flex flex-wrap gap-x-3 gap-y-0.5 text-xs text-ink-2">
                   {f.widthIn && f.heightIn && (
-                    <span>
-                      {f.widthIn.toFixed(3).replace(/\.?0+$/, '')} × {f.heightIn.toFixed(3).replace(/\.?0+$/, '')} in
-                    </span>
+                    <span>{exact(f.widthIn, f.heightIn)}</span>
                   )}
                   <span>{formatBytes(f.bytes)}</span>
                   {f.colorSpace && <span>{f.colorSpace}</span>}
@@ -396,7 +398,7 @@ export function ExportVerification({ rec, onDelete }: { rec: ExportRecord; onDel
                     Read back from file:
                     {f.verified.widthPx !== undefined && ` ${f.verified.widthPx}×${f.verified.heightPx}px`}
                     {f.verified.density !== undefined && ` · ${f.verified.density} DPI tag`}
-                    {f.verified.pageSizesIn && ` · pages ${f.verified.pageSizesIn.map(([w, h]) => `${w}×${h}"`).join(', ')}`}
+                    {f.verified.pageSizesIn && ` · pages ${f.verified.pageSizesIn.map(([w, h]) => exact(w, h)).join(', ')}`}
                     {f.verified.trimBox !== undefined && ` · TrimBox ${f.verified.trimBox ? '✓' : '✗'}`}
                     {f.verified.bleedBox !== undefined && ` · BleedBox ${f.verified.bleedBox ? '✓' : '✗'}`}
                   </div>

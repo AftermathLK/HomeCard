@@ -25,6 +25,7 @@ import {
 import { ColorField, Section, Segmented, Slider, Spinner, Swatch, Toggle } from '@/components/ui';
 import { api } from '@/lib/api';
 import { textureUrl, useAssets } from '@/lib/assets';
+import { useMeasure } from '@/lib/units';
 import { useEditor, useProject } from '@/store/editor';
 import { useSession } from '@/store/session';
 import { useUi } from '@/store/ui';
@@ -95,6 +96,7 @@ export function BackgroundsPanel() {
 /* ---------------- What's on this side now ---------------- */
 
 function CurrentBackground({ project, surfaceId, bg }: { project: CardProject; surfaceId: string; bg: SurfaceBackground }) {
+  const { dims } = useMeasure();
   const ed = useEditor.getState();
   const [saving, setSaving] = useState(false);
   if (!bg.texture && !bg.backdrop) return null;
@@ -165,7 +167,7 @@ function CurrentBackground({ project, surfaceId, bg }: { project: CardProject; s
               {dpi !== null && (
                 <div
                   className={clsx('mt-1 inline-flex items-center gap-1 rounded-md px-1.5 py-0.5 text-[11px] font-medium', tone === 'ok' ? 'bg-ok-soft text-ok' : tone === 'fine' ? 'bg-paper-2 text-ink-2' : 'bg-warn-soft text-warn')}
-                  title={`${bg.textureWidth}×${bg.textureHeight} px filling this ${project.format.widthIn}×${project.format.heightIn}" card with bleed`}
+                  title={`${bg.textureWidth}×${bg.textureHeight} px filling this ${dims(project.format.widthIn, project.format.heightIn)} card with bleed`}
                 >
                   ≈{Math.round(dpi)} DPI · {tone === 'ok' ? 'print sharp' : tone === 'fine' ? 'prints fine' : bg.soften ? 'softened for print' : 'low for print'}
                 </div>

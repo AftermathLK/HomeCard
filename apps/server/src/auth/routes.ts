@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import type { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify';
 import type { AuthState, SessionUser, UserPrefs } from '@homecard/shared';
-import { VENDOR_PRESETS } from '@homecard/shared';
+import { sanitizeUserPrefs } from '@homecard/shared';
 import { config } from '../config';
 import { tx } from '../db';
 import { closeStreams } from '../events';
@@ -81,14 +81,6 @@ export function safeNext(v: unknown) {
   return /^\/(?![\\/])[^\s]*$/.test(s) && !s.startsWith('/login') && !s.startsWith('/setup') ? s : '/';
 }
 
-function validPrefs(p: unknown): UserPrefs {
-  const out: UserPrefs = {};
-  if (p && typeof p === 'object') {
-    const v = (p as UserPrefs).defaultVendorId;
-    if (typeof v === 'string' && VENDOR_PRESETS.some((x) => x.id === v)) out.defaultVendorId = v;
-  }
-  return out;
-}
 
 export function registerAuthRoutes(app: FastifyInstance) {
   /* ---------- Pages ---------- */
@@ -228,7 +220,7 @@ export function registerAuthRoutes(app: FastifyInstance) {
       if (problem) throw httpError(400, problem);
       patch.displayName = req.body.displayName;
     }
-    if (req.body?.prefs) patch.prefs = { ...parsePrefs(findUserById(me.userId)!.prefs), ...validPrefs(req.body.prefs) };
+    if (req.body?.prefs) patch.prefs = { ...parsePrefs(findUserById(me.userId)!.prefs), ...sanitizeUserPrefs(req.body.prefs) };
     return toSessionUser(updateUserFields(me.userId, patch)!);
   });
 

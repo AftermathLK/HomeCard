@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 import clsx from 'clsx';
 import { AlertTriangle, CalendarDays, CheckCircle2, FileClock, FolderSync, Images, Package, Printer, Server, Settings2, Type, Upload, UserRound, Users } from 'lucide-react';
-import { VENDOR_PRESETS } from '@homecard/shared';
+import { VENDOR_PRESETS, type LengthUnit } from '@homecard/shared';
 import { Modal, Spinner } from '@/components/ui';
 import { api, upload } from '@/lib/api';
 import { useAssets } from '@/lib/assets';
+import { useMeasure } from '@/lib/units';
 import { useSession } from '@/store/session';
 import { useUi, type SettingsTab } from '@/store/ui';
 import { AdminAudit } from './AdminAudit';
@@ -312,9 +313,27 @@ function PrintingSettings() {
   const user = useSession((x) => x.user)!;
   const current = user.prefs.defaultVendorId ?? VENDOR_PRESETS[0].id;
   const vendor = VENDOR_PRESETS.find((v) => v.id === current) ?? VENDOR_PRESETS[0];
+  const { units, len } = useMeasure();
   return (
     <div className="max-w-xl space-y-4">
       <h3 className="font-display text-lg">Printing</h3>
+      <label className="block">
+        <span className="label">Measurements</span>
+        <select
+          className="input"
+          value={units}
+          onChange={(e) =>
+            useSession
+              .getState()
+              .savePrefs({ units: e.target.value as LengthUnit })
+              .catch((err) => useUi.getState().toast(err.message, 'error'))
+          }
+        >
+          <option value="in">Inches (5 × 7")</option>
+          <option value="mm">Millimetres (A6 · 105 × 148 mm)</option>
+        </select>
+        <span className="mt-1 block text-xs text-ink-3">Card sizes, bleed and margins show in these units. Each person picks their own.</span>
+      </label>
       <label className="block">
         <span className="label">Your default printer for new cards</span>
         <select
@@ -338,8 +357,8 @@ function PrintingSettings() {
         <div className="font-medium">{vendor.name}</div>
         <p className="mt-1 text-ink-2">{vendor.notes}</p>
         <div className="mt-2 grid grid-cols-2 gap-1 text-xs text-ink-3">
-          <span>Bleed: {vendor.bleedIn}"</span>
-          <span>Safe margin: {vendor.safeIn}"</span>
+          <span>Bleed: {len(vendor.bleedIn)}</span>
+          <span>Safe margin: {len(vendor.safeIn)}</span>
           <span>Colour: {vendor.colorProfile.toUpperCase()}</span>
           <span>Best file: {vendor.recommendedFormat.toUpperCase()}</span>
           {vendor.maxUploadMB && <span>Upload limit: {vendor.maxUploadMB} MB</span>}

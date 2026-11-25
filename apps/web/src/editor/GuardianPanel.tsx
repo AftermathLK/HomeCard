@@ -17,6 +17,7 @@ import { Section } from '@/components/ui';
 import { moveInsideSafe, smartCrop } from '@/lib/actions';
 import { useAssets } from '@/lib/assets';
 import { findReadableColor, measureContrast } from '@/lib/guardian';
+import { useMeasure } from '@/lib/units';
 import { findElement, useEditor } from '@/store/editor';
 import { useUi } from '@/store/ui';
 
@@ -200,6 +201,7 @@ async function addShade(id: string, ink: { x: number; y: number; w: number; h: n
 
 /** Print Guardian: traffic-light pre-flight with one-click fixes. */
 export function GuardianPanel({ report }: { report: GuardianReport | null }) {
+  const { dims } = useMeasure();
   if (!report) return null;
   const errors = report.issues.filter((i) => i.severity === 'error').length;
   const warns = report.issues.filter((i) => i.severity === 'warn').length;
@@ -272,7 +274,7 @@ export function GuardianPanel({ report }: { report: GuardianReport | null }) {
               >
                 <SeverityIcon s={ph.severity} size={13} />
                 <span className="flex-1 text-ink-2">
-                  {SURFACE_INFO[ph.surfaceId].label} · {ph.printWidthIn.toFixed(1)}×{ph.printHeightIn.toFixed(1)}"
+                  {SURFACE_INFO[ph.surfaceId].label} · {dims(ph.printWidthIn, ph.printHeightIn, 1)}
                 </span>
                 <span className={clsx('font-semibold tabular-nums', statusColor(ph.severity))}>{Math.round(ph.dpi)} DPI</span>
               </button>

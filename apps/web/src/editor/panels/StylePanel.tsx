@@ -20,6 +20,7 @@ import {
 } from '@homecard/shared';
 import { ColorField, PackGroup, Section, Segmented, Slider, Spinner, Swatch } from '@/components/ui';
 import { allFoils, useAssets } from '@/lib/assets';
+import { useMeasure } from '@/lib/units';
 import { analyzeImage } from '@/lib/image';
 import { useEditor, useProject } from '@/store/editor';
 import { useUi } from '@/store/ui';
@@ -337,6 +338,7 @@ export function FontsPanel() {
 /* ---------------- Foils & background ---------------- */
 
 export function FinishPanel() {
+  const { short } = useMeasure();
   const project = useProject();
   const surfaceId = useEditor((s) => s.surfaceId);
   const packs = useAssets((s) => s.packs);
@@ -466,7 +468,7 @@ export function FinishPanel() {
           <div className="mt-2">
             <Slider label="Texture strength" min={0.05} max={1} value={bg.textureOpacity ?? 1} format={(v) => `${Math.round(v * 100)}%`} onChange={(v) => setBg((b) => void (b.textureOpacity = v), 'tex-op')} />
             {bg.textureMode !== 'cover' && (
-              <Slider label="Pattern size" min={0.5} max={6} step={0.05} value={bg.textureScaleIn ?? 2} format={(v) => `${v.toFixed(2)}"`} onChange={(v) => setBg((b) => void (b.textureScaleIn = v), 'tex-scale')} />
+              <Slider label="Pattern size" min={0.5} max={6} step={0.05} value={bg.textureScaleIn ?? 2} format={short} onChange={(v) => setBg((b) => void (b.textureScaleIn = v), 'tex-scale')} />
             )}
             <Segmented
               size="sm"

@@ -21,3 +21,4 @@ export * from './render';
 export * from './immich';
 export * from './backdrops';
 export * from './albums';
+export * from './userPrefs';

@@ -44,6 +44,7 @@ import { FlipLeftRight, FlipUpDown } from '@/components/icons';
 import { ColorField, Section, Segmented, Slider, Toggle } from '@/components/ui';
 import { alignToCard, clearFrame, deleteElements, fitFrameToPhoto, moveInsideSafe, resetFraming, smartCrop, straightenPhoto, turnPhoto } from '@/lib/actions';
 import { useAssets } from '@/lib/assets';
+import { useMeasure } from '@/lib/units';
 import { useEditor, useProject, useSelected } from '@/store/editor';
 import { useUi } from '@/store/ui';
 import { CompareButton } from './panels/PolishPanel';
@@ -279,6 +280,7 @@ function TextProps({ el, upd }: { el: TextElement; upd: Upd }) {
 /* ---------------- Photo ---------------- */
 
 function PhotoProps({ el, upd }: { el: PhotoElement; upd: Upd }) {
+  const { short } = useMeasure();
   const dpi = photoDpi(el);
   const p = (recipe: (x: PhotoElement) => void, key?: string | null) => upd((e) => e.type === 'photo' && recipe(e), key);
   const sev = dpi === null ? null : dpi >= DPI_GOOD ? 'ok' : dpi >= DPI_MIN ? 'warn' : 'bad';
@@ -373,7 +375,7 @@ function PhotoProps({ el, upd }: { el: PhotoElement; upd: Upd }) {
             </button>
           ))}
         </div>
-        {el.mask === 'rounded' && <Slider label="Corner radius" min={0} max={1.5} value={el.radius} format={(v) => `${v.toFixed(2)}"`} onChange={(v) => p((x) => void (x.radius = v), `rad:${el.id}`)} />}
+        {el.mask === 'rounded' && <Slider label="Corner radius" min={0} max={1.5} value={el.radius} format={short} onChange={(v) => p((x) => void (x.radius = v), `rad:${el.id}`)} />}
         <div className="label mt-2">Style</div>
         <Segmented
           size="sm"
@@ -391,7 +393,7 @@ function PhotoProps({ el, upd }: { el: PhotoElement; upd: Upd }) {
         </div>
         {el.border && (
           <div className="mt-1">
-            <Slider label="Border width" min={0.01} max={0.3} value={el.border.width} format={(v) => `${v.toFixed(2)}"`} onChange={(v) => p((x) => void (x.border!.width = v), `bw:${el.id}`)} />
+            <Slider label="Border width" min={0.01} max={0.3} value={el.border.width} format={short} onChange={(v) => p((x) => void (x.border!.width = v), `bw:${el.id}`)} />
             <ColorRefPicker value={el.border.color} onChange={(c, k) => p((x) => void (x.border!.color = c), k)} />
           </div>
         )}
@@ -403,6 +405,7 @@ function PhotoProps({ el, upd }: { el: PhotoElement; upd: Upd }) {
 /* ---------------- Shape & scrim ---------------- */
 
 function ShapeProps({ el, upd }: { el: ShapeElement; upd: Upd }) {
+  const { short } = useMeasure();
   const s = (recipe: (x: ShapeElement) => void, key?: string | null) => upd((e) => e.type === 'shape' && recipe(e), key);
   return (
     <Section title="Shape">
@@ -417,7 +420,7 @@ function ShapeProps({ el, upd }: { el: ShapeElement; upd: Upd }) {
           <ColorRefPicker value={el.stroke.color} onChange={(c, k) => s((x) => void (x.stroke!.color = c), k)} />
         </>
       )}
-      {el.shape === 'rect' && <Slider label="Corner radius" min={0} max={1.5} value={el.radius} format={(v) => `${v.toFixed(2)}"`} onChange={(v) => s((x) => void (x.radius = v), `rad:${el.id}`)} />}
+      {el.shape === 'rect' && <Slider label="Corner radius" min={0} max={1.5} value={el.radius} format={short} onChange={(v) => s((x) => void (x.radius = v), `rad:${el.id}`)} />}
     </Section>
   );
 }

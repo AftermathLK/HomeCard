@@ -61,6 +61,9 @@ test('all templates build in portrait, landscape and square; text stays inside t
     makeFormat({ sizeId: '5x5' }),
     makeFormat({ sizeId: '4x8', orientation: 'portrait' }),
     makeFormat({ sizeId: 'a2', orientation: 'landscape' }),
+    makeFormat({ sizeId: 'dl', orientation: 'portrait' }),
+    makeFormat({ sizeId: 'a4', orientation: 'landscape' }),
+    makeFormat({ sizeId: 'saved:abc123', customW: 4.33, customH: 6.1 }),
   ];
   for (const fmt of formats) {
     for (const t of BUILTIN_TEMPLATES) {

@@ -16,6 +16,7 @@ import { MiniCard } from '@/components/MiniCard';
 import { Section, Slider } from '@/components/ui';
 import { applyTemplateTo } from '@/lib/actions';
 import { useAssets } from '@/lib/assets';
+import { useMeasure } from '@/lib/units';
 import { useEditor, useProject } from '@/store/editor';
 
 const CATEGORY_LABEL: Record<TemplateDef['category'], string> = {
@@ -37,6 +38,7 @@ const PARAM_META: Record<keyof TemplateParams, { label: string; min: number; max
 
 /** Live template gallery: each thumbnail is the user's own card re-laid-out with that template. */
 export function TemplatesPanel() {
+  const { short } = useMeasure();
   const project = useProject();
   const surfaceId = useEditor((s) => s.surfaceId);
   const stylesVersion = useAssets((s) => s.stylesVersion);
@@ -123,7 +125,7 @@ export function TemplatesPanel() {
                 max={m.max}
                 step={m.step}
                 value={v}
-                format={(x) => `${x.toFixed(2)}"`}
+                format={short}
                 onChange={(x) => applyTemplateTo(surfaceId, current.id, { [k]: x })}
                 onReset={() => applyTemplateTo(surfaceId, current.id, { [k]: current.defaults[k] })}
               />

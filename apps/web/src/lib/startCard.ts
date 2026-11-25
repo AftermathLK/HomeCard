@@ -15,6 +15,7 @@ import { useUi } from '@/store/ui';
 import { resolvePhotos } from './actions';
 import { api } from './api';
 import { useAssets } from './assets';
+import { defaultCardSize } from './units';
 
 /**
  * A front layout with room for `n` photos: the occasion's own layout when it already fits, then a
@@ -55,7 +56,8 @@ export async function startCardWithPhotos(occasionId: string, items: PhotoItem[]
   const records = await resolvePhotos(items);
   if (!records.length) throw new Error('None of those photos could be read from Immich.');
   const vendorId = useSession.getState().user?.prefs.defaultVendorId || undefined;
-  let p = createProject({ occasionId, vendorId, orientation: orientationFor(items) });
+  const orientation = orientationFor(items);
+  let p = createProject({ occasionId, vendorId, orientation, ...defaultCardSize(orientation) });
   const tpl = pickFrontTemplate(occasionId, records.length, useAssets.getState().packs);
   const front = p.surfaces.find((s) => s.id === 'front');
   if (front && front.templateId !== tpl) {

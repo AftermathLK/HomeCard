@@ -1,5 +1,7 @@
 /** DTOs shared by the HTTP API and the web client. */
+import type { SavedCardSize } from './formats';
 import type { FaceBox, PhotoRecord } from './types';
+import type { LengthUnit } from './units';
 
 export interface HealthInfo {
   ok: boolean;
@@ -21,6 +23,12 @@ export type UserRole = 'admin' | 'user';
 
 export interface UserPrefs {
   defaultVendorId?: string;
+  /** Show and type measurements in inches or millimetres (unset: from the browser's region). */
+  units?: LengthUnit;
+  /** Card sizes shown on the size picker, built-in ids or "saved:<id>" (unset: the defaults for the units). */
+  favoriteSizes?: string[];
+  /** Card sizes the person named and saved. */
+  savedSizes?: SavedCardSize[];
 }
 
 export interface SessionUser {

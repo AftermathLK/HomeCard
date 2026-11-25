@@ -17,7 +17,7 @@ as they are: real 300 DPI, bleed and safe zones, vector text in the PDF, sRGB or
 * **Clean files.** Exports carry no EXIF, GPS or camera data, so your home location never
   reaches a print shop.
 
-Version 0.13.2 · [MIT licence](LICENSE) · works on any Docker host, with a ready-made script for
+Version 0.13.3 · [MIT licence](LICENSE) · works on any Docker host, with a ready-made script for
 Unraid.
 
 ---
@@ -107,8 +107,10 @@ More detail: [docs/SECURITY.md](docs/SECURITY.md) (security model and how to che
 * **28 occasions** with greetings in 5 styles (short, warm, formal, humorous, family update),
   palettes and SVG ornaments.
 * **29 templates**, and switching template keeps your photos, crops and words.
-* **Sizes**: 5×7, 4×8, 5×5, A2, 6×8, 4×6 or custom (2″–14″), portrait or landscape, flat or
-  folded (front, back and inside).
+* **Sizes**: 5×7, 4×8, 5×5, A2, 6×8, 4×6, the ISO sizes A6, A5, A4, DL and 150 mm square, or
+  custom (2″–14″, 51–355 mm), portrait or landscape, flat or folded (front, back and inside).
+  Save your own card stock as a named size, star the sizes you use, and work in inches or
+  millimetres.
 * **Color Harmony** reads your photos and suggests contrast-checked colour themes.
 * **Backgrounds**: Pixabay, Unsplash and Openverse search, or the offline Pattern & Paper Studio
   (cardstock, linen, watercolour, snowfall, stars, plaid, Art Deco borders, scalloped frames,

@@ -18,6 +18,31 @@ export const round = (v: number, digits = 4) => {
   return Math.round(v * f) / f;
 };
 
+/* ---------- Inches or millimetres ---------- */
+
+/** How lengths are shown and typed. Everything is stored in inches. */
+export type LengthUnit = 'in' | 'mm';
+export const MM_PER_IN = 25.4;
+
+/** A length in inches, in the given unit. */
+export const toUnit = (inches: number, unit: LengthUnit) => (unit === 'mm' ? inches * MM_PER_IN : inches);
+/** A length typed in the given unit, in inches. */
+export const fromUnit = (v: number, unit: LengthUnit) => (unit === 'mm' ? v / MM_PER_IN : v);
+
+const num = (v: number, decimals: number) => String(round(v, decimals));
+
+/** A length for people to read: 0.125 → `0.125"` or `3.2 mm`. */
+export function formatLength(inches: number, unit: LengthUnit, decimals = unit === 'mm' ? 1 : 3): string {
+  return unit === 'mm' ? `${num(inches * MM_PER_IN, decimals)} mm` : `${num(inches, decimals)}"`;
+}
+
+/** Width × height for people to read: `5 × 7"` or `127 × 177.8 mm`. */
+export function formatDims(widthIn: number, heightIn: number, unit: LengthUnit, decimals = unit === 'mm' ? 1 : 2): string {
+  const w = num(toUnit(widthIn, unit), decimals);
+  const h = num(toUnit(heightIn, unit), decimals);
+  return unit === 'mm' ? `${w} × ${h} mm` : `${w} × ${h}"`;
+}
+
 /** Formats inches as a friendly fraction-ish string (e.g. 0.125 → 1/8"). */
 export function formatInches(v: number): string {
   const fractions: Array<[number, string]> = [

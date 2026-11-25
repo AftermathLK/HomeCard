@@ -1,4 +1,5 @@
 import type { CardFormat, FoldType, Orientation, SurfaceId } from './types';
+import { MM_PER_IN, type LengthUnit } from './units';
 
 export interface CardSize {
   id: string;
@@ -8,18 +9,76 @@ export interface CardSize {
   h: number;
   description: string;
   orientations: Array<'portrait' | 'landscape'>;
-  popular?: boolean;
+  /** Badged "Most popular" for people who measure in this unit. */
+  popularFor?: LengthUnit;
+  /** An ISO (metric) size: named by paper size, made in millimetres. */
+  metric?: boolean;
+  /** One of the person's own saved sizes. */
+  saved?: boolean;
 }
 
+const mm = (v: number) => v / MM_PER_IN;
+
 export const CARD_SIZES: CardSize[] = [
-  { id: '5x7', name: '5 × 7"', w: 5, h: 7, description: 'The classic holiday card. Fits A7 envelopes.', orientations: ['portrait', 'landscape'], popular: true },
+  { id: '5x7', name: '5 × 7"', w: 5, h: 7, description: 'The classic holiday card. Fits A7 envelopes.', orientations: ['portrait', 'landscape'], popularFor: 'in' },
   { id: '4x8', name: '4 × 8" Photo Card', w: 4, h: 8, description: 'Tall/wide photo-card format. Fits #10-style slim envelopes.', orientations: ['portrait', 'landscape'] },
   { id: '5x5', name: '5 × 5" Square', w: 5, h: 5, description: 'Modern square card. Needs a square envelope (extra postage in the US).', orientations: ['portrait'] },
-  { id: 'a2', name: 'A2 — 4.25 × 5.5"', w: 4.25, h: 5.5, description: 'Note-card size. Fits A2 envelopes; a letter sheet folds into it.', orientations: ['portrait', 'landscape'] },
+  { id: 'a2', name: 'A2 note card', w: 4.25, h: 5.5, description: 'Note-card size. Fits A2 envelopes; a letter sheet folds into it.', orientations: ['portrait', 'landscape'] },
   { id: '6x8', name: '6 × 8"', w: 6, h: 8, description: 'Large statement card.', orientations: ['portrait', 'landscape'] },
   { id: '4x6', name: '4 × 6" Postcard', w: 4, h: 6, description: 'Postcard / budget photo print size.', orientations: ['portrait', 'landscape'] },
+  { id: 'a6', name: 'A6', w: mm(105), h: mm(148), description: 'The standard UK and European greeting card (105 × 148 mm). Fits C6 envelopes; folded, it prints on an A5 sheet.', orientations: ['portrait', 'landscape'], popularFor: 'mm', metric: true },
+  { id: 'a5', name: 'A5', w: mm(148), h: mm(210), description: 'Large greeting card (148 × 210 mm). Fits C5 envelopes; folded, it prints on an A4 sheet.', orientations: ['portrait', 'landscape'], metric: true },
+  { id: 'a4', name: 'A4', w: mm(210), h: mm(297), description: 'Poster-size card, invitation or certificate (210 × 297 mm). Fits C4 envelopes.', orientations: ['portrait', 'landscape'], metric: true },
+  { id: 'dl', name: 'DL', w: mm(99), h: mm(210), description: 'Slim card (99 × 210 mm), a third of an A4 sheet. Fits DL envelopes.', orientations: ['portrait', 'landscape'], metric: true },
+  { id: 'sq150', name: 'Square 150 mm', w: mm(150), h: mm(150), description: 'Popular square card (150 × 150 mm). Fits 155 or 160 mm square envelopes.', orientations: ['portrait'], metric: true },
   { id: 'custom', name: 'Custom size', w: 5, h: 7, description: 'Any finished size from 2" to 14".', orientations: ['portrait', 'landscape'] },
 ];
+
+/* ---------- Saved sizes (per person) ---------- */
+
+/** A card size someone named and saved for their own card stock: portrait (w <= h), in inches. */
+export interface SavedCardSize {
+  id: string;
+  name: string;
+  w: number;
+  h: number;
+}
+
+export const MIN_CARD_IN = 2;
+export const MAX_CARD_IN = 14;
+export const MAX_SAVED_SIZES = 30;
+/** A card made at a saved size keeps `sizeId: 'saved:<id>'` (and its own width and height). */
+export const SAVED_SIZE_PREFIX = 'saved:';
+export const SAVED_SIZE_ID_RE = /^[a-z0-9]{1,24}$/;
+
+/** Sizes typed in by hand: "Custom size" and the person's saved sizes. */
+export const isCustomSizeId = (id: string) => id === 'custom' || id.startsWith(SAVED_SIZE_PREFIX);
+
+export function savedSizeOption(s: SavedCardSize): CardSize {
+  return {
+    id: SAVED_SIZE_PREFIX + s.id,
+    name: s.name,
+    w: s.w,
+    h: s.h,
+    description: 'One of your saved sizes.',
+    orientations: Math.abs(s.w - s.h) < 1e-6 ? ['portrait'] : ['portrait', 'landscape'],
+    saved: true,
+  };
+}
+
+/** A built-in size or one of the person's saved sizes, by id. */
+export function findCardSize(id: string, saved: readonly SavedCardSize[] = []): CardSize | undefined {
+  if (id.startsWith(SAVED_SIZE_PREFIX)) {
+    const s = saved.find((x) => SAVED_SIZE_PREFIX + x.id === id);
+    return s && savedSizeOption(s);
+  }
+  return CARD_SIZES.find((s) => s.id === id);
+}
+
+/** The sizes on the size picker until someone stars their own. */
+export function defaultFavoriteSizes(unit: LengthUnit): string[] {
+  return unit === 'mm' ? ['a6', 'a5', 'dl', 'sq150', '5x7', '4x6'] : ['5x7', '4x8', '5x5', 'a2', '6x8', '4x6'];
+}
 
 export interface VendorPreset {
   id: string;
@@ -151,14 +210,16 @@ export function makeFormat(opts: {
 }): CardFormat {
   const size = getSize(opts.sizeId);
   const vendor = getVendor(opts.vendorId ?? DEFAULT_VENDOR_ID);
-  let w = opts.sizeId === 'custom' ? clampSize(opts.customW ?? size.w) : size.w;
-  let h = opts.sizeId === 'custom' ? clampSize(opts.customH ?? size.h) : size.h;
-  if (opts.sizeId !== 'custom') {
+  const custom = isCustomSizeId(opts.sizeId);
+  let w = custom ? clampSize(opts.customW ?? size.w) : size.w;
+  let h = custom ? clampSize(opts.customH ?? size.h) : size.h;
+  if (!custom) {
     const wantLandscape = opts.orientation === 'landscape';
     if (wantLandscape && w < h) [w, h] = [h, w];
   }
+  const savedId = opts.sizeId.slice(SAVED_SIZE_PREFIX.length);
   return {
-    sizeId: size.id,
+    sizeId: !custom ? size.id : opts.sizeId.startsWith(SAVED_SIZE_PREFIX) && SAVED_SIZE_ID_RE.test(savedId) ? opts.sizeId : 'custom',
     widthIn: w,
     heightIn: h,
     bleedIn: vendor.bleedIn,
@@ -169,8 +230,8 @@ export function makeFormat(opts: {
   };
 }
 
-function clampSize(v: number) {
-  return Math.min(14, Math.max(2, Math.round(v * 1000) / 1000));
+export function clampSize(v: number) {
+  return Math.min(MAX_CARD_IN, Math.max(MIN_CARD_IN, Math.round(v * 1000) / 1000));
 }
 
 export interface SurfaceInfo {

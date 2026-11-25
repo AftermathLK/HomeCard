@@ -17,6 +17,7 @@ import { UserMenu } from '@/components/UserMenu';
 import { Empty, Modal, Spinner } from '@/components/ui';
 import { api, enc, onServerEvent } from '@/lib/api';
 import { useAssets } from '@/lib/assets';
+import { defaultCardSize, useMeasure } from '@/lib/units';
 import { FormatFields, GreetingStylePicker, OccasionGrid, type FormatChoice } from '@/setup/CardSetup';
 import { useEditor } from '@/store/editor';
 import { useHolidays } from '@/store/holidays';
@@ -128,6 +129,7 @@ function ProjectTile({ p, tick, onOpen, onChanged }: { p: Summary; tick?: number
   const [broken, setBroken] = useState(!p.hasThumb);
   useEffect(() => setBroken(!p.hasThumb && !tick), [p.hasThumb, tick]);
   const occ = getOccasion(p.occasionId);
+  const { dims } = useMeasure();
   const pal = occ.palettes[0].colors;
   const aspect = p.format.widthIn / p.format.heightIn;
   return (
@@ -155,7 +157,7 @@ function ProjectTile({ p, tick, onOpen, onChanged }: { p: Summary; tick?: number
             </div>
           )}
           <div className="truncate text-xs text-ink-3">
-            {occ.name} · {p.format.widthIn}×{p.format.heightIn}" {p.format.fold} · {new Date(p.updatedAt).toLocaleDateString()}
+            {occ.name} · {dims(p.format.widthIn, p.format.heightIn)} {p.format.fold} · {new Date(p.updatedAt).toLocaleDateString()}
           </div>
         </button>
         <div className="relative">
@@ -305,8 +307,10 @@ export function NewCardModal() {
       const featured = featuredHolidayId();
       if (featured) setOccasionId(featured);
     }
+    // Each new card starts at the person's first starred size and their default printer.
+    const size = defaultCardSize();
     const vendor = useSession.getState().user?.prefs.defaultVendorId;
-    if (vendor) setFmt((f) => ({ ...f, vendorId: vendor }));
+    setFmt((f) => ({ ...f, sizeId: size.sizeId, orientation: 'portrait', customW: size.customW ?? f.customW, customH: size.customH ?? f.customH, vendorId: vendor || f.vendorId }));
   }, [open]);
   if (!open) return null;
   const close = () => useUi.setState({ newCardOpen: false, newCardOccasionId: null });

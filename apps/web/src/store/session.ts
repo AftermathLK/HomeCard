@@ -12,6 +12,9 @@ interface SessionStore {
   logout: () => Promise<void>;
 }
 
+let prefQueue: Promise<unknown> = Promise.resolve();
+let prefSeq = 0;
+
 export const useSession = create<SessionStore>((set, get) => ({
   user: null,
   loaded: false,
@@ -23,9 +26,28 @@ export const useSession = create<SessionStore>((set, get) => ({
     return s.user;
   },
   setUser: (user) => set({ user }),
-  async savePrefs(prefs) {
-    const u = await api.put<SessionUser>('/api/auth/me', { prefs: { ...get().user?.prefs, ...prefs } });
-    set({ user: u });
+  // Shows the change at once; saves go out one after another and only the newest reply is applied.
+  // The server merges the fields sent over what it already has.
+  savePrefs(prefs) {
+    const user = get().user;
+    if (!user) return Promise.resolve();
+    const before = user.prefs;
+    const seq = ++prefSeq;
+    set({ user: { ...user, prefs: { ...before, ...prefs } } });
+    const job = prefQueue.then(() =>
+      api.put<SessionUser>('/api/auth/me', { prefs }).then(
+        (u) => {
+          if (seq === prefSeq) set({ user: u });
+        },
+        (e: Error) => {
+          const now = get().user;
+          if (seq === prefSeq && now) set({ user: { ...now, prefs: before } });
+          throw e;
+        },
+      ),
+    );
+    prefQueue = job.catch(() => undefined);
+    return job;
   },
   async logout() {
     try {

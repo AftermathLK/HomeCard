@@ -35,7 +35,7 @@ function parseTrustProxy(v: string | undefined): boolean | number | string[] {
 }
 
 export const config = {
-  version: '0.13.2',
+  version: '0.13.3',
   port: Number(env.PORT ?? 8787),
   host: env.HOST ?? '0.0.0.0',
   dataDir,
