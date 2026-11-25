@@ -20,3 +20,4 @@ export * from './stylepack';
 export * from './render';
 export * from './immich';
 export * from './backdrops';
+export * from './albums';

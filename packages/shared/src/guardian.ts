@@ -92,7 +92,7 @@ export function photoDpi(el: PhotoElement): number | null {
   if (!el.fill) return null;
   const box = photoContentBox(el);
   const o = orientedFill(el.fill);
-  return effectiveDpi(box.w, box.h, o.width, o.height, el.fill.crop.zoom);
+  return effectiveDpi(box.w, box.h, o.width, o.height, el.fill.crop.zoom, el.fill.crop.angle);
 }
 
 /** Below this a raster background (stock photo or texture) gets a Print Guardian note. */
@@ -180,7 +180,7 @@ export function runGuardian(project: CardProject, input: GuardianInput): Guardia
         // Faces
         const ov = orientedFill(el.fill);
         const faces = significantFaces(ov.faces, ov.width, ov.height);
-        if (faces.length && !el.rotation) {
+        if (faces.length && !el.rotation && !el.fill.crop.angle) {
           const frame = { x: el.x + box.x, y: el.y + box.y, w: box.w, h: box.h };
           const onCard = facesOnCard(frame, ov.width, ov.height, el.fill.crop, faces);
           let worst: Severity = 'ok';

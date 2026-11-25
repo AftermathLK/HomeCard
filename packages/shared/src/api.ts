@@ -209,6 +209,14 @@ export interface ImmichAlbum {
   count: number;
   thumbnailAssetId: string | null;
   shared: boolean;
+  /** ISO dates from Immich, used for sorting (any may be missing on older servers). */
+  createdAt?: string | null;
+  updatedAt?: string | null;
+  /** When a photo was last added. */
+  lastAssetAt?: string | null;
+  /** Date range of the photos in the album. */
+  startDate?: string | null;
+  endDate?: string | null;
 }
 
 export interface ImmichPerson {

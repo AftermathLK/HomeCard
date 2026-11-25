@@ -1,6 +1,6 @@
 import { createReadStream } from 'node:fs';
 import type { FastifyInstance } from 'fastify';
-import type { ImmichAlbum, ImmichConnectionDto, ImmichKeyCheck, ImmichPerson, ImmichStatus, PhotoPage, TimelineBucket } from '@homecard/shared';
+import type { ImmichAlbum, ImmichConnectionDto, ImmichKeyCheck, ImmichPerson, ImmichStatus, PhotoPage, PickerPrefs, TimelineBucket } from '@homecard/shared';
 import { actorOf, clientIp, userOf } from '../auth/context';
 import { audit } from '../security/audit';
 import { userCacheBucket } from '../storage/paths';
@@ -9,6 +9,7 @@ import { httpError } from '../util/fsx';
 import { assertId, assetToItem, type ImmichAsset, type SearchResponse } from './assets';
 import { clientForUser, connectionDto, deleteUserKey, immichServerUrl, saveUserKey, verifyImmichKey, verifyStoredKey } from './credentials';
 import { invalidateUserPhotos } from './photoCache';
+import { getPickerPrefs, savePickerPrefs } from './pickerPrefs';
 
 const PAGE_SIZE = 150;
 
@@ -87,14 +88,40 @@ export function registerImmichRoutes(app: FastifyInstance) {
     return { items: res.assets.items.filter((a) => a.type === 'IMAGE').map(assetToItem), nextPage: res.assets.nextPage ?? null, total: res.assets.total };
   };
 
+  // Photo picker preferences (favourite albums, album sort): the signed-in person's own only.
+  app.get('/api/me/picker', async (req): Promise<PickerPrefs> => getPickerPrefs(userOf(req).userId));
+  app.put<{ Body: unknown }>('/api/me/picker', async (req): Promise<PickerPrefs> => savePickerPrefs(userOf(req).userId, req.body));
+
   app.get('/api/immich/albums', async (req): Promise<ImmichAlbum[]> => {
     const c = clientForUser(userOf(req).userId);
-    type A = { id: string; albumName: string; assetCount: number; albumThumbnailAssetId: string | null; shared?: boolean };
+    type A = {
+      id: string;
+      albumName: string;
+      assetCount: number;
+      albumThumbnailAssetId: string | null;
+      shared?: boolean;
+      createdAt?: string;
+      updatedAt?: string;
+      lastModifiedAssetTimestamp?: string;
+      startDate?: string;
+      endDate?: string;
+    };
     const [own, shared] = await Promise.all([c.get<A[]>('/api/albums'), c.get<A[]>('/api/albums?shared=true').catch(() => [] as A[])]);
     const seen = new Set<string>();
     return [...own, ...shared]
       .filter((a) => (seen.has(a.id) ? false : (seen.add(a.id), true)))
-      .map((a) => ({ id: a.id, name: a.albumName, count: a.assetCount, thumbnailAssetId: a.albumThumbnailAssetId, shared: !!a.shared }))
+      .map((a) => ({
+        id: a.id,
+        name: a.albumName,
+        count: a.assetCount,
+        thumbnailAssetId: a.albumThumbnailAssetId,
+        shared: !!a.shared,
+        createdAt: a.createdAt ?? null,
+        updatedAt: a.updatedAt ?? null,
+        lastAssetAt: a.lastModifiedAssetTimestamp ?? null,
+        startDate: a.startDate ?? null,
+        endDate: a.endDate ?? null,
+      }))
       .sort((a, b) => a.name.localeCompare(b.name));
   });
 

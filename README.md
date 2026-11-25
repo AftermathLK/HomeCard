@@ -17,7 +17,7 @@ as they are: real 300 DPI, bleed and safe zones, vector text in the PDF, sRGB or
 * **Clean files.** Exports carry no EXIF, GPS or camera data, so your home location never
   reaches a print shop.
 
-Version 0.13.1 · [MIT licence](LICENSE) · works on any Docker host, with a ready-made script for
+Version 0.13.2 · [MIT licence](LICENSE) · works on any Docker host, with a ready-made script for
 Unraid.
 
 ---
@@ -88,15 +88,17 @@ More detail: [docs/SECURITY.md](docs/SECURITY.md) (security model and how to che
 **Photos**
 
 * **Immich**: each person links **their own** read-only key, then browses Albums, People,
-  Favorites, the Timeline and Smart Search. At export HomeCard fetches the **original** (HEIC,
+  Favorites, the Timeline and Smart Search. Find an album by typing its name, sort albums by
+  title or date, and star favourite albums to keep them at the top. At export HomeCard fetches the **original** (HEIC,
   RAW and WebP are converted) and deletes the temporary copy as soon as the render is done.
 * **Photo folders** (mounted read-only): `shared/` is visible to everyone, `users/<username>/`
   only to that person. New files appear automatically.
 * **Upload** from your computer or phone. Uploads are private to you.
 * **Face-aware smart crop**, using Immich's face boxes or in-browser face detection (the model is
   bundled; nothing is uploaded). Heads stay clear of the fold, the trim and the text.
-* **Turn, mirror and flip** a placed photo inside its frame, nudge the crop with the arrow keys,
-  reset the framing, or reshape the frame to the photo so nothing is cropped.
+* **Turn, mirror, flip and straighten** a placed photo inside its frame (free rotation with a
+  handle or slider), nudge the crop with the arrow keys, reset the framing, or reshape the frame
+  to the photo so nothing is cropped.
 * **Auto-Enhance**, 6 film-style filters and 11 sliders. The same maths runs on the
   full-resolution original at export, so the print matches the screen.
 

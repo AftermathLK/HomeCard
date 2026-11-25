@@ -163,7 +163,17 @@ export function turnPhoto(elementId: string, op: TurnOp | 'reset') {
   }, null);
 }
 
-/** Back to the plain framing: centred, zoomed all the way out (keeps any turn/mirror). */
+/** Straighten: turn the photo by `angle` degrees inside its frame (it grows just enough to keep covering it). */
+export function straightenPhoto(elementId: string, angle: number, key: string | null = `straighten:${elementId}`) {
+  useEditor.getState().updateElement(elementId, (el) => {
+    if (el.type !== 'photo' || !el.fill) return;
+    const box = photoContentBox(el);
+    const o = orientedFill(el.fill);
+    el.fill.crop = clampCrop(box.w, box.h, o.width, o.height, { ...el.fill.crop, angle });
+  }, key);
+}
+
+/** Back to the plain framing: centred, straight, zoomed all the way out (keeps any turn/mirror). */
 export function resetFraming(elementId: string) {
   useEditor.getState().updateElement(elementId, (el) => {
     if (el.type !== 'photo' || !el.fill) return;
@@ -181,7 +191,11 @@ export function panCrop(elementId: string, fx: number, fy: number) {
     const o = orientedFill(el.fill);
     const pl = placeImage(box.w, box.h, o.width, o.height, el.fill.crop);
     const c = el.fill.crop;
-    el.fill.crop = clampCrop(box.w, box.h, o.width, o.height, { ...c, cx: c.cx - (fx * box.w) / pl.width, cy: c.cy - (fy * box.h) / pl.height, mode: 'manual' });
+    // Move along the frame's axes even when the photo is straightened.
+    const t = (-(c.angle ?? 0) * Math.PI) / 180;
+    const dx = fx * box.w, dy = fy * box.h;
+    const ix = dx * Math.cos(t) - dy * Math.sin(t), iy = dx * Math.sin(t) + dy * Math.cos(t);
+    el.fill.crop = clampCrop(box.w, box.h, o.width, o.height, { ...c, cx: c.cx - ix / pl.width, cy: c.cy - iy / pl.height, mode: 'manual' });
   }, `crop:${elementId}`);
 }
 

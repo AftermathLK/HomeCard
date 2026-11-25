@@ -9,8 +9,6 @@ import {
   ArrowDownToLine,
   ArrowUpToLine,
   Crop,
-  FlipHorizontal2,
-  FlipVertical2,
   FoldVertical,
   ImagePlus,
   LocateFixed,
@@ -29,6 +27,7 @@ import {
   getBuiltinOrnament,
   isHexColor,
   MASK_LABELS,
+  MAX_STRAIGHTEN,
   photoDpi,
   resolveColor,
   THEME_TOKEN_LABELS,
@@ -41,8 +40,9 @@ import {
   type TextElement,
   type ThemeColors,
 } from '@homecard/shared';
+import { FlipLeftRight, FlipUpDown } from '@/components/icons';
 import { ColorField, Section, Segmented, Slider, Toggle } from '@/components/ui';
-import { alignToCard, clearFrame, deleteElements, fitFrameToPhoto, moveInsideSafe, resetFraming, smartCrop, turnPhoto } from '@/lib/actions';
+import { alignToCard, clearFrame, deleteElements, fitFrameToPhoto, moveInsideSafe, resetFraming, smartCrop, straightenPhoto, turnPhoto } from '@/lib/actions';
 import { useAssets } from '@/lib/assets';
 import { useEditor, useProject, useSelected } from '@/store/editor';
 import { useUi } from '@/store/ui';
@@ -82,14 +82,14 @@ export function Inspector() {
             </div>
           )}
           <button className="btn btn-sm mt-3" onClick={() => upd({ flipX: !el.flipX }, null)}>
-            <FlipHorizontal2 size={14} /> Mirror
+            <FlipLeftRight size={14} /> Mirror
           </button>
         </Section>
       )}
       {el.type === 'sticker' && (
         <Section title="Sticker">
           <button className="btn btn-sm" onClick={() => upd({ flipX: !el.flipX }, null)}>
-            <FlipHorizontal2 size={14} /> Mirror
+            <FlipLeftRight size={14} /> Mirror
           </button>
         </Section>
       )}
@@ -316,11 +316,11 @@ function PhotoProps({ el, upd }: { el: PhotoElement; upd: Upd }) {
               <button className="btn btn-sm" title="Turn the photo right 90°" onClick={() => turnPhoto(el.id, 'cw')}>
                 <RotateCw size={13} /> Right
               </button>
-              <button className="btn btn-sm" title="Flip horizontally (mirror)" onClick={() => turnPhoto(el.id, 'flipH')}>
-                <FlipHorizontal2 size={13} /> Mirror
+              <button className="btn btn-sm" title="Mirror: flip left to right" onClick={() => turnPhoto(el.id, 'flipH')}>
+                <FlipLeftRight size={13} /> Mirror
               </button>
-              <button className="btn btn-sm" title="Flip vertically (upside down)" onClick={() => turnPhoto(el.id, 'flipV')}>
-                <FlipVertical2 size={13} /> Flip
+              <button className="btn btn-sm" title="Flip upside down" onClick={() => turnPhoto(el.id, 'flipV')}>
+                <FlipUpDown size={13} /> Upside down
               </button>
               {(!!el.fill.rotate || !!el.fill.flipX) && (
                 <button className="btn btn-sm btn-ghost" title="Undo turn and flip" onClick={() => turnPhoto(el.id, 'reset')}>
@@ -328,16 +328,29 @@ function PhotoProps({ el, upd }: { el: PhotoElement; upd: Upd }) {
                 </button>
               )}
             </div>
+            <div className="mt-2">
+              <Slider
+                label="Straighten"
+                min={-MAX_STRAIGHTEN}
+                max={MAX_STRAIGHTEN}
+                step={0.1}
+                centered
+                value={el.fill.crop.angle ?? 0}
+                format={(v) => `${v > 0 ? '+' : ''}${v.toFixed(1)}°`}
+                onChange={(v) => straightenPhoto(el.id, v)}
+                onReset={() => straightenPhoto(el.id, 0, null)}
+              />
+            </div>
             <div className="label mt-3">Fit</div>
             <div className="flex flex-wrap gap-1">
-              <button className="btn btn-sm" title="Centre the photo and zoom all the way out" onClick={() => resetFraming(el.id)}>
+              <button className="btn btn-sm" title="Centre the photo, straighten it and zoom all the way out" onClick={() => resetFraming(el.id)}>
                 <LocateFixed size={13} /> Reset framing
               </button>
               <button className="btn btn-sm" title="Reshape the frame to the photo’s proportions so nothing is cropped" onClick={() => fitFrameToPhoto(el.id)}>
                 <Proportions size={13} /> Fit frame to photo
               </button>
             </div>
-            <p className="mt-1.5 text-[11px] leading-snug text-ink-3">To tilt the whole frame, drag its round handle or set Rotate below.</p>
+            <p className="mt-1.5 text-[11px] leading-snug text-ink-3">Straighten turns the photo inside its frame (also by dragging the handle above it while cropping). To tilt the whole frame, drag its round handle or set Rotate below.</p>
             <button className="mt-2 text-xs font-medium text-brand hover:underline" onClick={() => useUi.getState().set(useUi.getState().mode === 'studio' ? { tab: 'polish' } : { step: 3 })}>
               Polish this photo →
             </button>

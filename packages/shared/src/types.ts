@@ -77,6 +77,11 @@ export interface CropState {
   /** 1 = "cover" (image just fills the frame). >1 zooms in. */
   zoom: number;
   mode: 'auto' | 'manual';
+  /**
+   * Straighten: degrees the photo is turned clockwise inside its frame, about the frame centre
+   * (−45…45, on top of any quarter turn). The photo grows just enough to keep covering the frame.
+   */
+  angle?: number;
 }
 
 export interface Adjustments {

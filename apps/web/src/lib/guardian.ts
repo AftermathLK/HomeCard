@@ -11,6 +11,7 @@ import {
   orientedFill,
   placeImage,
   unorientPoint,
+  unstraightenPoint,
   pixelAdjustments,
   resolveColor,
   rotatedBounds,
@@ -236,7 +237,8 @@ export async function measureContrast(project: CardProject, surface: Surface, te
           const ov = orientedFill(e.fill);
           const pl = placeImage(box.w, box.h, ov.width, ov.height, e.fill.crop);
           // Sample the original pixels: undo the user's turn/mirror.
-          const [u, v] = unorientPoint((fx - pl.left) / pl.width, (fy - pl.top) / pl.height, e.fill);
+          const [sx, sy] = unstraightenPoint(fx, fy, box.w, box.h, e.fill.crop.angle);
+          const [u, v] = unorientPoint((sx - pl.left) / pl.width, (sy - pl.top) / pl.height, e.fill);
           const px = Math.min(d.px.w - 1, Math.max(0, Math.floor(u * d.px.w)));
           const py = Math.min(d.px.h - 1, Math.max(0, Math.floor(v * d.px.h)));
           const o = (py * d.px.w + px) * 4;

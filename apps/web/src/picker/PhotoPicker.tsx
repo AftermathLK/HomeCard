@@ -1,12 +1,13 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import clsx from 'clsx';
-import { CalendarDays, Check, ChevronLeft, Folder, Heart, Images, Search, Settings2, Sparkles, Upload, Users } from 'lucide-react';
-import type { ImmichAlbum, ImmichPerson, ImmichStatus, LibraryListing, PhotoItem, PhotoPage, TimelineBucket } from '@homecard/shared';
+import { ArrowUpDown, CalendarDays, Check, ChevronLeft, Folder, Heart, Images, Search, Settings2, Sparkles, Star, Upload, Users, X } from 'lucide-react';
+import { ALBUM_SORTS, nameMatches, sortAlbums, type AlbumSort, type ImmichAlbum, type ImmichPerson, type ImmichStatus, type LibraryListing, type PhotoItem, type PhotoPage, type TimelineBucket } from '@homecard/shared';
 import { Dropzone, Empty, Modal, Spinner } from '@/components/ui';
 import { addPhotosAndFill, addToTray, placeIntoFrame, resolvePhotos } from '@/lib/actions';
 import { api, enc, onServerEvent, upload } from '@/lib/api';
 import { thumbUrl } from '@/lib/image';
 import { useEditor } from '@/store/editor';
+import { usePickerPrefs } from '@/store/pickerPrefs';
 import { useUi } from '@/store/ui';
 
 type Source = 'immich' | 'library' | 'upload';
@@ -229,6 +230,22 @@ function ImmichBrowser({ status, selected, onToggle, onPick }: { status: ImmichS
   const [tab, setTab] = useState<'albums' | 'people' | 'years'>('albums');
   const [err, setErr] = useState<string | null>(null);
 
+  const prefs = usePickerPrefs((s) => s.prefs);
+  useEffect(() => {
+    void usePickerPrefs.getState().load();
+  }, []);
+
+  // Typing filters albums (and people) by name at once; Enter runs Immich's smart photo search.
+  const typed = q.trim();
+  const shownAlbums = useMemo(() => {
+    if (!albums) return null;
+    const matching = typed ? albums.filter((a) => nameMatches(a.name, typed)) : albums;
+    const sorted = sortAlbums(matching, prefs.albumSort);
+    const fav = new Set(prefs.favoriteAlbums);
+    return { favorites: sorted.filter((a) => fav.has(a.id)), rest: sorted.filter((a) => !fav.has(a.id)), total: matching.length };
+  }, [albums, typed, prefs]);
+  const shownPeople = useMemo(() => (people && typed ? people.filter((p) => p.name && nameMatches(p.name, typed)) : people), [people, typed]);
+
   useEffect(() => {
     if (!status?.ok) return;
     api.get<ImmichAlbum[]>('/api/immich/albums').then(setAlbums, (e) => setErr(e.message));
@@ -288,7 +305,18 @@ function ImmichBrowser({ status, selected, onToggle, onPick }: { status: ImmichS
         }}
       >
         <Search size={15} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-ink-3" />
-        <input className="input pl-8" value={q} onChange={(e) => setQ(e.target.value)} placeholder="Smart search: “kids in the snow”, “beach sunset”, “dog”…" />
+        <input
+          className="input pl-8 pr-8"
+          value={q}
+          onChange={(e) => setQ(e.target.value)}
+          placeholder="Find an album or person, or press Enter for smart search: “kids in the snow”…"
+          aria-label="Search albums, people and photos"
+        />
+        {q && (
+          <button type="button" className="absolute right-1.5 top-1/2 -translate-y-1/2 rounded p-1 text-ink-3 hover:text-ink" aria-label="Clear search" onClick={() => setQ('')}>
+            <X size={14} />
+          </button>
+        )}
       </form>
       <button className={clsx('chip', view.kind === 'favorites' && 'chip-on')} onClick={() => setView({ kind: 'favorites' })}>
         <Heart size={13} /> Favorites
@@ -303,6 +331,19 @@ function ImmichBrowser({ status, selected, onToggle, onPick }: { status: ImmichS
       <div className="h-full overflow-auto">
         {header}
         <div className="px-4 pt-3 font-display text-lg">{title}</div>
+        {view.kind === 'search' && albums && (() => {
+          const hits = sortAlbums(albums.filter((a) => nameMatches(a.name, view.query)), prefs.albumSort).slice(0, 12);
+          return hits.length ? (
+            <div className="flex flex-wrap items-center gap-1.5 px-4 pt-2">
+              <span className="text-[12px] text-ink-3">Albums:</span>
+              {hits.map((a) => (
+                <button key={a.id} className="chip" onClick={() => setView({ kind: 'album', album: a })}>
+                  <Images size={13} /> {a.name}
+                </button>
+              ))}
+            </div>
+          ) : null;
+        })()}
         {paged.error && <div className="m-3 rounded-lg bg-bad-soft p-3 text-[13px] text-bad">{paged.error}</div>}
         {!paged.loading && !paged.items.length && !paged.error && <Empty title="No photos here" />}
         <PhotoGrid items={paged.items} selected={selected} onToggle={onToggle} onPick={onPick} loading={paged.loading} hasMore={paged.hasMore} onMore={paged.more} />
@@ -328,33 +369,55 @@ function ImmichBrowser({ status, selected, onToggle, onPick }: { status: ImmichS
       </div>
       {err && <div className="m-3 rounded-lg bg-bad-soft p-3 text-[13px] text-bad">{err}</div>}
       {tab === 'albums' &&
-        (albums === null ? (
+        (albums === null || shownAlbums === null ? (
           <div className="flex justify-center p-8"><Spinner /></div>
         ) : !albums.length ? (
           <Empty title="No albums yet" />
         ) : (
-          <div className="grid gap-3 p-3" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))' }}>
-            {albums.map((a) => (
-              <button key={a.id} className="card-tile overflow-hidden text-left" onClick={() => setView({ kind: 'album', album: a })}>
-                <div className="aspect-[4/3] bg-paper-3">{a.thumbnailAssetId && <img src={thumbUrl(`immich:${a.thumbnailAssetId}`)} alt="" loading="lazy" className="h-full w-full object-cover" />}</div>
-                <div className="px-2.5 py-2">
-                  <div className="truncate text-[13px] font-medium">{a.name}</div>
-                  <div className="text-[11px] text-ink-3">
-                    {a.count} items{a.shared ? ' · shared' : ''}
-                  </div>
+          <>
+            <div className="flex items-center gap-2 px-3 pt-3 text-[12px] text-ink-3">
+              <span>{typed ? `${shownAlbums.total} of ${albums.length} albums match “${typed}”` : `${albums.length} albums`}</span>
+              <label className="ml-auto flex items-center gap-1.5">
+                <ArrowUpDown size={13} />
+                <span className="sr-only">Sort albums</span>
+                <select className="input h-7 w-auto py-0 pl-2 pr-7 text-[12px]" value={prefs.albumSort} onChange={(e) => void usePickerPrefs.getState().setSort(e.target.value as AlbumSort)}>
+                  {ALBUM_SORTS.map((s) => (
+                    <option key={s.id} value={s.id}>
+                      {s.label}
+                    </option>
+                  ))}
+                </select>
+              </label>
+            </div>
+            {!shownAlbums.total && (
+              <Empty title={`No albums named “${typed}”`}>Press Enter to search your photos for it instead.</Empty>
+            )}
+            {shownAlbums.favorites.length > 0 && (
+              <>
+                <div className="flex items-center gap-1.5 px-3 pt-3 text-[12px] font-medium text-ink-2">
+                  <Star size={13} className="fill-gold text-gold" /> Favourite albums
                 </div>
-              </button>
-            ))}
-          </div>
+                <AlbumGrid albums={shownAlbums.favorites} favorites={prefs.favoriteAlbums} onOpen={(a) => setView({ kind: 'album', album: a })} />
+              </>
+            )}
+            {shownAlbums.rest.length > 0 && (
+              <>
+                {shownAlbums.favorites.length > 0 && <div className="px-3 pt-2 text-[12px] font-medium text-ink-2">All albums</div>}
+                <AlbumGrid albums={shownAlbums.rest} favorites={prefs.favoriteAlbums} onOpen={(a) => setView({ kind: 'album', album: a })} />
+              </>
+            )}
+          </>
         ))}
       {tab === 'people' &&
-        (people === null ? (
+        (people === null || shownPeople === null ? (
           <div className="flex justify-center p-8"><Spinner /></div>
         ) : !people.length ? (
           <Empty title="No people found">Immich’s face recognition groups people automatically once it has processed your library.</Empty>
+        ) : !shownPeople.length ? (
+          <Empty title={`Nobody named “${typed}”`}>Press Enter to search your photos for it instead.</Empty>
         ) : (
           <div className="grid gap-3 p-3" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(104px, 1fr))' }}>
-            {people.map((p) => (
+            {shownPeople.map((p) => (
               <button key={p.id} className="flex flex-col items-center gap-1.5 rounded-xl p-2 hover:bg-white" onClick={() => setView({ kind: 'person', person: p })}>
                 <img src={p.thumbnailUrl} alt="" loading="lazy" className="h-20 w-20 rounded-full bg-paper-3 object-cover" />
                 <span className="w-full truncate text-center text-xs">{p.name || 'Unnamed'}</span>
@@ -379,6 +442,42 @@ function ImmichBrowser({ status, selected, onToggle, onPick }: { status: ImmichS
         <Sparkles size={11} className="mr-1 inline" />
         Your Immich library{status.user ? ` (${status.user})` : ''}, read-only. Face boxes from Immich are used for smart cropping.
       </div>
+    </div>
+  );
+}
+
+/** Album tiles with a star to keep favourites at the top of the list (saved per person). */
+function AlbumGrid({ albums, favorites, onOpen }: { albums: ImmichAlbum[]; favorites: string[]; onOpen: (a: ImmichAlbum) => void }) {
+  return (
+    <div className="grid gap-3 p-3" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))' }}>
+      {albums.map((a) => {
+        const fav = favorites.includes(a.id);
+        return (
+          <div key={a.id} className="group relative">
+            <button className="card-tile w-full overflow-hidden text-left" onClick={() => onOpen(a)}>
+              <div className="aspect-[4/3] bg-paper-3">{a.thumbnailAssetId && <img src={thumbUrl(`immich:${a.thumbnailAssetId}`)} alt="" loading="lazy" className="h-full w-full object-cover" />}</div>
+              <div className="px-2.5 py-2">
+                <div className="truncate text-[13px] font-medium">{a.name}</div>
+                <div className="text-[11px] text-ink-3">
+                  {a.count} items{a.shared ? ' · shared' : ''}
+                </div>
+              </div>
+            </button>
+            <button
+              className={clsx(
+                'absolute right-1.5 top-1.5 flex h-7 w-7 items-center justify-center rounded-full bg-black/35 backdrop-blur-sm transition hover:bg-black/55',
+                fav ? 'opacity-100' : 'opacity-0 focus-visible:opacity-100 group-hover:opacity-100',
+              )}
+              aria-pressed={fav}
+              aria-label={fav ? `Remove ${a.name} from favourite albums` : `Add ${a.name} to favourite albums`}
+              title={fav ? 'Remove from favourites' : 'Favourite: keep this album at the top'}
+              onClick={() => void usePickerPrefs.getState().toggleFavorite(a.id)}
+            >
+              <Star size={15} className={fav ? 'fill-gold text-gold' : 'text-white'} />
+            </button>
+          </div>
+        );
+      })}
     </div>
   );
 }

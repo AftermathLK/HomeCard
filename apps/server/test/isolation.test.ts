@@ -174,3 +174,24 @@ test('holiday preferences are per person, validated, merged and removed with the
   deleteUserRow(a.id);
   assert.ok(!mods.db.one('SELECT user_id FROM user_holiday_prefs WHERE user_id = ?', a.id));
 });
+
+test('photo picker preferences (favourite albums, sort) are per person and removed with the account', async () => {
+  const prefs = await import('../src/immich/pickerPrefs');
+  const { insertUser, deleteUserRow } = mods.users;
+  const DEFAULTS = mods.shared.DEFAULT_PICKER_PREFS;
+  const a = insertUser({ username: 'albumfan', displayName: 'Album fan', passwordHash: 'x', role: 'user', mustChangePassword: false });
+  const b = insertUser({ username: 'albumsib', displayName: 'Sibling', passwordHash: 'x', role: 'user', mustChangePassword: false });
+  assert.deepEqual(prefs.getPickerPrefs(a.id), DEFAULTS);
+  const saved = prefs.savePickerPrefs(a.id, { favoriteAlbums: ['11111111-2222-3333-4444-555555555555', 'bad/id'], albumSort: 'recent-photo' });
+  assert.deepEqual(saved, { favoriteAlbums: ['11111111-2222-3333-4444-555555555555'], albumSort: 'recent-photo' });
+  assert.deepEqual(prefs.getPickerPrefs(a.id), saved, 'read back from SQLite');
+  assert.deepEqual(prefs.getPickerPrefs(b.id), DEFAULTS, 'someone else’s favourites are untouched');
+  // A partial update keeps the rest.
+  assert.deepEqual(prefs.savePickerPrefs(a.id, { albumSort: 'name-desc' }).favoriteAlbums, ['11111111-2222-3333-4444-555555555555']);
+  // A damaged row can't break the picker.
+  mods.db.run('UPDATE user_picker_prefs SET prefs = ? WHERE user_id = ?', '{not json', a.id);
+  assert.deepEqual(prefs.getPickerPrefs(a.id), DEFAULTS);
+  prefs.savePickerPrefs(a.id, { albumSort: 'count-desc' });
+  deleteUserRow(a.id);
+  assert.ok(!mods.db.one('SELECT user_id FROM user_picker_prefs WHERE user_id = ?', a.id));
+});

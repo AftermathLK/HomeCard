@@ -119,6 +119,13 @@ const MIGRATIONS: string[] = [
     updated_at  INTEGER NOT NULL
   );
   `,
+  /* 3: per-user photo picker preferences (favourite Immich albums, album sort) */ `
+  CREATE TABLE user_picker_prefs (
+    user_id     TEXT PRIMARY KEY REFERENCES users(id) ON DELETE CASCADE,
+    prefs       TEXT NOT NULL DEFAULT '{}',
+    updated_at  INTEGER NOT NULL
+  );
+  `,
 ];
 
 function migrate(d: DatabaseSync) {

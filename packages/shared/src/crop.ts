@@ -16,6 +16,26 @@ export interface Placement {
 }
 
 export const MAX_ZOOM = 8;
+/** Largest straighten angle, either way (degrees). */
+export const MAX_STRAIGHTEN = 45;
+
+/** A straighten angle made safe: finite, within ±MAX_STRAIGHTEN, to 0.1°. */
+export function straightenAngle(angle: number | undefined | null): number {
+  if (!angle || !isFinite(angle)) return 0;
+  return Math.round(Math.max(-MAX_STRAIGHTEN, Math.min(MAX_STRAIGHTEN, angle)) * 10) / 10;
+}
+
+/**
+ * The box a photo straightened by `angle` must cover: the frame's bounding box once turned into
+ * the photo's axes. Covering it guarantees no empty corners show in the frame.
+ */
+export function straightenBox(frameW: number, frameH: number, angle?: number | null) {
+  const a = straightenAngle(angle);
+  if (!a) return { w: frameW, h: frameH };
+  const t = (Math.abs(a) * Math.PI) / 180;
+  const c = Math.cos(t), s = Math.sin(t);
+  return { w: frameW * c + frameH * s, h: frameW * s + frameH * c };
+}
 
 /* ---------------- Turn & mirror ---------------- */
 
@@ -104,6 +124,9 @@ export function turnFill<T extends PhotoFill>(fill: T, op: TurnOp | 'reset'): T 
   const [ox, oy] = unorientPoint(fill.crop.cx, fill.crop.cy, fill);
   const [cx, cy] = orientPoint(ox, oy, next);
   const out: T = { ...fill, crop: { ...fill.crop, cx, cy } };
+  // A mirror reverses which way the photo leans; a reset puts it straight.
+  if (op === 'reset') delete out.crop.angle;
+  else if ((op === 'flipH' || op === 'flipV') && out.crop.angle) out.crop.angle = -out.crop.angle;
   if (next.rotate) out.rotate = next.rotate;
   else delete out.rotate;
   if (next.flipX) out.flipX = true;
@@ -137,24 +160,41 @@ export function coverScale(frameW: number, frameH: number, imgW: number, imgH: n
 
 export function clampCrop(frameW: number, frameH: number, imgW: number, imgH: number, crop: CropState): CropState {
   const zoom = Math.min(MAX_ZOOM, Math.max(1, crop.zoom || 1));
-  const s = coverScale(frameW, frameH, imgW, imgH) * zoom;
+  const angle = straightenAngle(crop.angle);
+  const b = straightenBox(frameW, frameH, angle);
+  const s = coverScale(b.w, b.h, imgW, imgH) * zoom;
   const dw = imgW * s, dh = imgH * s;
-  const halfW = frameW / 2 / dw, halfH = frameH / 2 / dh;
+  const halfW = b.w / 2 / dw, halfH = b.h / 2 / dh;
   const cx = Math.min(1 - halfW, Math.max(halfW, isFinite(crop.cx) ? crop.cx : 0.5));
   const cy = Math.min(1 - halfH, Math.max(halfH, isFinite(crop.cy) ? crop.cy : 0.5));
-  return { ...crop, zoom, cx, cy };
+  const out: CropState = { ...crop, zoom, cx, cy };
+  if (angle) out.angle = angle;
+  else delete out.angle;
+  return out;
 }
 
 export function placeImage(frameW: number, frameH: number, imgW: number, imgH: number, crop: CropState): Placement {
   const c = clampCrop(frameW, frameH, imgW, imgH, crop);
-  const s = coverScale(frameW, frameH, imgW, imgH) * c.zoom;
+  const b = straightenBox(frameW, frameH, c.angle);
+  const s = coverScale(b.w, b.h, imgW, imgH) * c.zoom;
   const width = imgW * s, height = imgH * s;
+  // Positioned as if straight; a straightened photo is then turned by c.angle about the frame centre.
   return { left: frameW / 2 - c.cx * width, top: frameH / 2 - c.cy * height, width, height };
 }
 
 /** Effective print resolution (pixels per inch) of the placed photo. */
-export function effectiveDpi(frameW: number, frameH: number, imgW: number, imgH: number, zoom: number) {
-  return 1 / (coverScale(frameW, frameH, imgW, imgH) * Math.max(1, zoom));
+export function effectiveDpi(frameW: number, frameH: number, imgW: number, imgH: number, zoom: number, angle?: number | null) {
+  const b = straightenBox(frameW, frameH, angle);
+  return 1 / (coverScale(b.w, b.h, imgW, imgH) * Math.max(1, zoom));
+}
+
+/** A point in frame inches → where it falls on the straight (un-straightened) placement. */
+export function unstraightenPoint(x: number, y: number, frameW: number, frameH: number, angle?: number | null): [number, number] {
+  const a = straightenAngle(angle);
+  if (!a) return [x, y];
+  const t = (-a * Math.PI) / 180;
+  const dx = x - frameW / 2, dy = y - frameH / 2;
+  return [frameW / 2 + dx * Math.cos(t) - dy * Math.sin(t), frameH / 2 + dx * Math.sin(t) + dy * Math.cos(t)];
 }
 
 export interface SmartCropOptions {

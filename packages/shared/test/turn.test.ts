@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import {
+  clampCrop,
   defaultPolish,
   effectiveDpi,
   fitFill,
@@ -11,8 +12,11 @@ import {
   photoDpi,
   placeImage,
   turnFill,
+  straightenAngle,
+  straightenBox,
   turnOrientation,
   unorientPoint,
+  unstraightenPoint,
   type FillOrientation,
   type PhotoElement,
   type PhotoFill,
@@ -153,4 +157,57 @@ test('turning a landscape photo into a portrait frame raises its print DPI and k
   const pl = placeImage(5, 7, o.width, o.height, turned.fill!.crop);
   assert.ok(pl.left <= 1e-9 && pl.top <= 1e-9 && pl.left + pl.width >= 5 - 1e-9 && pl.top + pl.height >= 7 - 1e-9, 'still covers the frame');
   close(photoDpi(turned)!, effectiveDpi(5, 7, 4000, 6000, turned.fill!.crop.zoom));
+});
+
+/* ---------------- Straighten (free rotation inside the frame) ---------------- */
+
+test('a straightened photo always covers every corner of its frame', () => {
+  const frames = [[5, 7], [3, 3], [7, 2.5]];
+  const imgs = [[6000, 4000], [3000, 4000], [1200, 1200]];
+  for (const [fw, fh] of frames)
+    for (const [iw, ih] of imgs)
+      for (const angle of [-45, -12.5, -1, 0.3, 7, 30, 45])
+        for (const [cx, cy, zoom] of [[0.5, 0.5, 1], [0, 0, 1], [1, 0.2, 1.7], [0.3, 0.9, 3]]) {
+          const crop = clampCrop(fw, fh, iw, ih, { cx, cy, zoom, mode: 'manual', angle });
+          const pl = placeImage(fw, fh, iw, ih, crop);
+          for (const [x, y] of [[0, 0], [fw, 0], [0, fh], [fw, fh]]) {
+            const [sx, sy] = unstraightenPoint(x, y, fw, fh, crop.angle);
+            const eps = 1e-9;
+            assert.ok(sx >= pl.left - eps && sx <= pl.left + pl.width + eps && sy >= pl.top - eps && sy <= pl.top + pl.height + eps, `corner ${x},${y} covered at ${angle}°`);
+          }
+        }
+});
+
+test('straighten angle is kept safe and costs a little resolution', () => {
+  assert.equal(straightenAngle(60), 45);
+  assert.equal(straightenAngle(-1000), -45);
+  assert.equal(straightenAngle(NaN), 0);
+  assert.equal(straightenAngle(3.14159), 3.1);
+  assert.equal(clampCrop(5, 7, 6000, 4000, { cx: 0.5, cy: 0.5, zoom: 1, mode: 'manual', angle: 0 }).angle, undefined, 'a straight crop stores no angle');
+  const b = straightenBox(1, 1, 45);
+  close(b.w, Math.SQRT2);
+  close(b.h, Math.SQRT2);
+  assert.ok(effectiveDpi(5, 7, 6000, 4000, 1, 10) < effectiveDpi(5, 7, 6000, 4000, 1));
+});
+
+test('turning keeps the lean, mirroring reverses it, Original straightens', () => {
+  const f0 = fill({ crop: { cx: 0.5, cy: 0.5, zoom: 1, mode: 'manual', angle: 8 } });
+  assert.equal(turnFill(f0, 'cw').crop.angle, 8);
+  assert.equal(turnFill(f0, 'flipH').crop.angle, -8);
+  assert.equal(turnFill(f0, 'flipV').crop.angle, -8);
+  assert.equal(turnFill(f0, 'reset').crop.angle, undefined);
+  assert.equal(f0.crop.angle, 8, 'the original fill is not changed');
+});
+
+test('auto framing keeps the straighten angle and still covers the frame', () => {
+  const format = makeFormat({ sizeId: '5x7' });
+  const el = { id: 'p', type: 'photo', x: 0, y: 0, w: 5, h: 7, rotation: 0, opacity: 1, slot: 0, mask: 'rect', radius: 0, frameStyle: 'none', shadow: false } as unknown as PhotoElement;
+  const f = fitFill(el, fill({ crop: { cx: 0.5, cy: 0.5, zoom: 1, mode: 'auto', angle: -15 } }), format);
+  assert.equal(f.crop.angle, -15);
+  const pl = placeImage(5, 7, 6000, 4000, f.crop);
+  for (const [x, y] of [[0, 0], [5, 0], [0, 7], [5, 7]]) {
+    const [sx, sy] = unstraightenPoint(x, y, 5, 7, -15);
+    assert.ok(sx >= pl.left - 1e-9 && sx <= pl.left + pl.width + 1e-9 && sy >= pl.top - 1e-9 && sy <= pl.top + pl.height + 1e-9);
+  }
+  assert.ok(photoDpi({ ...el, fill: f })! < 4000 / 7);
 });

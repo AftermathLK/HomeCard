@@ -4,19 +4,22 @@ import {
   clampCrop,
   effectiveDpi,
   imageBox,
+  MAX_STRAIGHTEN,
   MAX_ZOOM,
   orientedFill,
   photoContentBox,
   placeImage,
   resolveTokens,
   rotatedBounds,
+  straightenAngle,
   type CardElement,
   type PhotoElement,
   type PhotoRecord,
   type TextElement,
 } from '@homecard/shared';
-import { Check, Copy, Crop, Eye, FlipHorizontal2, FlipVertical2, ImagePlus, Lock, MoveDown, MoveUp, Pencil, RotateCcw, RotateCw, ScanFace, Trash2, Undo2, Unlock } from 'lucide-react';
-import { addPhotoFrame, deleteElements, duplicateElements, nudge, panCrop, placeIntoFrame, reorder, resetFraming, resolvePhotos, smartCrop, swapPhotos, turnPhoto } from '@/lib/actions';
+import { Check, Copy, Crop, Eye, ImagePlus, Lock, MoveDown, MoveUp, Pencil, RotateCcw, RotateCw, ScanFace, Trash2, Undo2, Unlock } from 'lucide-react';
+import { addPhotoFrame, deleteElements, duplicateElements, nudge, panCrop, placeIntoFrame, reorder, resetFraming, resolvePhotos, smartCrop, straightenPhoto, swapPhotos, turnPhoto } from '@/lib/actions';
+import { FlipLeftRight, FlipUpDown } from '@/components/icons';
 import { upload } from '@/lib/api';
 import { useAssets } from '@/lib/assets';
 import { previewUrl } from '@/lib/image';
@@ -32,6 +35,7 @@ type Gesture =
   | { kind: 'resize'; id: string; hx: number; hy: number; start: { x: number; y: number; w: number; h: number; rotation: number }; sx: number; sy: number }
   | { kind: 'rotate'; id: string; cx: number; cy: number; start: number; a0: number }
   | { kind: 'pan-crop'; id: string; sx: number; sy: number; start: { cx: number; cy: number } }
+  | { kind: 'straighten'; id: string; cx: number; cy: number; start: number; a0: number }
   | { kind: 'scroll'; sx: number; sy: number; left: number; top: number };
 
 const HANDLES: Array<{ id: string; hx: number; hy: number; cursor: string }> = [
@@ -153,6 +157,15 @@ export function Canvas() {
 
     if (cropId) {
       const found = findElement(project, cropId);
+      const knob = target.closest('[data-straighten]');
+      if (knob && found && found.el.type === 'photo' && found.el.fill) {
+        // Turn about the frame centre (the crop surface's centre on screen).
+        const r = (knob.parentElement!.querySelector('[data-crop-surface]') as HTMLElement).getBoundingClientRect();
+        const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+        gesture.current = { kind: 'straighten', id: cropId, cx, cy, start: found.el.fill.crop.angle ?? 0, a0: Math.atan2(e.clientY - cy, e.clientX - cx) };
+        (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
+        return;
+      }
       if (found && found.el.type === 'photo' && found.el.fill && target.closest('[data-crop-surface]')) {
         gesture.current = { kind: 'pan-crop', id: cropId, sx: e.clientX, sy: e.clientY, start: { cx: found.el.fill.crop.cx, cy: found.el.fill.crop.cy } };
         (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
@@ -295,12 +308,23 @@ export function Canvas() {
       ed.updateElement(g.id, { rotation: Math.round(deg * 10) / 10 }, `rotate:${g.id}`);
       return;
     }
+    if (g.kind === 'straighten') {
+      const a = Math.atan2(e.clientY - g.cy, e.clientX - g.cx);
+      let deg = g.start + ((a - g.a0) * 180) / Math.PI;
+      deg = ((((deg + 180) % 360) + 360) % 360) - 180;
+      deg = Math.max(-MAX_STRAIGHTEN, Math.min(MAX_STRAIGHTEN, deg));
+      if (e.shiftKey) deg = Math.round(deg);
+      else if (Math.abs(deg) < 0.6) deg = 0;
+      straightenPhoto(g.id, Math.round(deg * 10) / 10);
+      return;
+    }
     if (g.kind === 'pan-crop') {
       const found = findElement(project, g.id);
       if (!found || found.el.type !== 'photo' || !found.el.fill) return;
       const el = found.el as PhotoElement;
       const fill = el.fill!;
-      const th = ((el.rotation || 0) * Math.PI) / 180;
+      // Drag in screen space → the photo's own axes (frame tilt + straighten).
+      const th = (((el.rotation || 0) + (fill.crop.angle ?? 0)) * Math.PI) / 180;
       const dX = (e.clientX - g.sx) / k, dY = (e.clientY - g.sy) / k;
       const lx = dX * Math.cos(th) + dY * Math.sin(th);
       const ly = -dX * Math.sin(th) + dY * Math.cos(th);
@@ -684,51 +708,68 @@ function CropOverlay({ el, style, k }: { el: PhotoElement; style: CSSProperties;
   const o = orientedFill(fill);
   const pl = placeImage(box.w, box.h, o.width, o.height, fill.crop);
   const ib = imageBox(pl, fill);
-  const dpi = effectiveDpi(box.w, box.h, o.width, o.height, fill.crop.zoom);
+  const angle = straightenAngle(fill.crop.angle);
+  const dpi = effectiveDpi(box.w, box.h, o.width, o.height, fill.crop.zoom, angle);
   const turned = !!fill.rotate || !!fill.flipX;
+  const lines = angle ? [1, 2, 3, 4, 5].map((i) => (i * 100) / 6) : [100 / 3, 200 / 3];
   return (
     <div style={{ ...style, pointerEvents: 'none' }}>
       <div data-crop-surface style={{ position: 'absolute', left: box.x * k, top: box.y * k, width: box.w * k, height: box.h * k, pointerEvents: 'auto', cursor: 'move' }}>
-        <img
-          src={previewUrl(fill.ref)}
-          alt=""
-          draggable={false}
-          style={{ position: 'absolute', left: ib.left * k, top: ib.top * k, width: ib.width * k, height: ib.height * k, transform: ib.transform, maxWidth: 'none', opacity: 0.38, pointerEvents: 'none' }}
-        />
+        <div style={{ position: 'absolute', inset: 0, transform: angle ? `rotate(${angle}deg)` : undefined, pointerEvents: 'none' }}>
+          <img
+            src={previewUrl(fill.ref)}
+            alt=""
+            draggable={false}
+            style={{ position: 'absolute', left: ib.left * k, top: ib.top * k, width: ib.width * k, height: ib.height * k, transform: ib.transform, maxWidth: 'none', opacity: 0.38, pointerEvents: 'none' }}
+          />
+          <svg width="100%" height="100%" style={{ position: 'absolute', inset: 0, overflow: 'visible' }}>
+            {(o.faces ?? []).map((fc, i) => (
+              <rect
+                key={i}
+                x={(pl.left + fc.x * pl.width) * k}
+                y={(pl.top + fc.y * pl.height) * k}
+                width={fc.w * pl.width * k}
+                height={fc.h * pl.height * k}
+                fill="none"
+                stroke="#ffd166"
+                strokeWidth={1.5}
+                strokeDasharray="4 3"
+                rx={4}
+              />
+            ))}
+          </svg>
+        </div>
         <div style={{ position: 'absolute', inset: 0, outline: '2px solid #fff', boxShadow: '0 0 0 1px rgba(0,0,0,.4)' }} />
-        {/* rule of thirds */}
-        <svg width="100%" height="100%" style={{ position: 'absolute', inset: 0 }}>
-          {[1, 2].map((i) => (
-            <g key={i} stroke="rgba(255,255,255,.7)" strokeWidth={1}>
-              <line x1={`${(i * 100) / 3}%`} x2={`${(i * 100) / 3}%`} y1="0" y2="100%" />
-              <line y1={`${(i * 100) / 3}%`} y2={`${(i * 100) / 3}%`} x1="0" x2="100%" />
+        {/* rule of thirds (a finer grid while straightened, to line up horizons and edges) */}
+        <svg width="100%" height="100%" style={{ position: 'absolute', inset: 0, pointerEvents: 'none' }}>
+          {lines.map((p) => (
+            <g key={p} stroke="rgba(255,255,255,.7)" strokeWidth={1}>
+              <line x1={`${p}%`} x2={`${p}%`} y1="0" y2="100%" />
+              <line y1={`${p}%`} y2={`${p}%`} x1="0" x2="100%" />
             </g>
-          ))}
-          {(o.faces ?? []).map((fc, i) => (
-            <rect
-              key={i}
-              x={(pl.left + fc.x * pl.width) * k}
-              y={(pl.top + fc.y * pl.height) * k}
-              width={fc.w * pl.width * k}
-              height={fc.h * pl.height * k}
-              fill="none"
-              stroke="#ffd166"
-              strokeWidth={1.5}
-              strokeDasharray="4 3"
-              rx={4}
-            />
           ))}
         </svg>
       </div>
+      {/* Straighten handle: drag to turn the photo freely inside the frame. */}
+      <div style={{ position: 'absolute', left: (box.x + box.w / 2) * k - 0.5, top: box.y * k - 24, width: 1, height: 22, background: '#fff', boxShadow: '0 0 0 0.5px rgba(0,0,0,.35)', pointerEvents: 'none' }} />
+      <div
+        data-straighten
+        title="Drag to straighten the photo (Shift: whole degrees)"
+        className="flex items-center justify-center rounded-full border border-line bg-white text-brand shadow-pop"
+        style={{ position: 'absolute', left: (box.x + box.w / 2) * k - 13, top: box.y * k - 50, width: 26, height: 26, cursor: 'grab', pointerEvents: 'auto', transform: angle ? `rotate(${angle}deg)` : undefined }}
+      >
+        <RotateCw size={14} />
+      </div>
       <div
         data-toolbar
-        style={{ position: 'absolute', left: '50%', bottom: -54, transform: 'translateX(-50%)', pointerEvents: 'auto' }}
-        className="flex items-center gap-2 whitespace-nowrap rounded-xl border border-line bg-white px-3 py-2 shadow-pop"
+        style={{ position: 'absolute', left: '50%', top: '100%', marginTop: 12, transform: 'translateX(-50%)', pointerEvents: 'auto' }}
+        className="flex flex-col gap-1.5 whitespace-nowrap rounded-xl border border-line bg-white px-3 py-2 shadow-pop"
       >
+        <div className="flex items-center gap-2">
         <span className="text-xs text-ink-3">Zoom</span>
         <input
           type="range"
-          className="range w-32"
+          className="range w-24"
           min={0}
           max={1}
           step={0.001}
@@ -745,17 +786,36 @@ function CropOverlay({ el, style, k }: { el: PhotoElement; style: CSSProperties;
           {Math.round(dpi)} DPI
         </span>
         <div className="h-5 w-px bg-line" />
+        <span className="text-xs text-ink-3">Straighten</span>
+        <input
+          type="range"
+          className="range w-24"
+          aria-label="Straighten"
+          min={-MAX_STRAIGHTEN}
+          max={MAX_STRAIGHTEN}
+          step={0.1}
+          value={angle}
+          style={{ ['--fill' as any]: `${((angle + MAX_STRAIGHTEN) / (2 * MAX_STRAIGHTEN)) * 100}%` }}
+          onChange={(e) => straightenPhoto(el.id, Number(e.target.value))}
+          onDoubleClick={() => straightenPhoto(el.id, 0, null)}
+        />
+        <button className="w-12 text-left text-[11px] tabular-nums text-ink-2 hover:text-ink" title="Straight (0°)" onClick={() => straightenPhoto(el.id, 0, null)}>
+          {angle > 0 ? '+' : ''}
+          {angle.toFixed(1)}°
+        </button>
+        </div>
+        <div className="flex items-center justify-center gap-2">
         <button className="icon-btn" title="Turn left 90°" onClick={() => turnPhoto(el.id, 'ccw')}>
           <RotateCcw size={15} />
         </button>
         <button className="icon-btn" title="Turn right 90°" onClick={() => turnPhoto(el.id, 'cw')}>
           <RotateCw size={15} />
         </button>
-        <button className="icon-btn" title="Flip horizontally (mirror)" onClick={() => turnPhoto(el.id, 'flipH')}>
-          <FlipHorizontal2 size={15} />
+        <button className="icon-btn" title="Mirror: flip left to right" onClick={() => turnPhoto(el.id, 'flipH')}>
+          <FlipLeftRight size={15} />
         </button>
-        <button className="icon-btn" title="Flip vertically" onClick={() => turnPhoto(el.id, 'flipV')}>
-          <FlipVertical2 size={15} />
+        <button className="icon-btn" title="Flip upside down" onClick={() => turnPhoto(el.id, 'flipV')}>
+          <FlipUpDown size={15} />
         </button>
         {turned && (
           <button className="icon-btn" title="Undo turn and flip" onClick={() => turnPhoto(el.id, 'reset')}>
@@ -763,7 +823,7 @@ function CropOverlay({ el, style, k }: { el: PhotoElement; style: CSSProperties;
           </button>
         )}
         <div className="h-5 w-px bg-line" />
-        <button className="btn btn-sm" onClick={() => resetFraming(el.id)} title="Centre the photo and zoom all the way out">
+        <button className="btn btn-sm" onClick={() => resetFraming(el.id)} title="Centre the photo, straighten it and zoom all the way out">
           Reset
         </button>
         <button className="btn btn-sm" onClick={() => smartCrop(el.id)} title="Face-aware automatic framing">
@@ -772,6 +832,7 @@ function CropOverlay({ el, style, k }: { el: PhotoElement; style: CSSProperties;
         <button className="btn btn-sm btn-primary" onClick={() => useUi.setState({ cropId: null })}>
           <Check size={14} /> Done
         </button>
+        </div>
       </div>
     </div>
   );
@@ -860,8 +921,8 @@ function FloatingToolbar({ el, anchor, cropping }: { el: CardElement; anchor: { 
               <button className="icon-btn" title="Turn photo right 90°" onClick={() => turnPhoto(el.id, 'cw')}>
                 <RotateCw size={16} />
               </button>
-              <button className="icon-btn" title="Flip photo horizontally (mirror)" onClick={() => turnPhoto(el.id, 'flipH')}>
-                <FlipHorizontal2 size={16} />
+              <button className="icon-btn" title="Mirror photo: flip left to right" onClick={() => turnPhoto(el.id, 'flipH')}>
+                <FlipLeftRight size={16} />
               </button>
             </>
           )}

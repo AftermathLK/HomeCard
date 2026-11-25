@@ -1,5 +1,5 @@
 import { contrastRatio, mixHex, resolveColor } from '../color';
-import { clampCrop, orientedFill, smartCrop } from '../crop';
+import { clampCrop, orientedFill, smartCrop, straightenAngle, straightenBox } from '../crop';
 import { orientationOf } from '../formats';
 import { photoContentBox, photoSafeInsets } from '../geometry';
 import { getOccasion, SIGNOFFS, type Occasion } from '../holidays';
@@ -188,18 +188,21 @@ export function fitFill(el: Pick<PhotoElement, 'x' | 'y' | 'w' | 'h' | 'frameSty
   if (fill.crop.mode === 'manual') {
     return { ...fill, crop: clampCrop(box.w, box.h, o.width, o.height, fill.crop) };
   }
+  // A straightened photo is framed against the box it must cover (insets don't apply when tilted).
+  const angle = straightenAngle(fill.crop.angle);
+  const sb = straightenBox(box.w, box.h, angle);
   const r = smartCrop({
-    frameW: box.w,
-    frameH: box.h,
+    frameW: sb.w,
+    frameH: sb.h,
     imgW: o.width,
     imgH: o.height,
     faces: o.faces,
     focus: o.focus,
-    focusArea: el.focusArea ?? null,
-    insets: photoSafeInsets({ ...(el as PhotoElement), type: 'photo' } as PhotoElement, format),
+    focusArea: angle ? null : (el.focusArea ?? null),
+    insets: angle ? undefined : photoSafeInsets({ ...(el as PhotoElement), type: 'photo' } as PhotoElement, format),
     minDpi: 280,
   });
-  return { ...fill, crop: { cx: r.cx, cy: r.cy, zoom: r.zoom, mode: 'auto' } };
+  return { ...fill, crop: { cx: r.cx, cy: r.cy, zoom: r.zoom, mode: 'auto', ...(angle ? { angle } : {}) } };
 }
 
 /* ---------------- Apply / switch ---------------- */

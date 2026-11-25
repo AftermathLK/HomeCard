@@ -9,7 +9,7 @@
  *   - background-clip:text (foils), clip-path, gradients, opacity and blend modes stay vector.
  *   - Photos are <img> elements sized to their exact print pixels; the PDF embeds them untouched.
  */
-import { createContext, memo, useContext, useId, useLayoutEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
+import { createContext, memo, useContext, useId, useLayoutEffect, useMemo, useRef, useState, type CSSProperties, type ReactNode } from 'react';
 import {
   backdropSvg,
   BUILTIN_FOILS,
@@ -25,6 +25,7 @@ import {
   placeImage,
   resolveColor,
   resolveTokens,
+  straightenAngle,
   withAlpha,
   type CardElement,
   type CardFormat,
@@ -232,6 +233,7 @@ function PhotoView({ el, project }: { el: PhotoElement; project: CardProject }) 
   const place = fill && oriented ? placeImage(box.w, box.h, oriented.width, oriented.height, fill.crop) : null;
   // The <img> keeps the photo's own axes; a CSS turn/mirror lays it over `place`.
   const ib = fill && place ? imageBox(place, fill) : null;
+  const angle = fill ? straightenAngle(fill.crop.angle) : 0;
   const compare = !!env.compareIds?.has(el.id);
   const editorSrc = useEditorPhotoSrc(env.mode === 'editor' ? fill : null, compare);
   const eff = fill ? effectiveAdjustments(fill.polish) : null;
@@ -274,6 +276,7 @@ function PhotoView({ el, project }: { el: PhotoElement; project: CardProject }) 
       )}
       <div style={{ ...contentPos, overflow: 'hidden', ...mask.style, background: fill ? undefined : 'transparent' }}>
         {fill && ib && src ? (
+          <Straighten angle={angle}>
           <img
             src={src}
             alt=""
@@ -297,6 +300,7 @@ function PhotoView({ el, project }: { el: PhotoElement; project: CardProject }) 
               pointerEvents: 'none',
             }}
           />
+          </Straighten>
         ) : env.mode === 'editor' && env.showEmptySlots !== false ? (
           <EmptySlot n={el.slot} />
         ) : null}
@@ -334,6 +338,12 @@ function PhotoView({ el, project }: { el: PhotoElement; project: CardProject }) 
       </div>
     </div>
   );
+}
+
+/** Turns its photo about the frame centre (the straighten angle); renders children as-is when 0. */
+function Straighten({ angle, children }: { angle: number; children: ReactNode }) {
+  if (!angle) return <>{children}</>;
+  return <div style={{ position: 'absolute', inset: 0, transform: `rotate(${angle}deg)` }}>{children}</div>;
 }
 
 function EmptySlot({ n }: { n: number }) {
