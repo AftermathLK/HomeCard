@@ -1,6 +1,6 @@
 {
   "name": "homecard",
-  "version": "0.13.3",
+  "version": "0.13.4",
   "license": "MIT",
   "private": true,
   "description": "HomeCard — self-hosted, print-ready holiday & occasion card studio with Immich integration.",

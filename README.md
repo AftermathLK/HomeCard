@@ -17,7 +17,7 @@ as they are: real 300 DPI, bleed and safe zones, vector text in the PDF, sRGB or
 * **Clean files.** Exports carry no EXIF, GPS or camera data, so your home location never
   reaches a print shop.
 
-Version 0.13.3 · [MIT licence](LICENSE) · works on any Docker host, with a ready-made script for
+Version 0.13.4 · [MIT licence](LICENSE) · works on any Docker host, with a ready-made script for
 Unraid.
 
 ---
