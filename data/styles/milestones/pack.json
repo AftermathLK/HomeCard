@@ -10,7 +10,8 @@
     "graduation",
     "new-home",
     "thank-you",
-    "save-the-date"
+    "save-the-date",
+    "birthday"
   ],
   "palettes": [
     {
@@ -568,6 +569,11 @@
     "templates/new-home-keys-split.json",
     "templates/postcard-airmail-postcard.json",
     "templates/stamped-stationery-letter.json",
-    "templates/watercolor-thankyou-split.json"
+    "templates/watercolor-thankyou-split.json",
+    "templates/classic-birthday-typography.json",
+    "templates/milestone-20-birthday.json",
+    "templates/milestone-30-birthday.json",
+    "templates/milestone-40-birthday.json",
+    "templates/milestone-50-birthday.json"
   ]
 }
