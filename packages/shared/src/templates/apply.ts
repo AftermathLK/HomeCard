@@ -246,6 +246,24 @@ export function applyTemplate(project: CardProject, surfaceId: SurfaceId, templa
     oldTexts.set(textKey(el, i), el.text);
   }
   const stash: Record<string, string> = { ...(surface.textStash as Record<string, string>) };
+  // Words the old layout came with (a pack layout's fixed `text`) are not the person's own copy,
+  // so they don't follow to the next layout and aren't stashed.
+  const oldWords = new Map<string, string>();
+  if (!sameTemplate) {
+    const old = getTemplate(surface.templateId);
+    if (old.source === 'custom') {
+      const count: Record<string, number> = {};
+      for (const b of old.build(templateContext(project.format, { ...old.defaults, ...surface.templateParams }))) {
+        if (b.type !== 'text') continue;
+        const i = count[b.role] ?? 0;
+        count[b.role] = i + 1;
+        if (typeof b.text === 'string') oldWords.set(i === 0 ? b.role : `${b.role}#${i}`, b.text);
+      }
+    }
+  }
+  const ownCopy = (key: string, text: string) => oldWords.get(key) !== text;
+  /** Slots where the new layout's own words replaced the card's copy (which is stashed instead). */
+  const layoutWordsWon = new Set<string>();
 
   const elements: CardElement[] = [];
   const usedKeys = new Set<string>();
@@ -280,7 +298,15 @@ export function applyTemplate(project: CardProject, surfaceId: SurfaceId, templa
       newRoleCount[t.role] = i + 1;
       const key = i === 0 ? t.role : `${t.role}#${i}`;
       usedKeys.add(key);
-      const migrated = opts.resetText ? undefined : oldTexts.get(key) ?? stash[key];
+      // Re-applying the same layout (new size, orientation or settings) keeps every edit. Picking a
+      // different layout brings its own words if it has them; otherwise the card's copy carries over.
+      let migrated: string | undefined;
+      if (!opts.resetText) {
+        const prior = oldTexts.get(key);
+        if (sameTemplate) migrated = prior ?? stash[key];
+        else if (t.text === undefined) migrated = (prior !== undefined && ownCopy(key, prior) ? prior : undefined) ?? stash[key];
+        else layoutWordsWon.add(key);
+      }
       const content = migrated ?? t.text ?? defaultText(t.role, kind, occasion, project.greetingStyle, opts.greetingVariant ?? 0, surface.id === 'inside-left');
       const { type: _t, role, text: _x, ...rest } = t;
       elements.push({
@@ -314,8 +340,9 @@ export function applyTemplate(project: CardProject, surfaceId: SurfaceId, templa
 
   // Text that the new template has no slot for is stashed (restored if you switch back).
   const newStash: Record<string, string> = {};
-  for (const [k, v] of Object.entries(stash)) if (!usedKeys.has(k)) newStash[k] = v;
-  for (const [k, v] of oldTexts) if (!usedKeys.has(k) && v.trim()) newStash[k] = v;
+  const keep = (k: string) => !usedKeys.has(k) || layoutWordsWon.has(k);
+  for (const [k, v] of Object.entries(stash)) if (keep(k)) newStash[k] = v;
+  for (const [k, v] of oldTexts) if (keep(k) && v.trim() && ownCopy(k, v)) newStash[k] = v;
 
   // Free (user-added) elements stay on top.
   const free = surface.elements.filter((e) => !e.managed);

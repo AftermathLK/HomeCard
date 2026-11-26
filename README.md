@@ -28,7 +28,7 @@ Unraid.
 |---|---|
 | ![The editor: photo panel on the left, the card front in the middle](docs/images/editor.jpg) **Guided editor.** Four steps from occasion to print. Photos are framed around faces automatically. | ![The Check & print step: a traffic light and a list of print checks](docs/images/checks.jpg) **Print Guardian.** Checks resolution, safe zones, faces, contrast and fonts before you export, with one-click fixes. |
 | ![The Pattern studio: vector backdrops on the left, a Mother's Day card with a watercolour background](docs/images/pattern-studio.jpg) **Pattern & Paper Studio.** Vector backgrounds drawn on the spot, in your card's colours. No internet needed. | ![The export dialog after a PNG export, reporting 1575 × 1575 px at 300 DPI](docs/images/export.png) **Verified exports.** Every file is read back: pixel size, DPI, colour space, each photo's effective DPI. |
-| ![The occasion picker with 28 occasions](docs/images/new-card.png) **28 occasions.** Christmas to Diwali to birth announcements, each with greetings, palettes and ornaments. | ![Server settings with the Openverse switch and fields for Pixabay and Unsplash keys](docs/images/server-settings.png) **Set up in the app.** Add stock-image keys and the Immich address without touching the terminal. |
+| ![The occasion picker](docs/images/new-card.png) **29 occasions.** Christmas to Diwali to birthdays and birth announcements, each with greetings, palettes and ornaments. | ![Server settings with the Openverse switch and fields for Pixabay and Unsplash keys](docs/images/server-settings.png) **Set up in the app.** Add stock-image keys and the Immich address without touching the terminal. |
 
 The photos in these screenshots are public domain ([credits](docs/images/CREDITS.md)) and the
 family is made up.
@@ -104,7 +104,7 @@ More detail: [docs/SECURITY.md](docs/SECURITY.md) (security model and how to che
 
 **Design**
 
-* **28 occasions** with greetings in 5 styles (short, warm, formal, humorous, family update),
+* **29 occasions** with greetings in 5 styles (short, warm, formal, humorous, family update),
   palettes and SVG ornaments.
 * **29 templates**, and switching template keeps your photos, crops and words.
 * **Sizes**: 5×7, 4×8, 5×5, A2, 6×8, 4×6, the ISO sizes A6, A5, A4, DL and 150 mm square, or
@@ -117,9 +117,9 @@ More detail: [docs/SECURITY.md](docs/SECURITY.md) (security model and how to che
   glows).
 * **21 open-licence font families** in designer pairings, plus your own fonts.
 * **Style packs** (plain JSON, SVG and images) add palettes, papers, foils, ornaments, stickers,
-  templates and font pairings. 16 are included: four starter packs plus twelve collections
+  templates and font pairings. 17 are included: four starter packs plus thirteen collections
   (winter holidays, festivals of light and faith, spring, summer, autumn, Halloween, weddings,
-  baby and birthdays, milestones and everyday styles) with about 310 palettes, 200 papers,
+  baby and birthdays, birthdays with 20th–50th milestone covers, milestones and everyday styles) with about 310 palettes, 200 papers,
   180 ornaments and 130 layouts. The editor opens the collections made for your occasion
   and folds the rest away.
 * **Mockup preview**: the card on a desk or with its envelope, flipped, or opened if folded.

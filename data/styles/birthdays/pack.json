@@ -1,0 +1,51 @@
+{
+  "$schema": "../style-pack.schema.json",
+  "id": "birthdays",
+  "name": "Birthdays",
+  "version": "1.0.0",
+  "author": "HomeCard contributors",
+  "license": "CC0-1.0",
+  "description": "A classic typographic birthday cover and prefilled 20th, 30th, 40th and 50th milestone covers.",
+  "occasions": [
+    "birthday"
+  ],
+  "palettes": [
+    {
+      "id": "birthday-champagne-night",
+      "name": "Champagne Night",
+      "colors": {
+        "background": "#17151c",
+        "text": "#f6efe2",
+        "accent": "#d8b45a",
+        "accent2": "#a89cc8"
+      }
+    },
+    {
+      "id": "birthday-confetti-cream",
+      "name": "Confetti Cream",
+      "colors": {
+        "background": "#fffaf3",
+        "text": "#2b2540",
+        "accent": "#c8455f",
+        "accent2": "#d9932b"
+      }
+    },
+    {
+      "id": "birthday-sage-and-gold",
+      "name": "Sage & Gold",
+      "colors": {
+        "background": "#f3f1ea",
+        "text": "#23302a",
+        "accent": "#a07c34",
+        "accent2": "#5f806b"
+      }
+    }
+  ],
+  "templates": [
+    "templates/classic-birthday-typography.json",
+    "templates/milestone-20-birthday.json",
+    "templates/milestone-30-birthday.json",
+    "templates/milestone-40-birthday.json",
+    "templates/milestone-50-birthday.json"
+  ]
+}

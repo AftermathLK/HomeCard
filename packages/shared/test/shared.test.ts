@@ -16,6 +16,7 @@ import {
   autoEnhance,
   buildPipeline,
   changeFormat,
+  changeGreeting,
   computeImageStats,
   contrastRatio,
   createProject,
@@ -35,6 +36,7 @@ import {
   smartCrop,
   surfacesFor,
 } from '../src/index';
+import type { CardProject, Surface } from '../src/index';
 
 test('every occasion creates a valid project in every size/orientation', () => {
   for (const occ of OCCASIONS) {
@@ -325,6 +327,51 @@ test('accent text that would not read on its backing gets a readable theme colou
       assert.ok(ratio >= need(sub2), `${occ.id}: subhead ${sub2.color} reads at ${ratio.toFixed(1)}:1`);
       if (contrastRatio(q.theme.colors.accent, q.theme.colors.background) >= need(sub2)) assert.equal(sub2.color, '@accent', `${occ.id} keeps a readable accent`);
     }
+  } finally {
+    clearCustomTemplates();
+  }
+});
+
+test("a layout's own words show when you pick it, and the card's copy comes back after", () => {
+  registerCustomTemplates(
+    [
+      { id: 'plain', layouts: { any: [{ type: 'text', role: 'headline', rect: [0.1, 0.1, 0.8, 0.2] }, { type: 'text', role: 'subhead', rect: [0.1, 0.4, 0.8, 0.1] }] } },
+      {
+        id: 'thirty',
+        layouts: { any: [{ type: 'text', role: 'headline', text: '30', sizeRel: 0.34, rect: [0.15, 0.24, 0.7, 0.26] }, { type: 'text', role: 'subhead', text: 'Happy 30th Birthday!', rect: [0.1, 0.6, 0.8, 0.1] }] },
+      },
+      { id: 'forty', layouts: { any: [{ type: 'text', role: 'headline', text: '40', rect: [0.15, 0.24, 0.7, 0.26] }] } },
+    ] as any,
+    'test',
+  );
+  try {
+    const front = (p: CardProject) => p.surfaces.find((x) => x.id === 'front')!;
+    const put = (p: CardProject, s: Surface): CardProject => ({ ...p, surfaces: p.surfaces.map((x) => (x.id === s.id ? s : x)) });
+    const words = (p: CardProject) => Object.fromEntries(front(p).elements.filter((e) => e.type === 'text').map((e: any) => [e.role, e.text]));
+    const write = (p: CardProject, role: string, text: string) =>
+      put(p, { ...front(p), elements: front(p).elements.map((e) => (e.type === 'text' && e.role === role ? { ...e, text } : e)) });
+    const pick = (p: CardProject, id: string) => put(p, applyTemplate(p, 'front', id));
+
+    let p = write(pick(createProject({ occasionId: 'birthday' }), 'test:plain'), 'headline', 'Happy Birthday, Sam!');
+    const mine = words(p);
+    assert.equal(mine.subhead, 'Wishing you a wonderful year ahead', 'the Birthday occasion fills the subhead');
+
+    p = pick(p, 'test:thirty');
+    assert.deepEqual(words(p), { headline: '30', subhead: 'Happy 30th Birthday!' }, 'picking the layout brings its words');
+    const big = front(p).elements.find((e) => e.type === 'text' && e.role === 'headline') as any;
+    assert.equal(big.fontSize, Math.round(0.34 * 5 * 72 * 10) / 10, 'sizeRel is a share of the short side');
+    // Same layout again (a new size or setting) keeps edits; a greeting change keeps the layout's words.
+    assert.equal(words(pick(write(p, 'headline', 'Sam is 30'), 'test:thirty')).headline, 'Sam is 30');
+    assert.equal(words(changeGreeting(p, 'humorous')).headline, '30');
+
+    // 30 → 40: the new layout's words; the old layout's words are neither carried nor stashed.
+    p = pick(p, 'test:forty');
+    assert.equal(words(p).headline, '40');
+    assert.ok(!Object.values(front(p).textStash).some((v) => v === '30' || v === 'Happy 30th Birthday!'), 'layout words are not stashed');
+
+    // Back to a layout without its own words: the person's copy returns.
+    p = pick(p, 'test:plain');
+    assert.deepEqual(words(p), mine);
   } finally {
     clearCustomTemplates();
   }

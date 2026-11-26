@@ -13,12 +13,12 @@ A Style Pack adds new looks to HomeCard without any code. A pack can contain:
 Packs are plain files in the `/data/styles` volume. HomeCard watches that folder, so changes
 show up in an open editor within a second or two. No restart or reload is needed.
 
-HomeCard ships 16 packs. The four starter packs are the easiest examples to copy from:
+HomeCard ships 17 packs. The four starter packs are the easiest examples to copy from:
 `classic-paper`, `winter-woodland`, `gilded-holiday` and `spring-garden`.
 
-The twelve **collections** group looks by season and occasion: `winter-holidays`,
+The thirteen **collections** group looks by season and occasion: `winter-holidays`,
 `new-year-parties`, `lights-and-faith`, `spring-easter`, `mothers-fathers-day`, `summer`,
-`autumn-harvest`, `halloween`, `love-weddings`, `baby-birthdays`, `milestones` and
+`autumn-harvest`, `halloween`, `love-weddings`, `baby-birthdays`, `birthdays`, `milestones` and
 `everyday-styles` (which also holds the shared foils and font pairings). Each ornament exists
 once, in the collection that uses it most, and layouts in other collections point to it there
 (`pack:<other-pack>/ornaments/…`). If you delete a collection, layouts in the others may lose
@@ -300,7 +300,7 @@ Every element has `rect` and may have these common fields:
 | `type` | Fields |
 |---|---|
 | `photo` | `slot` (0-based, required) · `mask`: `rect`, `rounded`, `circle`, `ellipse`, `arch`, `scallop`, `heart`, `stamp` · `radiusIn` (corner radius for `rounded`) · `frameStyle`: `none`, `polaroid`, `mat` · `shadow` · `focusArea` (`{x,y,w,h}` 0–1 inside the frame, where faces should land, for example above a text overlay) |
-| `text` | `role` (required): `headline`, `subhead`, `names`, `year`, `message`, `body`, `small`, `monogram`, `custom` · `sizeRel`: font size as a fraction of the card's short side (0.1 on a 5″-wide card = 0.5″ ≈ 36 pt) · `fontRole`: `display`, `body`, `accent` · `align` · `vAlign` · `color` · `fill`: `color` or `foil` · `lineHeight` · `shadow` · `text` (fixed text; otherwise the role's greeting, name or year is filled in) |
+| `text` | `role` (required): `headline`, `subhead`, `names`, `year`, `message`, `body`, `small`, `monogram`, `custom` · `sizeRel`: font size as a fraction of the card's short side (0.1 on a 5″-wide card = 0.5″ ≈ 36 pt) · `fontRole`: `display`, `body`, `accent` · `align` · `vAlign` · `color` · `fill`: `color` or `foil` · `lineHeight` · `shadow` · `text` (fixed words: they replace the card's words in that slot when someone picks the layout, and don't follow to the next one; otherwise the role's greeting, name or year is filled in and the card's own words carry over) |
 | `ornament` | `asset` (required): `pack:<pack-id>/<file.svg>`, a built-in ornament id such as `snowflake`, `holly`, `laurel` or `wreath`, or `@icon` for the occasion's own icon · `color` · `color2` · `flipX`. Pack artwork used here must also be listed under the pack's `ornaments`; otherwise the pack shows an error. |
 | `shape` | `shape`: `rect`, `ellipse`, `line` · `fill` · `radius` |
 | `scrim` | `direction`: `to-top`, `to-bottom`, `to-left`, `to-right`, `radial`, `solid` · `color` · `strength` (0–1) · `extent` (0–1). A gradient that keeps text readable over a photo. |
@@ -355,7 +355,7 @@ Set `license` to make clear what people may do with your artwork. All bundled pa
 
 * `layouts-generic-0p` … `layouts-generic-6p`: 50 layouts for each photo count (0–6) that
   work for every occasion (`occasions: []`), spread over all eight categories.
-* `layouts-<occasion-id>`: one pack per occasion (28) with 12 layouts for each photo count.
+* `layouts-<occasion-id>`: one pack per occasion (29) with 12 layouts for each photo count.
   Each pack draws five recolourable ornaments (crest, divider, corner, frame and scatter) for
   its occasion and uses them in every layout.
 

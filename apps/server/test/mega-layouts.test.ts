@@ -11,7 +11,7 @@ test('the layout library generator builds valid, distinct, year-safe packs', () 
   try {
     const res = generate({ perOccasion: 10, generic: 10, out, zip: null, review: null });
     assert.deepEqual(res.validation.errors, []);
-    assert.equal(res.packs.length, 35);
+    assert.equal(res.packs.length, 36);
     const generic = res.packs.filter((p: any) => p.id.startsWith('layouts-generic-'));
     assert.equal(generic.length, 7);
     for (const p of generic) {

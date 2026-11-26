@@ -102,6 +102,10 @@ test('bundled templates build, start their photo slots at 0 and only use artwork
         for (const [w, h] of [[5, 7], [7, 5], [5, 5]]) {
           const els = def.build(templateContext({ widthIn: w, heightIn: h, bleedIn: 0.125, safeIn: 0.25 } as any, def.defaults));
           assert.ok(els.length > 0, `${def.id} builds nothing at ${w}×${h}`);
+          // sizeRel is a share of the short side (0.1 ≈ 36 pt on a 5″ card): set far above its box is a typo.
+          for (const e of els) {
+            if (e.type === 'text') assert.ok(e.fontSize <= 2 * e.h * 72, `${def.id} at ${w}×${h}: ${e.role} is ${e.fontSize} pt in a ${Math.round(e.h * 72)} pt box`);
+          }
         }
       }
     }

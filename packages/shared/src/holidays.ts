@@ -464,6 +464,23 @@ export const OCCASIONS: Occasion[] = [
     letterIntro: 'Dear friends and family,\n\n[Share the story of the big day.]\n\n[Add a few fun facts — first impressions, nicknames, who they look like.]\n\nThank you for all of your love and support.',
   },
   {
+    id: 'birthday', name: 'Birthday', category: 'milestone', icon: 'cake', aliases: ['bday', 'happy birthday', 'milestone birthday', '30th', '40th', '50th', 'party'], when: 'Any time',
+    ornaments: ['cake', 'balloon', 'gift', 'confetti', 'champagne', 'sparkles', 'bunting'],
+    palettes: [
+      p('champagne-toast', 'Champagne Toast', '#17151c', '#f6efe2', '#d8b45a', '#a89cc8'),
+      p('confetti-pop', 'Confetti Pop', '#fffaf3', '#2b2540', '#c8455f', '#d9932b'),
+    ],
+    pairing: 'festive-bold', frontTemplate: 'polaroid-single', yearMode: 'current', defaultFoil: 'gold',
+    greetings: {
+      short: [g('Happy Birthday', 'Wishing you a wonderful year ahead'), g('Make a Wish'), g('Cheers to You!')],
+      warm: [g('Happy Birthday', 'Wishing you a wonderful year ahead', 'May this year bring you joy, laughter and everything you love.')],
+      formal: [g('Birthday Celebration', 'In honour of [Name]', '[Day, Date] at [Time]\n[Location]\nRSVP [Name, Phone]')],
+      humorous: [g('Another Trip Around the Sun', 'and still the life of the party', 'Here’s to cake first and candles second.')],
+      'family-update': [g('Happy Birthday', '[Name]', 'Another wonderful year of [Name]…')],
+    },
+    letterIntro: 'Dear [Name],\n\n[A favourite memory from this past year.]\n\nWishing you the happiest of birthdays and a wonderful year ahead.',
+  },
+  {
     id: 'first-birthday', name: 'First Birthday', category: 'milestone', icon: 'cake', aliases: ['birthday', 'one', 'turning one', 'party'], when: 'Any time',
     ornaments: ['cake', 'balloon', 'bunting', 'confetti', 'star', 'sparkles'],
     palettes: [
@@ -549,7 +566,7 @@ export const OCCASIONS: Occasion[] = [
     letterIntro: GENERIC_LETTER,
   },
   {
-    id: 'custom', name: 'Custom Occasion', category: 'milestone', icon: 'sparkle', aliases: ['blank', 'any', 'other', 'birthday', 'anniversary', 'announcement'], when: 'Any time',
+    id: 'custom', name: 'Custom Occasion', category: 'milestone', icon: 'sparkle', aliases: ['blank', 'any', 'other', 'anniversary', 'announcement'], when: 'Any time',
     ornaments: ['sparkle', 'sparkles', 'star', 'heart', 'flourish', 'divider-diamond', 'laurel', 'frame-double', 'confetti'],
     palettes: [
       p('classic', 'Classic', '#faf8f4', '#222222', '#3d5a80', '#ee6c4d'),

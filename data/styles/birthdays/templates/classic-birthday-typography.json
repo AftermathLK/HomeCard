@@ -1,72 +1,112 @@
 {
   "id": "classic-birthday-typography",
   "name": "Classic Birthday",
-  "description": "Clean typographic birthday card prefilled and ready to customize.",
-  "kinds": ["front"],
+  "description": "A clean typographic birthday cover in a double-rule frame.",
+  "kinds": [
+    "front"
+  ],
   "category": "typography",
   "layouts": {
     "portrait": [
       {
         "type": "ornament",
         "asset": "pack:love-weddings/ornaments/double-rule-frame.svg",
-        "rect": [0.05, 0.04, 0.9, 0.92],
+        "rect": [
+          0.05,
+          0.04,
+          0.9,
+          0.92
+        ],
         "color": "@accent",
         "color2": "@accent2"
       },
       {
         "type": "text",
         "role": "headline",
-        "text": "Happy Birthday",
         "align": "center",
         "color": "@text",
-        "rect": [0.1, 0.34, 0.8, 0.16]
+        "rect": [
+          0.1,
+          0.3,
+          0.8,
+          0.2
+        ]
       },
       {
         "type": "ornament",
         "asset": "pack:milestones/ornaments/diamond-rule-divider.svg",
-        "rect": [0.28, 0.52, 0.44, 0.04],
+        "rect": [
+          0.28,
+          0.52,
+          0.44,
+          0.04
+        ],
         "color": "@accent",
         "color2": "@accent2"
       },
       {
         "type": "text",
-        "role": "names",
-        "text": "Wishing you a wonderful year ahead",
+        "role": "subhead",
+        "sizeRel": 0.05,
         "align": "center",
         "color": "@text",
-        "rect": [0.12, 0.59, 0.76, 0.1]
+        "rect": [
+          0.12,
+          0.59,
+          0.76,
+          0.1
+        ]
       }
     ],
     "landscape": [
       {
         "type": "ornament",
         "asset": "pack:love-weddings/ornaments/double-rule-frame.svg",
-        "rect": [0.035, 0.05, 0.93, 0.9],
+        "rect": [
+          0.035,
+          0.05,
+          0.93,
+          0.9
+        ],
         "color": "@accent",
         "color2": "@accent2"
       },
       {
         "type": "text",
         "role": "headline",
-        "text": "Happy Birthday",
         "align": "center",
         "color": "@text",
-        "rect": [0.12, 0.3, 0.76, 0.2]
+        "rect": [
+          0.12,
+          0.26,
+          0.76,
+          0.24
+        ]
       },
       {
         "type": "ornament",
         "asset": "pack:milestones/ornaments/diamond-rule-divider.svg",
-        "rect": [0.34, 0.53, 0.32, 0.045],
+        "rect": [
+          0.34,
+          0.53,
+          0.32,
+          0.045
+        ],
         "color": "@accent",
         "color2": "@accent2"
       },
       {
         "type": "text",
-        "role": "names",
-        "text": "Wishing you a wonderful year ahead",
+        "role": "subhead",
+        "sizeRel": 0.05,
         "align": "center",
         "color": "@text",
-        "rect": [0.15, 0.61, 0.7, 0.1]
+        "rect": [
+          0.15,
+          0.61,
+          0.7,
+          0.1
+        ]
       }
     ]
   }
