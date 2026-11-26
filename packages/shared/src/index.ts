@@ -18,6 +18,7 @@ export * from './project';
 export * from './guardian';
 export * from './stylepack';
 export * from './render';
+export * from './textfit';
 export * from './immich';
 export * from './backdrops';
 export * from './albums';

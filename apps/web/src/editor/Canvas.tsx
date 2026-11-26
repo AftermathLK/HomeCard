@@ -12,6 +12,7 @@ import {
   resolveTokens,
   rotatedBounds,
   straightenAngle,
+  textFont,
   type CardElement,
   type PhotoElement,
   type PhotoRecord,
@@ -23,7 +24,7 @@ import { FlipLeftRight, FlipUpDown } from '@/components/icons';
 import { upload } from '@/lib/api';
 import { useAssets } from '@/lib/assets';
 import { previewUrl } from '@/lib/image';
-import { CardSurface, RenderEnvContext, textFont, type RenderEnv } from '@/render/CardSurface';
+import { CardSurface, RenderEnvContext, type RenderEnv } from '@/render/CardSurface';
 import { findElement, useEditor, useProject, useSurface } from '@/store/editor';
 import { useUi } from '@/store/ui';
 import { PX, resizeBox, round3, snapBox, snapLines } from './geometry';

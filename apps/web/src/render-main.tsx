@@ -9,6 +9,7 @@ import { flushSync } from 'react-dom';
 import {
   parsePackAssetRef,
   resolveTokens,
+  textFont,
   type CardProject,
   type FontFamilyInfo,
   type RenderJob,
@@ -21,7 +22,7 @@ import {
 import './index.css';
 import { applyPackTemplates, loadPackSvg, packSvgUrl, useAssets } from './lib/assets';
 import { preloadImage } from './lib/image';
-import { backgroundImageUrl, CardSurface, IN, RenderEnvContext, fontsUsed, textFont, type RenderEnv } from './render/CardSurface';
+import { backgroundImageUrl, CardSurface, IN, RenderEnvContext, fontsUsed, type RenderEnv } from './render/CardSurface';
 
 declare global {
   interface Window {

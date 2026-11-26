@@ -14,6 +14,7 @@ import {
   backdropSvg,
   BUILTIN_FOILS,
   effectiveAdjustments,
+  fitTextSize,
   fontStack,
   getBuiltinOrnament,
   imageBox,
@@ -26,11 +27,11 @@ import {
   resolveColor,
   resolveTokens,
   straightenAngle,
+  textFont,
   withAlpha,
   type CardElement,
   type CardFormat,
   type CardProject,
-  type FontSpec,
   type OrnamentElement,
   type PhotoElement,
   type ResolvedStylePack,
@@ -373,19 +374,6 @@ function EmptySlot({ n }: { n: number }) {
 
 /* ---------------------------- Text ---------------------------- */
 
-export function textFont(el: TextElement, theme: Theme): FontSpec & { size: number } {
-  const base = theme.fonts[el.fontRole] ?? theme.fonts.body;
-  const transform = el.transform && el.transform !== 'theme' ? el.transform : (base.transform ?? 'none');
-  return {
-    family: el.fontFamily || base.family,
-    weight: el.fontWeight ?? base.weight,
-    style: el.italic === undefined ? base.style : el.italic ? 'italic' : 'normal',
-    letterSpacing: el.letterSpacing ?? base.letterSpacing ?? 0,
-    transform,
-    size: el.fontSize,
-  };
-}
-
 export function foilFor(id: string, packs: ResolvedStylePack[]) {
   if (id.startsWith('pack:')) {
     for (const p of packs) {
@@ -405,33 +393,30 @@ function TextView({ el, project, packs }: { el: TextElement; project: CardProjec
   const outerRef = useRef<HTMLDivElement>(null);
   const innerRef = useRef<HTMLDivElement>(null);
   const [fitted, setFitted] = useState(font.size);
+  const [wholeWords, setWholeWords] = useState(true);
   const color = resolveColor(el.color, theme, '#000000');
   const foil = el.fill === 'foil' ? foilFor(theme.foil || 'gold', packs) : null;
 
-  // Shrink-to-fit (never grows) — identical algorithm in editor and print, run after fonts load.
+  // Shrink-to-fit (never grows), keeping words whole — the shared fitTextSize search, identical in
+  // editor and print, run after fonts load. With `overflow-wrap: normal` a word wider than the
+  // box overflows it (the line is start-aligned and spills right), so scrollWidth catches it.
   useLayoutEffect(() => {
     const outer = outerRef.current;
     const inner = innerRef.current;
     if (!outer || !inner) return;
-    const fits = (pt: number) => {
+    const wrap = (whole: boolean) => (whole ? 'normal' : 'break-word');
+    const fit = fitTextSize(font.size, el.autoFit, (pt, whole) => {
       inner.style.fontSize = `${pt}pt`;
+      inner.style.overflowWrap = wrap(whole);
       return inner.scrollHeight <= outer.clientHeight + 0.5 && inner.scrollWidth <= outer.clientWidth + 0.5;
-    };
-    let size = font.size;
-    if (el.autoFit && !fits(size)) {
-      let lo = Math.max(4, font.size * 0.3);
-      let hi = font.size;
-      for (let i = 0; i < 12; i++) {
-        const mid = (lo + hi) / 2;
-        if (fits(mid)) lo = mid;
-        else hi = mid;
-      }
-      size = Math.floor(lo * 10) / 10;
-    }
-    inner.style.fontSize = `${size}pt`;
-    if (size !== fitted) setFitted(size);
+    });
+    inner.style.fontSize = `${fit.pt}pt`;
+    inner.style.overflowWrap = wrap(fit.wholeWords);
+    if (fit.pt !== fitted) setFitted(fit.pt);
+    if (fit.wholeWords !== wholeWords) setWholeWords(fit.wholeWords);
     if (env.onTextMeasure) {
-      const overflow = inner.scrollHeight > outer.clientHeight + 1 || inner.scrollWidth > outer.clientWidth + 1;
+      // A word broken across lines doesn't fit its box either.
+      const overflow = !fit.wholeWords || inner.scrollHeight > outer.clientHeight + 1 || inner.scrollWidth > outer.clientWidth + 1;
       const surf = outer.closest('.hc-surface') as HTMLElement | null;
       let ink: TextMeasure['ink'] = null;
       if (surf && text.trim()) {
@@ -442,7 +427,7 @@ function TextView({ el, project, packs }: { el: TextElement; project: CardProjec
         const k = sr.width > 0 ? surf.offsetWidth / sr.width / 96 : 1 / 96; // screen px -> inches (undo editor zoom)
         if (r.width > 0) ink = { x: (r.left - sr.left) * k, y: (r.top - sr.top) * k, w: r.width * k, h: r.height * k };
       }
-      env.onTextMeasure(el.id, { overflow, ink, fittedPt: size });
+      env.onTextMeasure(el.id, { overflow, ink, fittedPt: fit.pt });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [text, font.size, font.family, font.weight, font.style, font.letterSpacing, font.transform, el.x, el.y, el.w, el.h, el.rotation, el.lineHeight, el.autoFit, fontTick]);
@@ -458,7 +443,8 @@ function TextView({ el, project, packs }: { el: TextElement; project: CardProjec
     textTransform: font.transform === 'uppercase' ? 'uppercase' : 'none',
     textAlign: el.align,
     whiteSpace: 'pre-wrap',
-    overflowWrap: 'break-word',
+    // Words stay whole; a word too long for the box even at the smallest size breaks between letters.
+    overflowWrap: wholeWords ? 'normal' : 'break-word',
     fontKerning: 'normal',
     fontVariantLigatures: 'common-ligatures contextual',
     margin: 0,

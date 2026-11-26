@@ -132,7 +132,10 @@ The key decision: **there is one renderer, and it runs in a browser in both plac
    points. The DOM uses real CSS `in`/`pt` units, and Chromium defines `1in = 96px`.
    Layout, line breaking and auto-fit all run in that unscaled space. The editor zooms with a
    CSS transform, which never re-flows text. Line breaks in the editor therefore match line
-   breaks in the export.
+   breaks in the export. Auto-fit (`fitTextSize` in `shared/textfit.ts`) shrinks the type until
+   the text fits its box with every word whole, so a long word such as “Thanksgiving” in a narrow
+   panel gets smaller type instead of breaking mid-word. Only a word too long for the box even at
+   the smallest size breaks between letters, and the Print Guardian then reports it.
 2. **Exact DPI.** The server renders with `deviceScaleFactor = 300/96 = 3.125`, so a
    5.25″ × 7.25″ page (5×7 + 0.125″ bleed) becomes exactly `1575 × 2175` device pixels. Sharp
    then checks the size, embeds an sRGB ICC profile and writes 300 DPI density metadata.
